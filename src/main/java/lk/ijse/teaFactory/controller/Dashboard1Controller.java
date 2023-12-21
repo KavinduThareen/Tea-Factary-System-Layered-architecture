@@ -9,6 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import lk.ijse.teaFactory.QrcodeReader.QrCodeScanner;
+import lk.ijse.teaFactory.dao.customer.CustomerDAO;
+import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.model.*;
 import net.sf.jasperreports.engine.*;
@@ -57,7 +59,7 @@ public class Dashboard1Controller {
     private ExecutorService qrScannerExecutor;
 
     @FXML
-    public void initialize() throws SQLException {
+    public void initialize() throws SQLException, ClassNotFoundException {
         // Call the method to start updating the time
         generateRealTime();
         generateOrderCount();
@@ -107,9 +109,9 @@ public class Dashboard1Controller {
         lblordersTxt.setText(String.valueOf(a));
    }
 
-    public void generateCustemereCount() throws SQLException {
-        CustomerModel customerModel = new CustomerModel();
-        int a = customerModel.cusCount();
+    public void generateCustemereCount() throws SQLException, ClassNotFoundException {
+        CustomerDAO customerDAO = new CustomerDAOImpl();
+        int a = ((CustomerDAOImpl) customerDAO).cusCount();
 
         lblCus.setText(String.valueOf(a));
 

@@ -6,22 +6,18 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Duration;
+import lk.ijse.teaFactory.dao.customer.CustomerDAO;
+import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
 import lk.ijse.teaFactory.dto.CustomerDto;
 import lk.ijse.teaFactory.dto.EmployeeDto;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
-import lk.ijse.teaFactory.model.CustomerModel;
 import lk.ijse.teaFactory.model.EmployeeModel;
-import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -48,6 +44,8 @@ public class CustomerAddPageController {
     @FXML
     private JFXComboBox<String> empidTxt;
 
+    CustomerDAO customerDAO = new CustomerDAOImpl();
+
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notification = new NotificationAnimation();
 
@@ -71,12 +69,11 @@ public class CustomerAddPageController {
 
         var dto = new CustomerDto(cusid,empid,cusname,cusAddress,cusCantac);
 
-        var model = new CustomerModel();
        boolean isValidated = validate();
 
         if (isValidated) {
             try {
-                boolean isSaved = model.customerSaved(dto);
+                boolean isSaved = customerDAO.save(dto);
                 if (isSaved) {
                     notification.showNotification("saved");
                     count++;
@@ -152,9 +149,11 @@ public class CustomerAddPageController {
 
     private void generateNextCusId() {
         try {
-            String cusId = CustomerModel.generateNextcusId();
+            String cusId = customerDAO.generateID();
             cusidTxt.setText(cusId);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -170,9 +169,8 @@ public class CustomerAddPageController {
 
         var dto = new CustomerDto(cusid,empid,cusname,cusAddress,cusCantac);
 
-        var model = new CustomerModel();
         try {
-            boolean isUpdated = model.updateCustomer(dto);
+            boolean isUpdated = customerDAO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notification.showNotification("update");
@@ -180,6 +178,8 @@ public class CustomerAddPageController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -206,9 +206,8 @@ public class CustomerAddPageController {
     public void searchCustomer(){
 
         String id = cusidTxt.getText();
-         var model = new CustomerModel();
         try {
-            CustomerDto customerDto = model.searchCustomer(id);
+            CustomerDto customerDto = customerDAO.search(id);
 
             if (customerDto != null) {
                 cusidTxt.setText(customerDto.getCusid());
@@ -221,6 +220,8 @@ public class CustomerAddPageController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
     @FXML

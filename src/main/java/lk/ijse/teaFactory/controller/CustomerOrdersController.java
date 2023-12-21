@@ -10,11 +10,11 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.CartTm;
 import lk.ijse.teaFactory.model.CusOrderModel;
-import lk.ijse.teaFactory.model.CustomerModel;
 import lk.ijse.teaFactory.model.PacketStokeModel;
 import lk.ijse.teaFactory.model.PlaseOrderModel;
 
@@ -25,8 +25,6 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -191,7 +189,7 @@ public class CustomerOrdersController {
     private void loadCusOrdersId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<CustomerDto> cusList = CustomerModel.loadAllItems();
+            List<CustomerDto> cusList = CustomerDAOImpl.loadAllItems();
 
             for (CustomerDto cusODto : cusList) {
                 obList.add(cusODto.getCusid());
@@ -199,6 +197,8 @@ public class CustomerOrdersController {
 
             cIdTxt.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

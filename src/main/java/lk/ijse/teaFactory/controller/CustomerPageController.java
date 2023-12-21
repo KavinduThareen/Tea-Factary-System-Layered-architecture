@@ -9,10 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.CustomerDAO;
+import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
 import lk.ijse.teaFactory.dto.CustomerDto;
 import lk.ijse.teaFactory.dto.tm.CustomerTm;
-import lk.ijse.teaFactory.model.CustomerModel;
-import lk.ijse.teaFactory.model.LeavesStokeModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -45,6 +45,8 @@ public class CustomerPageController {
     @FXML
     private TableView<CustomerTm> tabl;
 
+    CustomerDAO customerDAO = new CustomerDAOImpl();
+
     @FXML
     void addcusOnAction(ActionEvent event) throws IOException {
         cuspageroot.getChildren();
@@ -53,11 +55,11 @@ public class CustomerPageController {
     }
 
     public void loadAll(){
-        var model = new CustomerModel();
+
         ObservableList<CustomerTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<CustomerDto> dtoList = model.loadAll();
+            List<CustomerDto> dtoList = customerDAO.getAll();
 
             for(CustomerDto dto : dtoList) {
 
@@ -121,11 +123,13 @@ public class CustomerPageController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = CustomerModel.delete(id);
+            boolean isDeleted = customerDAO.delete(id);
             if(isDeleted)
                 new Alert(Alert.AlertType.CONFIRMATION, "item deleted!").show();
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -11,13 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.teaFactory.dto.CustomerDto;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
 import lk.ijse.teaFactory.dto.SupplierDto;
 import lk.ijse.teaFactory.dto.tm.SupplierTm;
-import lk.ijse.teaFactory.model.CustomerModel;
-import lk.ijse.teaFactory.model.EmployeeModel;
 import lk.ijse.teaFactory.model.SupplierModel;
 
 import java.io.IOException;

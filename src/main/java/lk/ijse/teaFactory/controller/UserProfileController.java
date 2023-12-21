@@ -2,7 +2,6 @@ package lk.ijse.teaFactory.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -11,12 +10,10 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
 import lk.ijse.teaFactory.dto.RegisterDto;
-import lk.ijse.teaFactory.model.CustomerModel;
 import lk.ijse.teaFactory.model.RegisterModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class UserProfileController{

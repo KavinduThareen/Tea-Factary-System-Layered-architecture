@@ -11,9 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
+import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.EmployeeTm;
-import lk.ijse.teaFactory.model.CustomerModel;
 import lk.ijse.teaFactory.model.EmployeeModel;
 import lk.ijse.teaFactory.model.RegisterModel;
 
@@ -59,6 +60,7 @@ public class EmployeePageController {
     @FXML
     private TableView<EmployeeTm> tbl2;
 
+    EmployeDAOImpl employeDAO = new EmployeDAOImpl();
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
 
@@ -106,7 +108,7 @@ public class EmployeePageController {
 
         if (isValidated) {
          try {
-             boolean isSaved = model.employeeSave(dto);
+             boolean isSaved = employeDAO.save(dto);
 
                  if (isSaved) {
                      notifi.showNotification("update");
@@ -115,6 +117,8 @@ public class EmployeePageController {
 
          } catch (SQLException e) {
              new Alert(Alert.AlertType.ERROR, "An error occurred: " + e.getMessage()).show();
+         } catch (ClassNotFoundException e) {
+             throw new RuntimeException(e);
          }
 
         }

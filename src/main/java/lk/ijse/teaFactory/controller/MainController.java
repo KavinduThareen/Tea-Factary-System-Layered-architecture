@@ -5,17 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.teaFactory.model.CustomerModel;
 import lk.ijse.teaFactory.model.EmpAttendensModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class MainController {
@@ -29,7 +23,7 @@ public class MainController {
     @FXML
     private AnchorPane root;
 
-    private CustomerModel customerModel = new CustomerModel();
+
     /*
     public AnchorPane getDashbordRoot() {
         return dashbordRoot;
