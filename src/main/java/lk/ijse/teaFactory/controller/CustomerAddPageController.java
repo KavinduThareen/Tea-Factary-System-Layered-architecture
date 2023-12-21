@@ -13,11 +13,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dao.customer.CustomerDAO;
 import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
+import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.dto.CustomerDto;
 import lk.ijse.teaFactory.dto.EmployeeDto;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
-import lk.ijse.teaFactory.model.EmployeeModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -45,6 +45,7 @@ public class CustomerAddPageController {
     private JFXComboBox<String> empidTxt;
 
     CustomerDAO customerDAO = new CustomerDAOImpl();
+    EmployeDAOImpl employeDAO = new EmployeDAOImpl();
 
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notification = new NotificationAnimation();
@@ -135,7 +136,7 @@ public class CustomerAddPageController {
     private void loadEmpId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<EmployeeDto> empList = EmployeeModel.loadAllItems();
+            List<EmployeeDto> empList = employeDAO.getAll();
 
             for (EmployeeDto empDto : empList) {
                 obList.add(empDto.getEmployeeId());
@@ -143,6 +144,8 @@ public class CustomerAddPageController {
 
             empidTxt.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -206,6 +209,7 @@ public class CustomerAddPageController {
     public void searchCustomer(){
 
         String id = cusidTxt.getText();
+
         try {
             CustomerDto customerDto = customerDAO.search(id);
 

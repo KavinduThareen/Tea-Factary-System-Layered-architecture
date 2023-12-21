@@ -9,11 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.dto.EmployeeDto;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
 import lk.ijse.teaFactory.dto.tm.EmployeeTm;
-import lk.ijse.teaFactory.model.CusOrderModel;
-import lk.ijse.teaFactory.model.EmployeeModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -50,6 +49,7 @@ public class ViewEmployeePageController {
     @FXML
     private TableView<EmployeeTm> tblEmployee;
 
+    EmployeDAOImpl employeDAO = new EmployeDAOImpl();
     NotificationAnimation notifi = new NotificationAnimation();
 
     @FXML
@@ -61,12 +61,11 @@ public class ViewEmployeePageController {
     }
 
     public void loadAllEmployees(){
-        var model =new EmployeeModel();
 
         ObservableList<EmployeeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<EmployeeDto> dtoList =model.getAllEmployee();
+            List<EmployeeDto> dtoList =employeDAO.getAll();
             for (EmployeeDto dto : dtoList){
 
 
@@ -111,16 +110,20 @@ public class ViewEmployeePageController {
             tblEmployee.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = EmployeeModel.deleteItem(id);
+            boolean isDeleted = employeDAO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Delete");
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

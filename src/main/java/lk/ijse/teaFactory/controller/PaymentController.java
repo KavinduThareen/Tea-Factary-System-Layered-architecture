@@ -11,10 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.SalaryTm;
-import lk.ijse.teaFactory.model.EmployeeModel;
 import lk.ijse.teaFactory.model.SalaryModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -225,9 +225,10 @@ public class PaymentController {
     }
 
     private void loadEmpId() {
+        EmployeDAOImpl employeDAO = new EmployeDAOImpl();
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<EmployeeDto> empList = EmployeeModel.loadAllItems();
+            List<EmployeeDto> empList = employeDAO.getAll();
 
             for (EmployeeDto empDto : empList) {
                 obList.add(empDto.getEmployeeId());
@@ -235,6 +236,8 @@ public class PaymentController {
 
             empIdTxt.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

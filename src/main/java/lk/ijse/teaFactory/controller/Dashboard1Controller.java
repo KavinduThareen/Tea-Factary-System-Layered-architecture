@@ -11,6 +11,7 @@ import javafx.util.Duration;
 import lk.ijse.teaFactory.QrcodeReader.QrCodeScanner;
 import lk.ijse.teaFactory.dao.customer.CustomerDAO;
 import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
+import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.model.*;
 import net.sf.jasperreports.engine.*;
@@ -57,6 +58,7 @@ public class Dashboard1Controller {
     private Label lblPacketSalles;
 
     private ExecutorService qrScannerExecutor;
+    EmployeDAOImpl employeDAO = new EmployeDAOImpl();
 
     @FXML
     public void initialize() throws SQLException, ClassNotFoundException {
@@ -97,8 +99,8 @@ public class Dashboard1Controller {
     }
 
     public void generatempCount() throws SQLException {
-        EmployeeModel order = new EmployeeModel();
-        int a = order.empCount();
+
+        int a = employeDAO.empCount();
         lblemp.setText(String.valueOf(a));
     }
 

@@ -11,11 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.EmployeeTm;
-import lk.ijse.teaFactory.model.EmployeeModel;
 import lk.ijse.teaFactory.model.RegisterModel;
 
 import java.io.IOException;
@@ -75,10 +73,9 @@ public class EmployeePageController {
         String empContac = empContacTxt.getText();
 
         var dto = new EmployeeDto(uId,employeeId,empGender,empbd,employeeName,empAddress,empContac);
-        var model = new EmployeeModel();
 
         try {
-            boolean isUpdated = model.update(dto);
+            boolean isUpdated = employeDAO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
               notifi.showNotification("update");
@@ -88,6 +85,8 @@ public class EmployeePageController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -103,7 +102,6 @@ public class EmployeePageController {
         String empContac = empContacTxt.getText();
 
         var dto = new EmployeeDto(uId,employeeId,empGender,empbd,employeeName,empAddress,empContac);
-         var model = new EmployeeModel();
         boolean isValidated = validate();
 
         if (isValidated) {
@@ -142,9 +140,11 @@ public class EmployeePageController {
 
     private void generateNextEmpId() {
         try {
-            String orderId = EmployeeModel.generateNextOrderId();
-            employeeIdTxt.setText(orderId);
+            String empid = employeDAO.generateID();
+            employeeIdTxt.setText(empid);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -204,12 +204,11 @@ public class EmployeePageController {
 
 
     public void loadAllEmployees(){
-        var model =new EmployeeModel();
 
         ObservableList<EmployeeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<EmployeeDto> dtoList =model.getAllEmployee();
+            List<EmployeeDto> dtoList =employeDAO.getAll();
             for (EmployeeDto dto : dtoList){
 
 
@@ -230,6 +229,8 @@ public class EmployeePageController {
             tbl2.setItems(obList);
 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -261,9 +262,8 @@ public class EmployeePageController {
         if (event.getCode() == KeyCode.ENTER) {
             String id = employeeIdTxt.getText();
 
-            var model = new EmployeeModel();
             try {
-                EmployeeDto employeeDto = model.searchCustomer(id);
+                EmployeeDto employeeDto = employeDAO.search(id);
                 if (employeeDto != null) {
                     uidTxt.setValue(employeeDto.getUId());
                     employeeIdTxt.setText(employeeDto.getEmployeeId());
@@ -277,6 +277,8 @@ public class EmployeePageController {
                 }
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "An error occurred: " + e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -285,10 +287,8 @@ public class EmployeePageController {
     void searchBtnOnAction(ActionEvent event) {
 
         String id = employeeIdTxt.getText();
-
-        var model = new EmployeeModel();
         try {
-            EmployeeDto employeeDto = model.searchCustomer(id);
+            EmployeeDto employeeDto = employeDAO.search(id);
 
             if (employeeDto != null) {
                 uidTxt.setValue(employeeDto.getUId());
@@ -303,6 +303,8 @@ public class EmployeePageController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "An error occurred: " + e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
