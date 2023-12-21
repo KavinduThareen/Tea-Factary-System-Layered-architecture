@@ -1,0 +1,31 @@
+/* styles.css */
+
+.text-field {
+    /* Your custom styles go here */
+    -fx-background-color: rgba(255, 0, 0, 0);
+    -fx-text-fill: #3c3c69;
+    -fx-border-color: #090606;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+    -fx-font-size: 18px;
+    -fx-font-family: "Arial";
+    -fx-prompt-text-fill: gray; /* Color of the prompt text */
+    -fx-focus-color: dodgerblue; /* Color of the focus ring when the TextField is selected */
+    -fx-faint-focus-color: #536d73; /* Color of the faint focus ring */
+    -fx-background-insets: 0; /* Removes inner padding */
+    -fx-background-radius: 5px; /* Radius of the background */
+    -fx-cursor: text; /* Cursor style when hovering over the TextField */
+    -fx-effect: dropshadow(3px, 3px, 3px, darkgray); /* Drop shadow effect */
+}
+
+.text-field:focused {
+    /* Styles applied when the TextField has focus */
+    -fx-background-color: rgba(255, 254, 254, 0.31);
+    -fx-border-color: dodgerblue;
+}
+
+.text-field:hover {
+    /* Styles applied when hovering over the TextField */
+    -fx-background-color: rgba(101, 107, 107, 0);
+}

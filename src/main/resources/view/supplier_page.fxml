@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXClippedPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="1080.0" prefWidth="1598.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.teaFactory.controller.SupplierPageController">
+
+    <children>
+        <JFXClippedPane />
+      <ImageView fitHeight="1048.0" fitWidth="1575.0" layoutX="10.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/supplier%20fream.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tbl" layoutX="36.0" layoutY="71.0" prefHeight="932.0" prefWidth="826.0" stylesheets="@../style/tableCss.css">
+        <columns>
+          <TableColumn fx:id="cold" prefWidth="131.0" text="ID" />
+            <TableColumn fx:id="colName" prefWidth="203.0" text="Name" />
+            <TableColumn fx:id="colCantac" prefWidth="167.0" text="Contac" />
+            <TableColumn fx:id="colAddress" prefWidth="180.0" text="Address" />
+            <TableColumn fx:id="coldelte" prefWidth="144.0" text="Delete" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="1047.0" layoutY="662.0" onAction="#addOnAction" prefHeight="64.0" prefWidth="426.0" styleClass="button-with-style" stylesheets="@../style/registerbutton.css" text="Add Suppliers">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </JFXButton>
+      <TextField fx:id="idTxt" layoutX="1044.0" layoutY="211.0" onKeyPressed="#searchOnAction" prefHeight="64.0" prefWidth="426.0" promptText="id" stylesheets="@../style/textfield.css">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="nameTxt" layoutX="1043.0" layoutY="339.0" prefHeight="54.0" prefWidth="426.0" promptText="name" stylesheets="@../style/textfield.css">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="Contac" layoutX="1044.0" layoutY="462.0" prefHeight="54.0" prefWidth="426.0" promptText="no" stylesheets="@../style/textfield.css">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="Address" layoutX="1044.0" layoutY="586.0" prefHeight="54.0" prefWidth="426.0" promptText="addres" stylesheets="@../style/textfield.css">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <JFXButton layoutX="1047.0" layoutY="749.0" onAction="#updateOnAction" prefHeight="64.0" prefWidth="426.0" styleClass="button-with-style" stylesheets="@../style/registerbutton.css" text="Upadate Supplier">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="1392.0" layoutY="75.0" onAction="#addSDetailOnAction" prefHeight="40.0" prefWidth="168.0" styleClass="button-with-style" stylesheets="@../style/Savebtn.css" text="Add Suppling Deteailse">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+    </children>
+</AnchorPane>

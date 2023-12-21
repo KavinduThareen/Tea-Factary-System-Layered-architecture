@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXClippedPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.teaFactory.controller.OrdersController">
+
+    <children>
+        <JFXClippedPane />
+      <ImageView fitHeight="559.0" fitWidth="848.0" layoutX="561.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/Frame%2025.png" />
+         </image>
+      </ImageView>
+      <JFXButton layoutX="763.0" layoutY="369.0" onAction="#cusOrdesOnAction" prefHeight="64.0" prefWidth="416.0" styleClass="button-with-style" stylesheets="@../style/viewStokeButton.css" text="Customer Orders">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></JFXButton>
+      <JFXButton layoutX="754.0" layoutY="508.0" onAction="#supOrderOnAction" prefHeight="64.0" prefWidth="416.0" styleClass="button-with-style" stylesheets="@../style/viewStokeButton.css" text="Supplier Orders">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></JFXButton>
+    </children>
+</AnchorPane>

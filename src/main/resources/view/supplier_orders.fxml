@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXClippedPane?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="962.0" prefWidth="1538.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.teaFactory.controller.SupplierOrdersController">
+
+    <children>
+        <JFXClippedPane />
+      <ImageView fitHeight="1001.0" fitWidth="1548.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/Supper_orders.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="sOidTxt" layoutX="1013.0" layoutY="170.0" prefHeight="62.0" prefWidth="413.0" promptText="id" stylesheets="@../style/textfield.css" />
+      <TextField fx:id="weigthTxt" layoutX="1007.0" layoutY="532.0" prefHeight="54.0" prefWidth="419.0" promptText="w" stylesheets="@../style/textfield.css" />
+      <JFXButton layoutX="1009.0" layoutY="736.0" onAction="#addOnAction" prefHeight="54.0" prefWidth="429.0" styleClass="button-with-style" stylesheets="@../style/loginbutton.css" text="Add Suppling Stoke">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="1006.0" layoutY="802.0" onAction="#updateOnAction" prefHeight="54.0" prefWidth="432.0" styleClass="button-with-style" stylesheets="@../style/updatebtn.css" text="Update Stoke">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </JFXButton>
+      <TableView fx:id="tbl" layoutX="5.0" layoutY="79.0" prefHeight="824.0" prefWidth="829.0" stylesheets="@../style/tableCss.css">
+        <columns>
+          <TableColumn fx:id="colSoId" prefWidth="119.0" text="Order ID " />
+          <TableColumn fx:id="colSid" prefWidth="134.3333282470703" text="Supplier ID" />
+            <TableColumn fx:id="colDate" prefWidth="171.33334350585938" text="Date" />
+            <TableColumn fx:id="colWeigth" prefWidth="121.66668701171875" text="Weigth" />
+            <TableColumn fx:id="colPayment" prefWidth="152.33331298828125" text="payment" />
+            <TableColumn fx:id="colDelete" prefWidth="126.3333740234375" text="Deelete" />
+        </columns>
+      </TableView>
+      <JFXComboBox fx:id="sIdTxt" layoutX="1011.0" layoutY="293.0" prefHeight="54.0" prefWidth="413.0" />
+      <TextField fx:id="paymentTxt" layoutX="1007.0" layoutY="651.0" prefHeight="54.0" prefWidth="419.0" promptText="Payment" stylesheets="@../style/textfield.css" />
+      <DatePicker fx:id="dateTxt" layoutX="1012.0" layoutY="410.0" prefHeight="54.0" prefWidth="413.0" stylesheets="@../style/datePiker.css" />
+      <JFXButton layoutX="1006.0" layoutY="869.0" onAction="#searchOnAction" prefHeight="56.0" prefWidth="436.0" styleClass="button-with-style" stylesheets="@../style/clearbtn.css" text="Search Stoke">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </JFXButton>
+    </children>
+</AnchorPane>

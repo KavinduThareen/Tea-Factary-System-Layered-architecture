@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXClippedPane?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="988.0" prefWidth="1588.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.teaFactory.controller.PaymentController">
+
+    <children>
+        <JFXClippedPane />
+      <ImageView fitHeight="1034.0" fitWidth="1586.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/salorypage.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="idTxt" layoutX="1045.0" layoutY="176.0" onKeyPressed="#searchOnAction" prefHeight="59.0" prefWidth="426.0" promptText="d" stylesheets="@../style/textfield.css" />
+      <TextField fx:id="countTxt" layoutX="1046.0" layoutY="547.0" prefHeight="59.0" prefWidth="426.0" promptText="s" stylesheets="@../style/textfield.css" />
+      <JFXButton layoutX="1052.0" layoutY="637.0" onAction="#addOnAction" prefHeight="52.0" prefWidth="414.0" styleClass="button-with-style" stylesheets="@../style/registerbutton.css" text="Add salory">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></JFXButton>
+      <JFXButton layoutX="1050.0" layoutY="699.0" onAction="#updateOnAction" prefHeight="52.0" prefWidth="416.0" styleClass="button-with-style" stylesheets="@../style/registerbutton.css" text="update">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></JFXButton>
+      <TableView fx:id="tbl" layoutX="14.0" layoutY="38.0" prefHeight="930.0" prefWidth="834.0" stylesheets="@../style/tableCss.css">
+        <columns>
+          <TableColumn fx:id="colid" prefWidth="140.33331298828125" text="id" />
+          <TableColumn fx:id="colempId" prefWidth="128.66668701171875" text="employee ID" />
+            <TableColumn fx:id="coldate" prefWidth="213.66668701171875" text="date" />
+            <TableColumn fx:id="colsCount" prefWidth="200.0" text="salary Count" />
+            <TableColumn fx:id="coldelete" prefWidth="144.3333740234375" text="delete" />
+        </columns>
+      </TableView>
+      <JFXComboBox fx:id="empIdTxt" focusColor="#405aa800" layoutX="1045.0" layoutY="302.0" prefHeight="52.0" prefWidth="426.0" stylesheets="@../style/comboBox.css" unFocusColor="#4d4d4d00" />
+      <DatePicker fx:id="dateTxt" layoutX="1045.0" layoutY="425.0" prefHeight="52.0" prefWidth="426.0" stylesheets="@../style/datePiker.css" />
+      <JFXButton layoutX="1050.0" layoutY="763.0" onAction="#repoateOnAction" prefHeight="52.0" prefWidth="416.0" styleClass="button-with-style" stylesheets="@../style/clearbtn.css" text="Salary Repote">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+    </children>
+</AnchorPane>

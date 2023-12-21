@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.teaFactory.controller.MainController">
+
+    <children>
+        <ImageView fitHeight="1082.0" fitWidth="1914.0" layoutX="4.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/Rectangle%2037773.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="1084.0" fitWidth="342.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/menu.png" />
+            </image>
+        </ImageView>
+        <JFXButton layoutX="29.0" layoutY="166.0" onAction="#dashboardOnAction" prefHeight="64.0" prefWidth="291.0" styleClass="button-with-style" stylesheets="@../style/dashboardAllbutton.css" text="Dashboard">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font></JFXButton>
+        <ImageView fitHeight="138.0" fitWidth="338.0" layoutX="2.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/GreenLeaf%20Tea-logos_black%204.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="45.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/dashbord%20icon.png" />
+            </image>
+        </ImageView>
+        <JFXButton layoutX="26.0" layoutY="253.0" onAction="#stokebtnOnAction" prefHeight="64.0" prefWidth="291.0" styleClass="button-with-style" stylesheets="@../style/dashboardAllbutton.css" text="Our Stoke">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </JFXButton>
+        <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="45.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/Stoke%20icon.png" />
+            </image>
+        </ImageView>
+        <JFXButton layoutX="29.0" layoutY="342.0" onAction="#customerOnAction" prefHeight="64.0" prefWidth="291.0" styleClass="button-with-style" stylesheets="@../style/dashboardAllbutton.css" text="Customer">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </JFXButton>
+        <JFXButton layoutX="28.0" layoutY="427.0" onAction="#employeeOnBtn" prefHeight="64.0" prefWidth="291.0" styleClass="button-with-style" stylesheets="@../style/dashboardAllbutton.css" text="Employee">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </JFXButton>
+        <JFXButton layoutX="28.0" layoutY="607.0" onAction="#ordersOnAction" prefHeight="64.0" prefWidth="291.0" styleClass="button-with-style" stylesheets="@../style/dashboardAllbutton.css" text="Orders">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </JFXButton>
+        <JFXButton layoutX="28.0" layoutY="512.0" onAction="#SupplierOnAction" prefHeight="64.0" prefWidth="291.0" styleClass="button-with-style" stylesheets="@../style/dashboardAllbutton.css" text="Supplier">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </JFXButton>
+        <JFXButton layoutX="27.0" layoutY="703.0" onAction="#paymentOnAction" prefHeight="64.0" prefWidth="291.0" styleClass="button-with-style" stylesheets="@../style/dashboardAllbutton.css" text="Payment">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </JFXButton>
+        <JFXButton fx:id="singoutbtn" layoutX="11.0" layoutY="972.0" onAction="#singoutbtnOnAction" prefHeight="64.0" prefWidth="321.0" styleClass="button-with-style" stylesheets="@../style/Sigoutbutton.css" text="Sigout">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </JFXButton>
+        <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="45.0" layoutY="358.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/image%2066.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="45.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/image%2069.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="45.0" layoutY="528.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/image%2071.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="45.0" layoutY="623.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/image%2054.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="45.0" layoutY="719.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/image%2063.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="21.0" layoutY="988.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/logout%20icon.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="93.0" fitWidth="1574.0" layoutX="345.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/bar.png" />
+            </image>
+        </ImageView>
+      <AnchorPane fx:id="dashbordRoot" layoutX="346.0" layoutY="44.0" prefHeight="1034.0" prefWidth="1572.0" />
+      <JFXButton layoutX="1796.0" layoutY="-1.0" onAction="#profileOnAction" prefHeight="43.0" prefWidth="119.0" text="You Profile" />
+      <ImageView fitHeight="23.0" fitWidth="28.0" layoutX="1804.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/image%2066.png" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>

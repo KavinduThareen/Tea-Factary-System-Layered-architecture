@@ -1,0 +1,40 @@
+/* styles.css */
+
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #d9c3c3;
+    -fx-font-size: 18px;
+    -fx-font-family: "Arial";
+    -fx-border-color: darkgray;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.combo-box .arrow-button {
+    /* Color of the arrow */
+    -fx-background-color: #59595b;
+    /* Arrow icon color */
+    -fx-mark-color: white;
+}
+
+.combo-box .list-cell {
+    /* Background color of the dropdown list */
+    -fx-background-color: lightgray;
+}
+
+.combo-box .list-view {
+    /* Background color of the dropdown list */
+    -fx-background-color: lightgray;
+}
+
+.combo-box .list-cell:selected {
+    /* Background color of the selected item in the dropdown list */
+    -fx-background-color: #def1f1;
+    -fx-text-fill: #090606;
+}
+
+.combo-box:hover {
+    /* Background color when hovering over the ComboBox */
+    -fx-background-color: lightcyan;
+}

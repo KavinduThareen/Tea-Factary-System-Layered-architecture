@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.teaFactory.controller.VerifiedPageController">
+   <children>
+      <ImageView fitHeight="1080.0" fitWidth="1920.0" layoutX="2.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/verified%20Pw.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="newpwTxt" layoutX="242.0" layoutY="604.0" prefHeight="55.0" prefWidth="435.0" stylesheets="@../style/textfield.css" />
+      <TextField fx:id="confimepwTxt" layoutX="242.0" layoutY="764.0" prefHeight="55.0" prefWidth="435.0" stylesheets="@../style/textfield.css" />
+      <JFXButton layoutX="242.0" layoutY="876.0" onAction="#pwSaveOnAction" prefHeight="69.0" prefWidth="443.0" styleClass="button-with-style" stylesheets="@../style/registerbutton.css" text="Save Password">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </JFXButton>
+      <TextField fx:id="uidTxt" layoutX="242.0" layoutY="462.0" prefHeight="55.0" prefWidth="435.0" stylesheets="@../style/textfield.css" />
+   </children>
+</AnchorPane>
