@@ -10,10 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.teaFactory.dto.CustomerDto;
+import lk.ijse.teaFactory.dao.customer.Impl.LoginDetailDAOImpl;
+import lk.ijse.teaFactory.dao.customer.LoginDetailsDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.LoginDetailsDto;
-import lk.ijse.teaFactory.model.LoginDetailModel;
 import lk.ijse.teaFactory.model.RegisterModel;
 
 
@@ -44,6 +44,8 @@ public class LoginPageController{
     private TextField usernameTxt;
      private RegisterModel registerModel = new RegisterModel();
      private ErrorAnimation errorAnimation = new ErrorAnimation();
+
+     private LoginDetailsDAO logdetail = new LoginDetailDAOImpl();
 
     @FXML
     void keyOnAction(KeyEvent event) throws IOException {
@@ -82,19 +84,20 @@ public class LoginPageController{
                 }
             } catch (SQLException | IOException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
-    public void loginDetail(String inTime, Date date, String uid) throws SQLException {
+    public void loginDetail(String inTime, Date date, String uid) throws SQLException, ClassNotFoundException {
 
-        LoginDetailModel model = new LoginDetailModel();
         String userid = uid;
         String intime = inTime;
         Date loginDate = date;
 
         var dto = new LoginDetailsDto(userid,intime,loginDate);
-        boolean isSaved = model.logdetail(dto);
+        boolean isSaved = logdetail.logdetail(dto);
 
         if (isSaved){
             System.out.println("saved");

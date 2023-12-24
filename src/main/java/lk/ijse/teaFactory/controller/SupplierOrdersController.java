@@ -9,6 +9,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.Impl.SupOrderDAOImpl;
+import lk.ijse.teaFactory.dao.customer.Impl.SupplierDAOImpl;
+import lk.ijse.teaFactory.dao.customer.SupOrdersDAO;
+import lk.ijse.teaFactory.dao.customer.SupplierDAO;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.SupOrderTm;
@@ -69,6 +73,8 @@ public class SupplierOrdersController {
 
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
+    SupplierDAO supplierDAO= new SupplierDAOImpl();
+    SupOrdersDAO supOrdersDAO = new SupOrderDAOImpl();
 
     @FXML
     void addOnAction(ActionEvent event) {
@@ -84,13 +90,11 @@ public class SupplierOrdersController {
             double total = weigthValue * paymentValue;
 
             var dto = new SupOrderDto(id, sId, date, weigth, total);
-            var model = new SupOrderModel();
-
             boolean isValidated = validate();
 
             if (isValidated) {
                 try {
-                    boolean isSaved = model.SupOrderSaved(dto);
+                    boolean isSaved = supOrdersDAO.save(dto);
                     if (isSaved) {
                         printCustomer();
                          notifi.showNotification("Saved");
@@ -136,11 +140,10 @@ public class SupplierOrdersController {
     }
 
     public void loadAll(){
-        var model = new SupOrderModel();
         ObservableList<SupOrderTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<SupOrderDto> dtoList = model.loadAll();
+            List<SupOrderDto> dtoList = supOrdersDAO.getAll();
 
             for(SupOrderDto dto : dtoList) {
 
@@ -187,11 +190,13 @@ public class SupplierOrdersController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = SupOrderModel.deleteItem(id);
+            boolean isDeleted = supOrdersDAO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Delete");
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -230,10 +235,8 @@ public class SupplierOrdersController {
         int payment = Integer.parseInt(paymentTxt.getText());
 
         var dto = new SupOrderDto(id,sId,date,weigth,payment);
-        var model = new SupOrderModel();
-
         try {
-            boolean isUpdated = model.update(dto);
+            boolean isUpdated = supOrdersDAO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notifi.showNotification("Update");
@@ -242,6 +245,8 @@ public class SupplierOrdersController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -270,9 +275,11 @@ public class SupplierOrdersController {
 
     private void generateNextId() {
         try {
-            String orderId = SupOrderModel.generateNextOrderId();
+            String orderId = supOrdersDAO.generateID();
             sOidTxt.setText(orderId);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -280,7 +287,7 @@ public class SupplierOrdersController {
     private void loadSupId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<SupplierDto> empList = SupplierModel.loadAllItems();
+            List<SupplierDto> empList = supplierDAO.getAll();
 
             for (SupplierDto empDto : empList) {
                 obList.add(empDto.getId());
@@ -289,6 +296,8 @@ public class SupplierOrdersController {
             sIdTxt.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -296,10 +305,8 @@ public class SupplierOrdersController {
     void searchOnAction(ActionEvent event) {
 
         String id = sOidTxt.getText();
-
-        var model = new SupOrderModel();
         try {
-            SupOrderDto supOrderDto = model.searchSuppli(id);
+            SupOrderDto supOrderDto = supOrdersDAO.search(id);
 
             if (supOrderDto != null) {
                 sOidTxt.setText(supOrderDto.getId());
@@ -312,6 +319,8 @@ public class SupplierOrdersController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

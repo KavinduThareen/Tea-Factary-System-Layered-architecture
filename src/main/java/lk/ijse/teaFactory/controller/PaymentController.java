@@ -12,10 +12,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
+import lk.ijse.teaFactory.dao.customer.Impl.SalaryDAOImpl;
+import lk.ijse.teaFactory.dao.customer.SalaryDAO;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.SalaryTm;
-import lk.ijse.teaFactory.model.SalaryModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -65,6 +66,7 @@ public class PaymentController {
 
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
+    SalaryDAO salaryDAO = new SalaryDAOImpl();
 
     @FXML
     void addOnAction(ActionEvent event) {
@@ -74,16 +76,12 @@ public class PaymentController {
         int count = Integer.parseInt(countTxt.getText());
         String payment = String.valueOf(count * 30);
 
-
-
         var dto = new SalaryDto(id,empId,date,payment);
-
-        var model = new SalaryModel();
         boolean isValidated = validate();
 
         if (isValidated) {
             try {
-                boolean isSaved = model.salarySaved(dto);
+                boolean isSaved = salaryDAO.save(dto);
                 if (isSaved) {
                    notifi.showNotification("Saved");
                     loadAllEmployees();
@@ -128,10 +126,8 @@ public class PaymentController {
 
 
         var dto = new SalaryDto(id,empId,date,count);
-
-        var model = new SalaryModel();
         try {
-            boolean isUpdated = model.updateSalary(dto);
+            boolean isUpdated = salaryDAO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notifi.showNotification("Update");
@@ -141,6 +137,8 @@ public class PaymentController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -153,12 +151,10 @@ public class PaymentController {
     }
 
     public void loadAllEmployees(){
-        var model =new SalaryModel();
-
         ObservableList<SalaryTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<SalaryDto> dtoList =model.getAllSalary();
+            List<SalaryDto> dtoList =salaryDAO.getAll();
             for (SalaryDto dto : dtoList){
 
 
@@ -200,6 +196,8 @@ public class PaymentController {
             tbl.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -216,11 +214,13 @@ public class PaymentController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = SalaryModel.deleteItem(id);
+            boolean isDeleted = salaryDAO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Delete");
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -244,9 +244,11 @@ public class PaymentController {
 
     private void generateNextPaymentId() {
         try {
-            String orderId = SalaryModel.generateNextOrderId();
+            String orderId = salaryDAO.generateID();
             idTxt.setText(orderId);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -263,10 +265,8 @@ public class PaymentController {
         if (event.getCode() == KeyCode.ENTER) {
 
             String id = idTxt.getText();
-
-            var model = new SalaryModel();
             try {
-                SalaryDto salaryDto = model.searchPayment(id);
+                SalaryDto salaryDto = salaryDAO.search(id);
                 if (salaryDto != null) {
                     idTxt.setText(salaryDto.getId());
                     empIdTxt.setValue(salaryDto.getEmpId());
@@ -278,6 +278,8 @@ public class PaymentController {
                 }
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }

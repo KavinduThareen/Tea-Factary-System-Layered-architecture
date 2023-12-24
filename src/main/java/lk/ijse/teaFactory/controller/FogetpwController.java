@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dto.OtpDto;
 import lk.ijse.teaFactory.gmail.Gmailer;
-import lk.ijse.teaFactory.model.LoginDetailModel;
 import lk.ijse.teaFactory.model.OtpModel;
 
 import java.io.IOException;

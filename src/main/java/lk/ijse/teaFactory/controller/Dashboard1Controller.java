@@ -10,8 +10,9 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 import lk.ijse.teaFactory.QrcodeReader.QrCodeScanner;
 import lk.ijse.teaFactory.dao.customer.CustomerDAO;
-import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
-import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
+import lk.ijse.teaFactory.dao.customer.Impl.*;
+import lk.ijse.teaFactory.dao.customer.LeaveStokeDAO;
+import lk.ijse.teaFactory.dao.customer.PacketDAO;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.model.*;
 import net.sf.jasperreports.engine.*;
@@ -59,6 +60,8 @@ public class Dashboard1Controller {
 
     private ExecutorService qrScannerExecutor;
     EmployeDAOImpl employeDAO = new EmployeDAOImpl();
+    LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
+    PacketDAO packetDAO = new PacketDAOImpl();
 
     @FXML
     public void initialize() throws SQLException, ClassNotFoundException {
@@ -120,8 +123,8 @@ public class Dashboard1Controller {
     }
 
     public void generatestokeCount() throws SQLException {
-        LeavesStokeModel leavesStokeModel = new LeavesStokeModel();
-        int a = leavesStokeModel.stokeCount();
+        int a = ((LeavesStokeDAOImpl) leaveStokeDAO).stokeCount();
+
 
         lblstokeCount.setText(String.valueOf(a));
 
@@ -136,8 +139,7 @@ public class Dashboard1Controller {
     }
 
     public void generatePacketstokeCount() throws SQLException {
-        PacketStokeModel packetStokeModel = new PacketStokeModel();
-        int a = packetStokeModel.stokeCount();
+        int a = ((PacketDAOImpl) packetDAO).stokeCount();
 
         lblPacket.setText(String.valueOf(a));
 

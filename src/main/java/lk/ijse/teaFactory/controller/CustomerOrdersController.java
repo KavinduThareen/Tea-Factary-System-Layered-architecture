@@ -11,11 +11,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
+import lk.ijse.teaFactory.dao.customer.PacketDAO;
+import lk.ijse.teaFactory.dao.customer.Impl.PacketDAOImpl;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.CartTm;
 import lk.ijse.teaFactory.model.CusOrderModel;
-import lk.ijse.teaFactory.model.PacketStokeModel;
 import lk.ijse.teaFactory.model.PlaseOrderModel;
 
 import net.sf.jasperreports.engine.*;
@@ -90,6 +91,7 @@ public class CustomerOrdersController {
 
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation noti = new NotificationAnimation();
+    PacketDAO packetDAO = new PacketDAOImpl();
 
   //  private CustomerModel customerModel = new CustomerModel();
   //  private PacketStokeModel packetStokeModel = new PacketStokeModel();
@@ -225,7 +227,7 @@ public class CustomerOrdersController {
     private void loadCatagary() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<PacketStokeDto> empList = PacketStokeModel.loadAllcatagary();
+            List<PacketStokeDto> empList = packetDAO.getAll();
 
             for (PacketStokeDto cusODto : empList) {
                 obList.add(cusODto.getCatagory());
@@ -233,19 +235,23 @@ public class CustomerOrdersController {
             catagaryTxt.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     private void loadItemCodes() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<PacketStokeDto> itemDtos = PacketStokeModel.loadAllItems();
+            List<PacketStokeDto> itemDtos = packetDAO.getAll();
 
             for (PacketStokeDto dto : itemDtos) {
                 obList.add(dto.getId());
             }
             itemIdTxt.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

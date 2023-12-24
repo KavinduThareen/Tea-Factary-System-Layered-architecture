@@ -7,15 +7,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.Impl.LeavesStokeDAOImpl;
+import lk.ijse.teaFactory.dao.customer.PacketDAO;
+import lk.ijse.teaFactory.dao.customer.Impl.PacketDAOImpl;
+import lk.ijse.teaFactory.dao.customer.LeaveStokeDAO;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.CompleteTm;
-import lk.ijse.teaFactory.dto.tm.PacketStokeTm;
 import lk.ijse.teaFactory.model.*;
 
 import java.io.IOException;
@@ -63,11 +65,9 @@ public class PacketStokePageController {
 
     @FXML
     private JFXComboBox<String > leavesId;
-
-    LeavesStokeModel leavesStokeModel = new LeavesStokeModel();
-
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
+    PacketDAO packetDAO = new PacketDAOImpl();
 
     @FXML
     void addOnAction(ActionEvent event) {
@@ -81,11 +81,12 @@ public class PacketStokePageController {
         var model = new PacketStokeModel();
         boolean isValidated = validate();
         var stokemodel = new StokeDetailModel();
+        LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
 
         if (isValidated) {
             try {
-                boolean isSaved = model.packetStokeSaved(dto);
-                boolean drop = leavesStokeModel.drop(leavesStokeId,weigth);
+                boolean isSaved = packetDAO.save(dto);
+                boolean drop = ((LeavesStokeDAOImpl) leaveStokeDAO).drop(leavesStokeId,weigth);
                 boolean saved1 = stokemodel.detail(pid,leavesStokeId,date);
 
                 if (isSaved) {
@@ -94,6 +95,8 @@ public class PacketStokePageController {
                     clearFields();
                 }
             } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -129,9 +132,10 @@ public class PacketStokePageController {
     }
 
     private void loadLeavesId() {
+        LeavesStokeDAOImpl leavesStokeDAO = new LeavesStokeDAOImpl();
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<LeavesStokeDto> empList = LeavesStokeModel.loadAll();
+            List<LeavesStokeDto> empList = leavesStokeDAO.getAll();
 
             for (LeavesStokeDto leavesDto : empList) {
                 obList.add(leavesDto.getId());
@@ -139,6 +143,8 @@ public class PacketStokePageController {
 
             leavesId.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -152,10 +158,8 @@ public class PacketStokePageController {
         Date date = Date.valueOf(expirTxt.getValue());
 
         var dto = new PacketStokeDto(id,catagory,weigth,date);
-        var model = new PacketStokeModel();
-
         try {
-            boolean isUpdated = model.update(dto);
+            boolean isUpdated = packetDAO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notifi.showNotification("Update");
@@ -164,6 +168,8 @@ public class PacketStokePageController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -174,7 +180,7 @@ public class PacketStokePageController {
         ObservableList<CompleteTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<PacketStokeDto> dtoList = model.loadAll();
+            List<PacketStokeDto> dtoList = packetDAO.getAll();
             for (PacketStokeDto dto : dtoList){
 
                 JFXButton btnDelete = new JFXButton("Deleted");
@@ -230,26 +236,30 @@ public class PacketStokePageController {
     public void initialize() {
         setCellValueFactory();
         loadAll();
-        generateNextCusId();
+        generateNextId();
         loadLeavesId();
     }
 
-    private void generateNextCusId() {
+    private void generateNextId() {
         try {
-            String orderId = PacketStokeModel.generateNextOrderId();
+            String orderId = packetDAO.generateID();
             idTxt.setText(orderId);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = PacketStokeModel.delete(id);
+            boolean isDeleted = packetDAO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Delete");
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -265,9 +275,8 @@ public class PacketStokePageController {
         if (event.getCode() == KeyCode.ENTER) {
             String id = idTxt.getText();
 
-            var model = new PacketStokeModel();
             try {
-                PacketStokeDto packetStokeDto = model.searchCustomer(id);
+                PacketStokeDto packetStokeDto = packetDAO.search(id);
 
                 if (packetStokeDto != null) {
                     idTxt.setText(packetStokeDto.getId());
@@ -280,6 +289,8 @@ public class PacketStokePageController {
                 }
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }

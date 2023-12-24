@@ -11,6 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.Impl.LeavesStokeDAOImpl;
+import lk.ijse.teaFactory.dao.customer.Impl.SupOrderDAOImpl;
+import lk.ijse.teaFactory.dao.customer.LeaveStokeDAO;
+import lk.ijse.teaFactory.dao.customer.SupOrdersDAO;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.LeaveStokeTm;
 import lk.ijse.teaFactory.model.*;
@@ -57,9 +61,11 @@ public class LevesStokePageController {
 
     @FXML
     private ComboBox<String > supplingidTxt;
+    LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
 
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
+    SupOrdersDAO supOrdersDAO = new SupOrderDAOImpl();
 
     @FXML
     private TableView<LeaveStokeTm> table;
@@ -75,14 +81,12 @@ public class LevesStokePageController {
 
         var supliDetail = new SupplingDetailModel();
         var dto = new LeavesStokeDto(id,weigth,sDate,eDate);
-        var model = new LeavesStokeModel();
-        var model2 = new SupOrderModel();
         boolean isValidated = validate();
 
         if (isValidated) {
             try {
-                boolean isSaved = model.addLeavesStoke(dto);
-                boolean isSaved2 = model2.dropid(sid,weigth);
+                boolean isSaved = leaveStokeDAO.save(dto);
+                boolean isSaved2 =supOrdersDAO.dropid(sid,weigth);
 
                 boolean a = supliDetail.detail(sid,id,sDate);
 
@@ -92,6 +96,8 @@ public class LevesStokePageController {
                     clearFields();
                 }
             } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -122,7 +128,7 @@ public class LevesStokePageController {
     private void loadSupplingId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<SupOrderDto> supList = SupOrderModel.loadAllItems();
+            List<SupOrderDto> supList = supOrdersDAO.getAll();
 
             for (SupOrderDto supDto : supList) {
                 obList.add(supDto.getId());
@@ -130,15 +136,16 @@ public class LevesStokePageController {
             supplingidTxt.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+
         }
     }
 
     public void loadAll(){
-        var model = new LeavesStokeModel();
         ObservableList<LeaveStokeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<LeavesStokeDto> dtoList = model.loadAll();
+            List<LeavesStokeDto> dtoList = leaveStokeDAO.getAll();
             for (LeavesStokeDto dto : dtoList){
 
                 JFXButton btnDelete = new JFXButton("Deleted");
@@ -182,11 +189,13 @@ public class LevesStokePageController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = LeavesStokeModel.delete(id);
+            boolean isDeleted = leaveStokeDAO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Deleted");
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -203,15 +212,17 @@ public class LevesStokePageController {
     public void initialize() {
         setCellValueFactory();
         loadAll();
-        generateNextCusId();
+        generateNextId();
         loadSupplingId();
     }
 
-    private void generateNextCusId() {
+    private void generateNextId() {
         try {
-            String orderId = LeavesStokeModel.generateNextLeavesId();
+            String orderId = leaveStokeDAO.generateID();
             idTxt.setText(orderId);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -233,10 +244,9 @@ public class LevesStokePageController {
         Date eDate = Date.valueOf(eDateTxt.getValue());
 
         var dto = new LeavesStokeDto(id,weigth,sDate,eDate);
-        var model = new LeavesStokeModel();
 
         try {
-            boolean isUpdated = model.update(dto);
+            boolean isUpdated = leaveStokeDAO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notifi.showNotification("update");
@@ -245,6 +255,8 @@ public class LevesStokePageController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -254,9 +266,8 @@ public class LevesStokePageController {
         if (event.getCode() == KeyCode.ENTER) {
             String id = idTxt.getText();
 
-            var model = new LeavesStokeModel();
             try {
-                LeavesStokeDto leavesStokeDto = model.searchCustomer(id);
+                LeavesStokeDto leavesStokeDto = leaveStokeDAO.search(id);
 
                 if (leavesStokeDto != null) {
                     idTxt.setText(leavesStokeDto.getId());
@@ -269,6 +280,8 @@ public class LevesStokePageController {
                 }
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }

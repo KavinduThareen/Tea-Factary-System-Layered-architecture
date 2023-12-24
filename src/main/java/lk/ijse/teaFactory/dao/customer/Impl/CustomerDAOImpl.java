@@ -48,14 +48,24 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public String generateID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT customer_id FROM customer ORDER BY  customer_id DESC LIMIT 1"   );
-        if (rst.next()) {
-            String id = rst.getString("customer_id");
-            int newCustomerId = Integer.parseInt(id.replace("C00-", "")) + 1;
-            return String.format("C%03d", newCustomerId);
-        } else {
-            return "C001";
+        ResultSet resultSet = SQLUtil.execute("SELECT customer_id FROM customer ORDER BY  customer_id DESC LIMIT 1"   );
+        String currentCusId = null;
+
+        if (resultSet.next()) {
+            currentCusId = resultSet.getString(1);
+            return splitOrderId(currentCusId);
         }
+        return splitOrderId(null);
+    }
+
+    private static String splitOrderId(String currentCusId) {    //O008
+        if (currentCusId != null) {
+            String[] split = currentCusId.split("C");
+            int id = Integer.parseInt(split[1]);    //008
+            id++;  //9
+            return "C00" + id;
+        }
+        return "C001";
     }
 
     @Override

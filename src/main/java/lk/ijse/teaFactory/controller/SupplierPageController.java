@@ -11,11 +11,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.Impl.SupplierDAOImpl;
+import lk.ijse.teaFactory.dao.customer.SupplierDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
 import lk.ijse.teaFactory.dto.SupplierDto;
 import lk.ijse.teaFactory.dto.tm.SupplierTm;
-import lk.ijse.teaFactory.model.SupplierModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -62,6 +63,8 @@ public class SupplierPageController {
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
 
+    SupplierDAO supplierDAO = new SupplierDAOImpl();
+
     @FXML
     void addSDetailOnAction(ActionEvent event) throws IOException {
         root.getChildren().clear();
@@ -77,12 +80,11 @@ public class SupplierPageController {
         String contac= Contac.getText();
 
         var dto = new SupplierDto(id,name,address,contac);
-        var model = new SupplierModel();
         boolean isValidated = validate();
 
         if (isValidated) {
             try {
-                boolean isSaved = model.supplierSaved(dto);
+                boolean isSaved = supplierDAO.save(dto);
                 if (isSaved) {
                      notifi.showNotification("Saved");
                     loadAll();
@@ -137,19 +139,20 @@ public class SupplierPageController {
 
     private void generateNextSupId() {
         try {
-            String orderId = SupplierModel.generateNextOrderId();
+            String orderId = supplierDAO.generateID();
             idTxt.setText(orderId);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void loadAll(){
-        var model =new SupplierModel();
 
         ObservableList<SupplierTm> obList = FXCollections.observableArrayList();
     try {
-        List<SupplierDto> dtoList = model.loadAll();
+        List<SupplierDto> dtoList = supplierDAO.getAll();
         for (SupplierDto dto : dtoList){
 
 
@@ -196,11 +199,13 @@ public class SupplierPageController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = SupplierModel.deleteItem(id);
+            boolean isDeleted = supplierDAO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Delete");
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -228,10 +233,9 @@ public class SupplierPageController {
         String contac= Contac.getText();
 
         var dto = new SupplierDto(id,name,address,contac);
-        var model = new SupplierModel();
 
         try {
-            boolean isUpdated = model.update(dto);
+            boolean isUpdated = supplierDAO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notifi.showNotification("Update");
@@ -240,6 +244,8 @@ public class SupplierPageController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -256,9 +262,8 @@ public class SupplierPageController {
         if (event.getCode() == KeyCode.ENTER) {
             String id = idTxt.getText();
 
-            var model = new SupplierModel();
             try {
-                SupplierDto supplierDto = model.searchCustomer(id);
+                SupplierDto supplierDto = supplierDAO.search(id);
                 if (supplierDto != null) {
                     idTxt.setText(supplierDto.getId());
                     nameTxt.setText(supplierDto.getName());
@@ -270,6 +275,8 @@ public class SupplierPageController {
                 }
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
     }
