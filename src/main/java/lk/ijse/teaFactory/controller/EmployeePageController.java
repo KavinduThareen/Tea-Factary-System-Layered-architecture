@@ -12,9 +12,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
+import lk.ijse.teaFactory.dao.customer.Impl.RegisterDAOImpl;
+import lk.ijse.teaFactory.dao.customer.RegisterDAO;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.EmployeeTm;
-import lk.ijse.teaFactory.model.RegisterModel;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -61,6 +62,7 @@ public class EmployeePageController {
     EmployeDAOImpl employeDAO = new EmployeDAOImpl();
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
+    RegisterDAO registerDAO = new RegisterDAOImpl();
 
     @FXML
     void updateOnAction(ActionEvent event) {
@@ -126,7 +128,7 @@ public class EmployeePageController {
     private void loadUserId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<RegisterDto> empList = RegisterModel.loadAllItems();
+            List<RegisterDto> empList = registerDAO.getAll();
 
             for (RegisterDto regDto : empList) {
                 obList.add(regDto.getUserid());
@@ -134,6 +136,8 @@ public class EmployeePageController {
 
             uidTxt.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

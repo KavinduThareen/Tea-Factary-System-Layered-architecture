@@ -1,25 +1,17 @@
 package lk.ijse.teaFactory.controller;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.css.Size;
-import javafx.css.SizeUnits;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
+import lk.ijse.teaFactory.dao.customer.Impl.RegisterDAOImpl;
+import lk.ijse.teaFactory.dao.customer.RegisterDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
 import lk.ijse.teaFactory.dto.RegisterDto;
-import lk.ijse.teaFactory.model.CusOrderModel;
-import lk.ijse.teaFactory.model.RegisterModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -53,6 +45,7 @@ public class RegisterPagecontroller {
 
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
+    RegisterDAO registerDAO = new RegisterDAOImpl();
 
     @FXML
     void createAccountBtnOnAction(ActionEvent event) {
@@ -66,13 +59,12 @@ public class RegisterPagecontroller {
 
             var dto = new RegisterDto(userid, username, contac, password);
 
-            var model = new RegisterModel();
         boolean isValidated = validate();
 
         if (isValidated) {
             if (password.equals(conPw)) {
                 try {
-                    boolean isSaved = model.registerUser(dto);
+                    boolean isSaved = registerDAO.save(dto);
                     if (isSaved) {
                         notifi.showNotification("You are registerd!");
 
@@ -85,6 +77,8 @@ public class RegisterPagecontroller {
                 } catch (SQLException e) {
                     new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
                 } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -146,9 +140,11 @@ public class RegisterPagecontroller {
 
     private void generateNextCusOrderId() {
         try {
-            String orderId = RegisterModel.generateNextUserId();
+            String orderId = registerDAO.generateID();
             useridTxt.setText(orderId);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

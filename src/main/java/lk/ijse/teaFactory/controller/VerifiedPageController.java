@@ -6,7 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.teaFactory.model.RegisterModel;
+import lk.ijse.teaFactory.dao.customer.Impl.RegisterDAOImpl;
+import lk.ijse.teaFactory.dao.customer.RegisterDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,6 +27,8 @@ public class VerifiedPageController {
     @FXML
     private TextField uidTxt;
 
+    RegisterDAO registerDAO = new RegisterDAOImpl();
+
     @FXML
     void pwSaveOnAction(ActionEvent event) {
         String id = uidTxt.getText();
@@ -34,7 +37,7 @@ public class VerifiedPageController {
 
         try {
             if (pw.equals(cfpw)) {
-                boolean isLogin = RegisterModel.updatepw(id, pw);
+                boolean isLogin = registerDAO.updatepw(id, pw);
                 if (isLogin) {
                     root.getChildren().clear();
                     root.getChildren().add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/login_page.fxml"))));
@@ -49,6 +52,8 @@ public class VerifiedPageController {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

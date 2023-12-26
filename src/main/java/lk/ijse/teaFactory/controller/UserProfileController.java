@@ -7,10 +7,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.Impl.RegisterDAOImpl;
+import lk.ijse.teaFactory.dao.customer.RegisterDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
 import lk.ijse.teaFactory.dto.RegisterDto;
-import lk.ijse.teaFactory.model.RegisterModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -41,6 +42,7 @@ public class UserProfileController{
 
     private ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
+    RegisterDAO registerDAO = new RegisterDAOImpl();
 
     @FXML
     void addnewaccOnAction(ActionEvent event) throws IOException, SQLException {
@@ -63,11 +65,13 @@ public class UserProfileController{
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = RegisterModel.delete(id);
+            boolean isDeleted = registerDAO.delete(id);
             if(isDeleted)
               notifi.showNotification("Delete");
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -85,9 +89,8 @@ public class UserProfileController{
 
         if (isValidated) {
             if (password.equals(comfimepw)) {
-                var model = new RegisterModel();
                 try {
-                    boolean isUpdated = model.updateuser(dto);
+                    boolean isUpdated = registerDAO.update(dto);
                     System.out.println(isUpdated);
                     if (isUpdated) {
                         notifi.showNotification("Update");
@@ -95,6 +98,8 @@ public class UserProfileController{
                     }
                 } catch (SQLException e) {
                     new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
                 }
             } else {
                 new Alert(Alert.AlertType.CONFIRMATION, "Wrong password").show();

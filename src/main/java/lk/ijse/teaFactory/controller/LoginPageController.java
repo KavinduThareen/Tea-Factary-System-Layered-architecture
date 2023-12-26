@@ -11,10 +11,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dao.customer.Impl.LoginDetailDAOImpl;
+import lk.ijse.teaFactory.dao.customer.Impl.RegisterDAOImpl;
 import lk.ijse.teaFactory.dao.customer.LoginDetailsDAO;
+import lk.ijse.teaFactory.dao.customer.RegisterDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.LoginDetailsDto;
-import lk.ijse.teaFactory.model.RegisterModel;
 
 
 import java.io.IOException;
@@ -42,10 +43,10 @@ public class LoginPageController{
 
     @FXML
     private TextField usernameTxt;
-     private RegisterModel registerModel = new RegisterModel();
      private ErrorAnimation errorAnimation = new ErrorAnimation();
 
      private LoginDetailsDAO logdetail = new LoginDetailDAOImpl();
+     RegisterDAO registerDAO = new RegisterDAOImpl();
 
     @FXML
     void keyOnAction(KeyEvent event) throws IOException {
@@ -67,7 +68,7 @@ public class LoginPageController{
 
         if (isValidated) {
             try {
-                boolean isLogin = RegisterModel.searchUser(username, password);
+                boolean isLogin = registerDAO.searchUser(username, password);
                 if (isLogin) {
                     loginroot.getChildren().clear();
                     loginroot.getChildren().add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/dashboard.fxml"))));
@@ -75,7 +76,7 @@ public class LoginPageController{
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
                     String inTime = ((LocalDateTime.now().format(formatter)));
                     Date date = Date.valueOf((LocalDate.now().toString()));
-                    String uid = registerModel.findUserIdByUsername(username);
+                    String uid = registerDAO.findUserIdByUsername(username);
 
                     loginDetail(inTime, date, uid);
 
@@ -83,7 +84,7 @@ public class LoginPageController{
                    new Alert(Alert.AlertType.WARNING, "Invalid Username Or Passowrd").show();
                 }
             } catch (SQLException | IOException e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+               //  new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }

@@ -1,5 +1,7 @@
 package lk.ijse.teaFactory.model;
 
+import lk.ijse.teaFactory.dao.customer.Impl.OrderDetailDAOImpl;
+import lk.ijse.teaFactory.dao.customer.OrderDetailDAO;
 import lk.ijse.teaFactory.dao.customer.PacketDAO;
 import lk.ijse.teaFactory.dao.customer.Impl.PacketDAOImpl;
 import lk.ijse.teaFactory.db.DbConnection;
@@ -14,6 +16,7 @@ public class PlaseOrderModel {
     private static PacketStokeModel packetStokeModel = new PacketStokeModel();
     private static OrderDetailModel orderDetailModel = new OrderDetailModel();
    private static PacketDAO packetDAO = new PacketDAOImpl();
+   private static OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
     public static boolean placeOrder(PaseOrderDto placeOrderDto) throws SQLException {
 
             String orderId = placeOrderDto.getid();
@@ -35,7 +38,7 @@ public class PlaseOrderModel {
                    boolean isUpdated = packetDAO.updateItem(placeOrderDto.getCartTmList());
 
                     if (isUpdated  ) {
-                       boolean isOrderDetailSaved = orderDetailModel.saveOrderDetails(placeOrderDto.getid(), placeOrderDto.getCartTmList());
+                       boolean isOrderDetailSaved = orderDetailDAO.saveOrderDetails(placeOrderDto.getid(), placeOrderDto.getCartTmList());
 
 
                         if (isOrderDetailSaved) {
@@ -44,6 +47,8 @@ public class PlaseOrderModel {
                     }
                 }
                 connection.rollback();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             } finally {
                 connection.setAutoCommit(true);
             }

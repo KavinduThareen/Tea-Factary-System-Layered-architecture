@@ -3,6 +3,7 @@ package lk.ijse.teaFactory.dao.customer.Impl;
 import lk.ijse.teaFactory.dao.SQLUtil;
 import lk.ijse.teaFactory.dao.customer.LeaveStokeDAO;
 import lk.ijse.teaFactory.db.DbConnection;
+import lk.ijse.teaFactory.dto.EmployeeDto;
 import lk.ijse.teaFactory.dto.LeavesStokeDto;
 
 import java.sql.*;

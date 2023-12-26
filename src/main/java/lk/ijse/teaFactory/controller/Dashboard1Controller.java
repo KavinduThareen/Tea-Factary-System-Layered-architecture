@@ -12,6 +12,7 @@ import lk.ijse.teaFactory.QrcodeReader.QrCodeScanner;
 import lk.ijse.teaFactory.dao.customer.CustomerDAO;
 import lk.ijse.teaFactory.dao.customer.Impl.*;
 import lk.ijse.teaFactory.dao.customer.LeaveStokeDAO;
+import lk.ijse.teaFactory.dao.customer.OrderDetailDAO;
 import lk.ijse.teaFactory.dao.customer.PacketDAO;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.model.*;
@@ -62,6 +63,7 @@ public class Dashboard1Controller {
     EmployeDAOImpl employeDAO = new EmployeDAOImpl();
     LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
     PacketDAO packetDAO = new PacketDAOImpl();
+    OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
 
     @FXML
     public void initialize() throws SQLException, ClassNotFoundException {
@@ -130,9 +132,9 @@ public class Dashboard1Controller {
 
     }
 
-    public void generateordersCount() throws SQLException {
+    public void generateordersCount() throws SQLException, ClassNotFoundException {
         OrderDetailModel orderDetailModel = new OrderDetailModel()          ;
-        int a = orderDetailModel.ordersCount();
+        int a = orderDetailDAO.ordersCount();
 
         lblPacketSalles.setText(String.valueOf(a));
 

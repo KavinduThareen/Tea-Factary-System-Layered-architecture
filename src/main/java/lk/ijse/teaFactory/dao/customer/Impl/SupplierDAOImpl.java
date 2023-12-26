@@ -7,11 +7,25 @@ import lk.ijse.teaFactory.dto.SupplierDto;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SupplierDAOImpl implements SupplierDAO {
     @Override
     public ArrayList<SupplierDto> getAll() throws SQLException, ClassNotFoundException {
-        return null;
+        ResultSet resultSet = SQLUtil.execute("SELECT * FROM supplier");
+        ArrayList<SupplierDto> dtoList = new ArrayList<>();
+
+        while (resultSet.next()) {
+            String id = resultSet.getString(1);
+            String name = resultSet.getString(2);
+            String address = resultSet.getString(3);
+            String contac = resultSet.getString(4);
+            //  String isCompleted = resultSet.getString(5);
+
+            var dto = new SupplierDto(id, name, address, contac);
+            dtoList.add(dto);
+        }
+        return dtoList;
     }
 
     @Override
