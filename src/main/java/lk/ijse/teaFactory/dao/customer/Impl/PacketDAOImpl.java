@@ -87,7 +87,7 @@ public class PacketDAOImpl implements PacketDAO {
     }
 
     @Override
-    public boolean updateItem(List<CartTm> cartTmList) throws SQLException {
+    public boolean updateItem(List<CartTm> cartTmList) throws SQLException, ClassNotFoundException {
         for(CartTm tm : cartTmList) {
             System.out.println("Item: " + tm);
             if(!updateQty(tm.getItemId(), String.valueOf(tm.getWeigth()))) {
@@ -96,17 +96,10 @@ public class PacketDAOImpl implements PacketDAO {
         }
         return true;
     }
+    public boolean updateQty(String code, String qty) throws SQLException, ClassNotFoundException {
+        int rowsAffected = SQLUtil.execute( "UPDATE packet_stoke SET s_weigth = s_weigth - ? WHERE packet_id = ?",code,qty);
 
-    public boolean updateQty(String code, String qty) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "UPDATE packet_stoke SET s_weigth = s_weigth - ? WHERE packet_id = ?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1, qty);
-        pstm.setString(2, code);
-
-        return pstm.executeUpdate() > 0; //false
+        return rowsAffected > 0; //false
     }
 
     public int stokeCount() throws SQLException {

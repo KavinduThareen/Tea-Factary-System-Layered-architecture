@@ -133,7 +133,6 @@ public class Dashboard1Controller {
     }
 
     public void generateordersCount() throws SQLException, ClassNotFoundException {
-        OrderDetailModel orderDetailModel = new OrderDetailModel()          ;
         int a = orderDetailDAO.ordersCount();
 
         lblPacketSalles.setText(String.valueOf(a));
@@ -151,15 +150,9 @@ public class Dashboard1Controller {
         EmpAttendensModel empAttendensModel = new EmpAttendensModel();
         int a = empAttendensModel.empAttendes();
 
-
         lblqrAttendent.setText(String.valueOf(a));
 
     }
-
-
-
-
-
     @FXML
     void leavesStokeRepoteOnAction(ActionEvent event) {
 

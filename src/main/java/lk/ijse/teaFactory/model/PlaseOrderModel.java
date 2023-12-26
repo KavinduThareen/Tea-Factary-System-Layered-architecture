@@ -13,8 +13,6 @@ import java.time.LocalDate;
 
 public class PlaseOrderModel {
     private static CusOrderModel cusModel = new CusOrderModel();
-    private static PacketStokeModel packetStokeModel = new PacketStokeModel();
-    private static OrderDetailModel orderDetailModel = new OrderDetailModel();
    private static PacketDAO packetDAO = new PacketDAOImpl();
    private static OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
     public static boolean placeOrder(PaseOrderDto placeOrderDto) throws SQLException {

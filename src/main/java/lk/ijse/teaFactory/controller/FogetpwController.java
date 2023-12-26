@@ -5,9 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.Impl.OtpDAOImpl;
+import lk.ijse.teaFactory.dao.customer.OtpDAO;
 import lk.ijse.teaFactory.dto.OtpDto;
 import lk.ijse.teaFactory.gmail.Gmailer;
-import lk.ijse.teaFactory.model.OtpModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -23,6 +24,8 @@ public class FogetpwController {
     private AnchorPane root;
     private String email;
     public int otp;
+
+    OtpDAO otpDAO = new OtpDAOImpl();
 
     private int otp2;
 
@@ -60,15 +63,14 @@ public class FogetpwController {
         }
     }
 
-    public int generateNewOtp() throws SQLException {
+    public int generateNewOtp() throws SQLException, ClassNotFoundException {
         do {
             Random random = new Random();
-            var model = new OtpModel();
             otp2 = random.nextInt(9999);
 
             if (otp2 > 1000){
                var otpDto = new OtpDto(otp2);
-               boolean a =  model.save(otpDto);
+               boolean a =  otpDAO.save(otpDto);
               //  System.out.println(otp2);
                 return otp2;
             }

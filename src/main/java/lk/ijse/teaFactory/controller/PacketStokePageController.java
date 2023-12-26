@@ -13,9 +13,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dao.customer.Impl.LeavesStokeDAOImpl;
+import lk.ijse.teaFactory.dao.customer.Impl.StokeDetailDAOImpl;
 import lk.ijse.teaFactory.dao.customer.PacketDAO;
 import lk.ijse.teaFactory.dao.customer.Impl.PacketDAOImpl;
 import lk.ijse.teaFactory.dao.customer.LeaveStokeDAO;
+import lk.ijse.teaFactory.dao.customer.StokeDetailDAO;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.CompleteTm;
 import lk.ijse.teaFactory.model.*;
@@ -68,6 +70,7 @@ public class PacketStokePageController {
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
     PacketDAO packetDAO = new PacketDAOImpl();
+    StokeDetailDAO stokeDetailDAO = new StokeDetailDAOImpl();
 
     @FXML
     void addOnAction(ActionEvent event) {
@@ -78,16 +81,14 @@ public class PacketStokePageController {
         String leavesStokeId = leavesId.getValue();
 
         var dto = new PacketStokeDto(pid,catagory,weigth,date);
-        var model = new PacketStokeModel();
         boolean isValidated = validate();
-        var stokemodel = new StokeDetailModel();
         LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
 
         if (isValidated) {
             try {
                 boolean isSaved = packetDAO.save(dto);
                 boolean drop = ((LeavesStokeDAOImpl) leaveStokeDAO).drop(leavesStokeId,weigth);
-                boolean saved1 = stokemodel.detail(pid,leavesStokeId,date);
+                boolean saved1 = stokeDetailDAO.detail(pid,leavesStokeId,date);
 
                 if (isSaved) {
                     notifi.showNotification("Saved");
@@ -171,12 +172,9 @@ public class PacketStokePageController {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public  void loadAll(){
-
-    var model = new PacketStokeModel();
         ObservableList<CompleteTm> obList = FXCollections.observableArrayList();
 
         try {

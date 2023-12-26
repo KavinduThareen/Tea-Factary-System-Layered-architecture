@@ -13,8 +13,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dao.customer.Impl.LeavesStokeDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.SupOrderDAOImpl;
+import lk.ijse.teaFactory.dao.customer.Impl.SupplingDetailDAOImpl;
 import lk.ijse.teaFactory.dao.customer.LeaveStokeDAO;
 import lk.ijse.teaFactory.dao.customer.SupOrdersDAO;
+import lk.ijse.teaFactory.dao.customer.SupplingDetailDAO;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.LeaveStokeTm;
 import lk.ijse.teaFactory.model.*;
@@ -66,6 +68,7 @@ public class LevesStokePageController {
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
     SupOrdersDAO supOrdersDAO = new SupOrderDAOImpl();
+    SupplingDetailDAO supplingDetailDAO = new SupplingDetailDAOImpl();
 
     @FXML
     private TableView<LeaveStokeTm> table;
@@ -79,7 +82,6 @@ public class LevesStokePageController {
         Date sDate = Date.valueOf(sDateTxt.getValue());
         Date eDate = Date.valueOf(eDateTxt.getValue());
 
-        var supliDetail = new SupplingDetailModel();
         var dto = new LeavesStokeDto(id,weigth,sDate,eDate);
         boolean isValidated = validate();
 
@@ -88,7 +90,7 @@ public class LevesStokePageController {
                 boolean isSaved = leaveStokeDAO.save(dto);
                 boolean isSaved2 =supOrdersDAO.dropid(sid,weigth);
 
-                boolean a = supliDetail.detail(sid,id,sDate);
+                boolean a = supplingDetailDAO.detail(sid,id,sDate);
 
                 if (isSaved && isSaved2) {
                         notifi.showNotification("saved");

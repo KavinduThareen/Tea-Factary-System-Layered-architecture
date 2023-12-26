@@ -8,5 +8,5 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface PacketDAO extends CrudDAO<PacketStokeDto> {
-    boolean updateItem(List<CartTm> cartTmList) throws SQLException;
+    boolean updateItem(List<CartTm> cartTmList) throws SQLException, ClassNotFoundException;
 }

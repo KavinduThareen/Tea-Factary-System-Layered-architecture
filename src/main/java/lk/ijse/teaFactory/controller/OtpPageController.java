@@ -10,7 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.teaFactory.model.OtpModel;
+import lk.ijse.teaFactory.dao.customer.Impl.OtpDAOImpl;
+import lk.ijse.teaFactory.dao.customer.OtpDAO;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,6 +39,8 @@ public class OtpPageController implements Initializable {
     @FXML
     private TextField otpField4Txt;
 
+    OtpDAO otpDAO = new OtpDAOImpl();
+
     FogetpwController fogetpwController = new FogetpwController();
 
     /*
@@ -50,10 +53,9 @@ public class OtpPageController implements Initializable {
     int otp=0;
 
     @FXML
-    void textOnAction(ActionEvent event) throws SQLException, IOException {
+    void textOnAction(ActionEvent event) throws SQLException, IOException, ClassNotFoundException {
 
-        var model = new OtpModel();
-        otp = model.load();
+        otp = otpDAO.load();
 
         boolean a = verifyOto(otp);
         if (a){
@@ -69,10 +71,12 @@ public class OtpPageController implements Initializable {
 
     private void delete(int otp) {
         try {
-            boolean isDeleted = OtpModel.delete(otp);
+            boolean isDeleted = otpDAO.delete(otp);
 
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
