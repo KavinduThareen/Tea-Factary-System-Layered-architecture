@@ -10,13 +10,14 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.customer.CusOrdersDAO;
+import lk.ijse.teaFactory.dao.customer.Impl.CusOrdersDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
 import lk.ijse.teaFactory.dao.customer.PacketDAO;
 import lk.ijse.teaFactory.dao.customer.Impl.PacketDAOImpl;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.CartTm;
-import lk.ijse.teaFactory.model.CusOrderModel;
 import lk.ijse.teaFactory.model.PlaseOrderModel;
 
 import net.sf.jasperreports.engine.*;
@@ -92,6 +93,7 @@ public class CustomerOrdersController {
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation noti = new NotificationAnimation();
     PacketDAO packetDAO = new PacketDAOImpl();
+    CusOrdersDAO cusOrdersDAO = new CusOrdersDAOImpl();
 
   //  private CustomerModel customerModel = new CustomerModel();
   //  private PacketStokeModel packetStokeModel = new PacketStokeModel();
@@ -207,9 +209,11 @@ public class CustomerOrdersController {
 
     private void generateNextCusOrderId() {
         try {
-            String orderId = CusOrderModel.generateNextOrderId();
+            String orderId = cusOrdersDAO.generateID();
             idTxt.setText(orderId);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

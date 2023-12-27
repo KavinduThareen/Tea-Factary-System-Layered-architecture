@@ -97,9 +97,7 @@ public class PacketDAOImpl implements PacketDAO {
         return true;
     }
     public boolean updateQty(String code, String qty) throws SQLException, ClassNotFoundException {
-        int rowsAffected = SQLUtil.execute( "UPDATE packet_stoke SET s_weigth = s_weigth - ? WHERE packet_id = ?",code,qty);
-
-        return rowsAffected > 0; //false
+     return  SQLUtil.execute( "UPDATE packet_stoke SET s_weigth = s_weigth - ? WHERE packet_id = ?",code,qty);
     }
 
     public int stokeCount() throws SQLException {

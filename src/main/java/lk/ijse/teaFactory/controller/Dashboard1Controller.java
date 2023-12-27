@@ -9,11 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import lk.ijse.teaFactory.QrcodeReader.QrCodeScanner;
-import lk.ijse.teaFactory.dao.customer.CustomerDAO;
+import lk.ijse.teaFactory.dao.customer.*;
 import lk.ijse.teaFactory.dao.customer.Impl.*;
-import lk.ijse.teaFactory.dao.customer.LeaveStokeDAO;
-import lk.ijse.teaFactory.dao.customer.OrderDetailDAO;
-import lk.ijse.teaFactory.dao.customer.PacketDAO;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.model.*;
 import net.sf.jasperreports.engine.*;
@@ -64,7 +61,7 @@ public class Dashboard1Controller {
     LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
     PacketDAO packetDAO = new PacketDAOImpl();
     OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
-
+    CusOrdersDAO cusOrdersDAO = new CusOrdersDAOImpl();
     @FXML
     public void initialize() throws SQLException, ClassNotFoundException {
         // Call the method to start updating the time
@@ -111,8 +108,7 @@ public class Dashboard1Controller {
 
 
    public void generateOrderCount() throws SQLException {
-      CusOrderModel order = new CusOrderModel();
-       int a = order.cusCount();
+       int a = cusOrdersDAO.cusCount();
         lblordersTxt.setText(String.valueOf(a));
    }
 
