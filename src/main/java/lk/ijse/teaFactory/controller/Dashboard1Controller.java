@@ -120,7 +120,7 @@ public class Dashboard1Controller {
 
     }
 
-    public void generatestokeCount() throws SQLException {
+    public void generatestokeCount() throws SQLException, ClassNotFoundException {
         int a = ((LeavesStokeDAOImpl) leaveStokeDAO).stokeCount();
 
 
@@ -135,7 +135,7 @@ public class Dashboard1Controller {
 
     }
 
-    public void generatePacketstokeCount() throws SQLException {
+    public void generatePacketstokeCount() throws SQLException, ClassNotFoundException {
         int a = ((PacketDAOImpl) packetDAO).stokeCount();
 
         lblPacket.setText(String.valueOf(a));

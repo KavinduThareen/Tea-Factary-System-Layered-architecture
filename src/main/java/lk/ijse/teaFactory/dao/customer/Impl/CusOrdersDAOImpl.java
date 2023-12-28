@@ -14,26 +14,6 @@ import java.util.ArrayList;
 
 public class CusOrdersDAOImpl implements CusOrdersDAO {
     @Override
-    public ArrayList<CusOrderDto> getAll() throws SQLException, ClassNotFoundException {
-        return null;
-    }
-
-    @Override
-    public boolean save(CusOrderDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("INSERT INTO orders VALUES(?, ?, ?, ?, ?,?,?)",dto.getId(),dto.getCId(),dto.getCatagary(),dto.getWeigth(),dto.getDate(),dto.getDescreption(),dto.getPayment());
-    }
-
-    @Override
-    public boolean update(CusOrderDto dto) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
-    public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
     public String generateID() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1");
 
@@ -54,11 +34,6 @@ public class CusOrdersDAOImpl implements CusOrdersDAO {
             return "O00" + id;
         }
         return "O001";
-    }
-
-    @Override
-    public CusOrderDto search(String id) throws SQLException, ClassNotFoundException {
-        return null;
     }
 
     @Override

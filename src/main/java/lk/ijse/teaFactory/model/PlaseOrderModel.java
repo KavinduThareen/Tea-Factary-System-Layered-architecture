@@ -33,9 +33,9 @@ public class PlaseOrderModel {
                 connection = DbConnection.getInstance().getConnection();
                 connection.setAutoCommit(false);
 
-                var dto1 = new CusOrderDto(orderId,customerId,category,weight,date,description, String.valueOf(payment));
-              //  boolean isOrderSaved = cusOrdersDAO.saveOrder(orderId,customerId,category,weight,date,description, String.valueOf(payment));
-                boolean isOrderSaved = cusOrdersDAO.save(dto1);
+              //  var dto1 = new CusOrderDto(orderId,customerId,category,weight,date,description, String.valueOf(payment));
+                boolean isOrderSaved = cusOrdersDAO.saveOrder(orderId,customerId,category,weight,date,description, String.valueOf(payment));
+              //  boolean isOrderSaved = cusOrdersDAO.save(dto1);
                 if (isOrderSaved) {
                  //   boolean isUpdated = packetStokeModel.updateItem(placeOrderDto.getCartTmList());
                    boolean isUpdated = packetDAO.updateItem(placeOrderDto.getCartTmList());

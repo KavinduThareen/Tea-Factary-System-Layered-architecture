@@ -15,8 +15,8 @@ public class CusOrderDto {
     private String cId;
     private String catagary;
     private double weigth;
-    private LocalDate date;
+    private String date;
     private String descreption;
-    private String  payment;
+    private double payment;
  //   private String isCompleted;
 }

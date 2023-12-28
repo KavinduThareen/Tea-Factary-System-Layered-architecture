@@ -96,24 +96,25 @@ public class PacketDAOImpl implements PacketDAO {
         }
         return true;
     }
+
     public boolean updateQty(String code, String qty) throws SQLException, ClassNotFoundException {
-     return  SQLUtil.execute( "UPDATE packet_stoke SET s_weigth = s_weigth - ? WHERE packet_id = ?",code,qty);
+        return SQLUtil.execute("UPDATE packet_stoke SET s_weigth = s_weigth - ? WHERE packet_id = ?",qty,code);
     }
 
-    public int stokeCount() throws SQLException {
+    public int stokeCount() throws SQLException, ClassNotFoundException {
         int rowCount = 0;
-        Connection connection = DbConnection.getInstance().getConnection();
+     //   Connection connection = DbConnection.getInstance().getConnection();
 
-        String sql = "SELECT SUM(s_weigth) AS total_weight FROM packet_stoke";
+     //   String sql = "SELECT SUM(s_weigth) AS total_weight FROM packet_stoke";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+      //  try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = SQLUtil.execute("SELECT SUM(s_weigth) AS total_weight FROM packet_stoke");
 
             if (resultSet.next()) {
                 rowCount = resultSet.getInt("total_weight");
                 System.out.println("Number of rows: " + rowCount);
             }
-        }
+
         return rowCount;
     }
 

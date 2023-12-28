@@ -99,20 +99,22 @@ public class LeavesStokeDAOImpl implements LeaveStokeDAO {
         return pstm.executeUpdate() > 0;
     }
 
-    public int stokeCount() throws SQLException {
+    public int stokeCount() throws SQLException, ClassNotFoundException {
         int rowCount = 0;
-        Connection connection = DbConnection.getInstance().getConnection();
+      /*  Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "SELECT SUM(l_weigth) AS total_weight FROM leaves_stoke";
 
         try (PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+
+       */
+             ResultSet resultSet = SQLUtil.execute("SELECT SUM(l_weigth) AS total_weight FROM leaves_stoke");
 
             if (resultSet.next()) {
                 rowCount = resultSet.getInt("total_weight");
                 System.out.println("Number of rows: " + rowCount);
             }
-        }
+
         return rowCount;
     }
 
