@@ -1,5 +1,6 @@
 package lk.ijse.teaFactory.dao.customer.Impl;
 
+import lk.ijse.teaFactory.Entity.Customer;
 import lk.ijse.teaFactory.dao.SQLUtil;
 import lk.ijse.teaFactory.dao.customer.CustomerDAO;
 import lk.ijse.teaFactory.dto.CustomerDto;
@@ -12,9 +13,9 @@ import java.util.List;
 public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
-    public ArrayList<CustomerDto> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Customer> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM Customer");
-        ArrayList<CustomerDto> allCustomer = new ArrayList<>();
+        ArrayList<Customer> allCustomer = new ArrayList<>();
 
         while (resultSet.next()) {
             String cusid = resultSet.getString(1);
@@ -24,21 +25,21 @@ public class CustomerDAOImpl implements CustomerDAO {
             String contac = resultSet.getString(5);
             // String isCompleted = resultSet.getString(6);
 
-            var dto = new CustomerDto(cusid,empId,cusname,cusaddress,contac);
-            allCustomer.add(dto);
+            Customer entity = new Customer(cusid,empId,cusname,cusaddress,contac);
+            allCustomer.add(entity);
         }
         return allCustomer;
 
     }
 
     @Override
-    public boolean save(CustomerDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("INSERT INTO customer VALUES(?, ?, ?, ?, ?)",dto.getCusid(),dto.getEmpid(),dto.getCusname(),dto.getCusAddress(),dto.getCusCantac());
+    public boolean save(Customer entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("INSERT INTO customer VALUES(?, ?, ?, ?, ?)",entity.getCusid(),entity.getEmpid(),entity.getCusname(),entity.getCusAddress(),entity.getCusCantac());
     }
 
     @Override
-    public boolean update(CustomerDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("UPDATE customer SET emp_id = ?, cus_name = ?, cus_address = ? ,cus_cantac = ?  WHERE customer_id = ?",dto.getCusid(),dto.getEmpid(),dto.getCusname(),dto.getCusAddress(),dto.getCusCantac());
+    public boolean update(Customer entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("UPDATE customer SET emp_id = ?, cus_name = ?, cus_address = ? ,cus_cantac = ?  WHERE customer_id = ?",entity.getCusid(),entity.getEmpid(),entity.getCusname(),entity.getCusAddress(),entity.getCusCantac());
     }
 
     @Override
@@ -69,11 +70,11 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public CustomerDto search(String id) throws SQLException, ClassNotFoundException {
+    public Customer search(String id) throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM customer WHERE customer_id = ?",id);
 
-        CustomerDto dto = null;
+        Customer dto = null;
 
         if(resultSet.next()) {
             String cus_id = resultSet.getString(1);
@@ -81,7 +82,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             String name = resultSet.getString(3);
             String address = resultSet.getString(4);
             String cantac = resultSet.getString(5);
-            dto = new CustomerDto(cus_id, empid, name , address,cantac);
+            dto = new Customer(cus_id, empid, name , address,cantac);
         }
         return dto;
     }
