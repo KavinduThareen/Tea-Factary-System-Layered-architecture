@@ -1,5 +1,6 @@
 package lk.ijse.teaFactory.dao.customer.Impl;
 
+import lk.ijse.teaFactory.Entity.LeavesStoke;
 import lk.ijse.teaFactory.dao.SQLUtil;
 import lk.ijse.teaFactory.dao.customer.LeaveStokeDAO;
 import lk.ijse.teaFactory.db.DbConnection;
@@ -12,10 +13,10 @@ import java.util.List;
 
 public class LeavesStokeDAOImpl implements LeaveStokeDAO {
     @Override
-    public ArrayList<LeavesStokeDto> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<LeavesStoke> getAll() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM leaves_stoke");
-        ArrayList<LeavesStokeDto> dtoList = new ArrayList<>();
+        ArrayList<LeavesStoke> dtoList = new ArrayList<>();
 
         while (resultSet.next()){
             String id = resultSet.getString(1);
@@ -24,21 +25,21 @@ public class LeavesStokeDAOImpl implements LeaveStokeDAO {
             Date eDate = resultSet.getDate(4);
             //   String isCompleted = resultSet.getString(5);
 
-            var dto = new LeavesStokeDto(id,weigth,sDate,eDate);
-            dtoList.add(dto);
+            var entity = new LeavesStoke(id,weigth,sDate,eDate);
+            dtoList.add(entity);
         }
 
         return dtoList;
     }
 
     @Override
-    public boolean save(LeavesStokeDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("INSERT INTO leaves_stoke VALUES(?, ?, ?, ?)",dto.getId(),dto.getWeigth(),dto.getSDate(),dto.getEDate());
+    public boolean save(LeavesStoke entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("INSERT INTO leaves_stoke VALUES(?, ?, ?, ?)",entity.getId(),entity.getWeigth(),entity.getSDate(),entity.getEDate());
     }
 
     @Override
-    public boolean update(LeavesStokeDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("UPDATE leaves_stoke SET l_weigth = ?, l_suppli_date = ?, l_s_expiredate = ? WHERE leaves_s_id = ?",dto.getWeigth(),dto.getSDate(),dto.getEDate(),dto.getId());
+    public boolean update(LeavesStoke entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("UPDATE leaves_stoke SET l_weigth = ?, l_suppli_date = ?, l_s_expiredate = ? WHERE leaves_s_id = ?",entity.getWeigth(),entity.getSDate(),entity.getEDate(),entity.getId());
     }
 
     @Override
@@ -69,23 +70,19 @@ public class LeavesStokeDAOImpl implements LeaveStokeDAO {
         return "L001";
     }
 
-
     @Override
-    public LeavesStokeDto search(String id) throws SQLException, ClassNotFoundException {
+    public LeavesStoke search(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM leaves_stoke WHERE leaves_s_id = ?",id);
-
-        LeavesStokeDto dto = null;
-
+        LeavesStoke entity = null;
         if(resultSet.next()) {
             String lid = resultSet.getString(1);
             String weigth = resultSet.getString(2);
             Date sdate = resultSet.getDate(3);
             Date edate = resultSet.getDate(4);
             //   String complete = resultSet.getString(5);
-
-            dto = new LeavesStokeDto(lid,weigth,sdate,edate);
+            entity = new LeavesStoke(lid,weigth,sdate,edate);
         }
-        return dto;
+        return entity;
     }
 
     public  boolean drop(String id, String weigth) throws SQLException {
@@ -101,20 +98,11 @@ public class LeavesStokeDAOImpl implements LeaveStokeDAO {
 
     public int stokeCount() throws SQLException, ClassNotFoundException {
         int rowCount = 0;
-      /*  Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "SELECT SUM(l_weigth) AS total_weight FROM leaves_stoke";
-
-        try (PreparedStatement statement = connection.prepareStatement(sql);
-
-       */
              ResultSet resultSet = SQLUtil.execute("SELECT SUM(l_weigth) AS total_weight FROM leaves_stoke");
-
             if (resultSet.next()) {
                 rowCount = resultSet.getInt("total_weight");
                 System.out.println("Number of rows: " + rowCount);
             }
-
         return rowCount;
     }
 

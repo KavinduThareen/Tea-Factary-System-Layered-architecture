@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.Supplier;
 import lk.ijse.teaFactory.dao.customer.Impl.SupplierDAOImpl;
 import lk.ijse.teaFactory.dao.customer.SupplierDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
@@ -79,12 +80,12 @@ public class SupplierPageController {
         String address = Address.getText();
         String contac= Contac.getText();
 
-        var dto = new SupplierDto(id,name,address,contac);
+        var entity = new Supplier(id,name,address,contac);
         boolean isValidated = validate();
 
         if (isValidated) {
             try {
-                boolean isSaved = supplierDAO.save(dto);
+                boolean isSaved = supplierDAO.save(entity);
                 if (isSaved) {
                      notifi.showNotification("Saved");
                     loadAll();
@@ -152,8 +153,8 @@ public class SupplierPageController {
 
         ObservableList<SupplierTm> obList = FXCollections.observableArrayList();
     try {
-        List<SupplierDto> dtoList = supplierDAO.getAll();
-        for (SupplierDto dto : dtoList){
+        List<Supplier> dtoList = supplierDAO.getAll();
+        for (Supplier dto : dtoList){
 
 
             JFXButton btnDelete = new JFXButton("Deleted");
@@ -232,7 +233,7 @@ public class SupplierPageController {
         String address = Address.getText();
         String contac= Contac.getText();
 
-        var dto = new SupplierDto(id,name,address,contac);
+        var dto = new Supplier(id,name,address,contac);
 
         try {
             boolean isUpdated = supplierDAO.update(dto);
@@ -263,12 +264,12 @@ public class SupplierPageController {
             String id = idTxt.getText();
 
             try {
-                SupplierDto supplierDto = supplierDAO.search(id);
-                if (supplierDto != null) {
-                    idTxt.setText(supplierDto.getId());
-                    nameTxt.setText(supplierDto.getName());
-                    Address.setText(supplierDto.getAddress());
-                    Contac.setText(supplierDto.getContac());
+                Supplier supplier = supplierDAO.search(id);
+                if (supplier != null) {
+                    idTxt.setText(supplier.getId());
+                    nameTxt.setText(supplier.getName());
+                    Address.setText(supplier.getAddress());
+                    Contac.setText(supplier.getContac());
 
                 } else {
                     notifi.showNotification("Supplier not found");

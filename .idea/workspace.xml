@@ -6,12 +6,25 @@
   <component name="ChangeListManager">
     <list default="true" id="a9d40562-1598-46ef-b631-583a8e64a67b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/Dashboard1Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/Dashboard1Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/CusOrdersDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/CusOrdersDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/CusOrdersDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/CusOrdersDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/SupplierPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/SupplierPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/DAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/DAOFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/EmployeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/EmployeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/EmployeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/EmployeDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/EmployeeAttendensDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/EmployeeAttendensDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/LeavesStokeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/LeavesStokeDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/OtpDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/OtpDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/PacketDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/PacketDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dto/CusOrderDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dto/CusOrderDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/model/PlaseOrderModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/model/PlaseOrderModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/RegisterDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/RegisterDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/SalaryDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/SalaryDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/SupOrderDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/SupOrderDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/SupplierDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/Impl/SupplierDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/LeaveStokeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/LeaveStokeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/OtpDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/OtpDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/PacketDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/PacketDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/RegisterDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/RegisterDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/SalaryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/SalaryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/SupOrdersDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/SupOrdersDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/SupplierDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/customer/SupplierDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +34,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -119,7 +132,8 @@
       <workItem from="1703663683659" duration="2221000" />
       <workItem from="1703670752253" duration="230000" />
       <workItem from="1703679722206" duration="7191000" />
-      <workItem from="1703780831734" duration="3129000" />
+      <workItem from="1703780831734" duration="4799000" />
+      <workItem from="1703870326623" duration="2717000" />
     </task>
     <task id="LOCAL-00001" summary="new commit">
       <option name="closed" value="true" />
@@ -169,7 +183,23 @@
       <option name="project" value="LOCAL" />
       <updated>1703685585629</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="new commit">
+      <option name="closed" value="true" />
+      <created>1703784167869</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1703784167869</updated>
+    </task>
+    <task id="LOCAL-00008" summary="new commit">
+      <option name="closed" value="true" />
+      <created>1703785611930</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1703785611930</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

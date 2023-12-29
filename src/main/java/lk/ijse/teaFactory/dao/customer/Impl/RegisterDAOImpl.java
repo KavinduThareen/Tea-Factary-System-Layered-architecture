@@ -1,5 +1,6 @@
 package lk.ijse.teaFactory.dao.customer.Impl;
 
+import lk.ijse.teaFactory.Entity.Register;
 import lk.ijse.teaFactory.dao.SQLUtil;
 import lk.ijse.teaFactory.dao.customer.RegisterDAO;
 import lk.ijse.teaFactory.dto.RegisterDto;
@@ -8,38 +9,36 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 
 // not complited
 
 public class RegisterDAOImpl implements RegisterDAO {
     @Override
-    public ArrayList<RegisterDto> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Register> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM user");
 
-        ArrayList<RegisterDto> dtoList = new ArrayList<>();
+        ArrayList<Register> dtoList = new ArrayList<>();
 
         while (resultSet.next()) {
-            var dto = new RegisterDto(
+            var entity = new Register(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getString(4)
             );
-            dtoList.add(dto);
+            dtoList.add(entity);
         }
         return dtoList;
     }
 
     @Override
-    public boolean save(RegisterDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("INSERT INTO user VALUES(?, ?, ?, ?)",dto.getUserid(),dto.getUsername(),dto.getContac(),dto.getPassword());
+    public boolean save(Register entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("INSERT INTO user VALUES(?, ?, ?, ?)",entity.getUserid(),entity.getUsername(),entity.getContac(),entity.getPassword());
     }
 
     @Override
-    public boolean update(RegisterDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("UPDATE user SET username = ?, contac = ?, password = ?   WHERE userid = ?",dto.getUsername(),dto.getContac(),dto.getPassword(),dto.getUserid());
+    public boolean update(Register entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("UPDATE user SET username = ?, contac = ?, password = ?   WHERE userid = ?",entity.getUsername(),entity.getContac(),entity.getPassword(),entity.getUserid());
     }
 
     @Override
@@ -70,14 +69,13 @@ public class RegisterDAOImpl implements RegisterDAO {
     }
 
     @Override
-    public RegisterDto search(String id) throws SQLException, ClassNotFoundException {
+    public Register search(String id) throws SQLException, ClassNotFoundException {
        return null;
     }
 
     @Override
     public boolean searchUser(String username, String password) throws SQLException, ClassNotFoundException {
        ResultSet resultSet= SQLUtil.execute( "SELECT * FROM user WHERE username = ? AND password = ?",username,password);
-
         if (resultSet.next()) {
             return true;
         }
@@ -87,7 +85,6 @@ public class RegisterDAOImpl implements RegisterDAO {
     @Override
     public boolean updatepw(String id, String pw) throws SQLException, ClassNotFoundException {
         PreparedStatement pstm  = SQLUtil.execute( "UPDATE user SET password = ?  WHERE userid = ?");
-
         pstm.setString(1, pw);
         pstm.setString(2, id);
 
@@ -96,8 +93,6 @@ public class RegisterDAOImpl implements RegisterDAO {
 
     @Override
     public String findUserIdByUsername(String username) throws SQLException {
-
-
             try (ResultSet resultSet = SQLUtil.execute("SELECT userid FROM user WHERE username = ?",username)) {
                 if (resultSet.next()) {
                     return resultSet.getString("userid");

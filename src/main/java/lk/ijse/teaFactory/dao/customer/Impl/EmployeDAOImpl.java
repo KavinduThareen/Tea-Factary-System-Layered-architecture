@@ -1,5 +1,6 @@
 package lk.ijse.teaFactory.dao.customer.Impl;
 
+import lk.ijse.teaFactory.Entity.Employee;
 import lk.ijse.teaFactory.dao.CrudDAO;
 import lk.ijse.teaFactory.dao.SQLUtil;
 import lk.ijse.teaFactory.dao.customer.EmployeDAO;
@@ -13,9 +14,9 @@ import java.util.List;
 public class EmployeDAOImpl implements EmployeDAO {
 
     @Override
-    public ArrayList<EmployeeDto> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Employee> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM employee");
-        ArrayList<EmployeeDto> dtoList = new ArrayList<>();
+        ArrayList<Employee> dtoList = new ArrayList<>();
         while (resultSet.next()){
 
             String uId = resultSet.getString(1);
@@ -26,20 +27,20 @@ public class EmployeDAOImpl implements EmployeDAO {
             String empAddress = resultSet.getString(6);
             String empContac = resultSet.getString(7);
 
-            var dto = new EmployeeDto(uId,employeeId,empGender,empbd,employeeName,empAddress,empContac);
+            var dto = new Employee(uId,employeeId,empGender,empbd,employeeName,empAddress,empContac);
             dtoList.add(dto);
         }
         return dtoList;
     }
 
     @Override
-    public boolean save(EmployeeDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute( "INSERT INTO employee VALUES(?, ?, ?, ?,?,? ,?)",dto.getUId(),dto.getEmployeeId(),dto.getEmpGender(),dto.getEmpbd(),dto.getEmployeeName(),dto.getEmpAddress(),dto.getEmpContac());
+    public boolean save(Employee entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute( "INSERT INTO employee VALUES(?, ?, ?, ?,?,? ,?)",entity.getUId(),entity.getEmployeeId(),entity.getEmpGender(),entity.getEmpbd(),entity.getEmployeeName(),entity.getEmpAddress(),entity.getEmpContac());
     }
 
     @Override
-    public boolean update(EmployeeDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("UPDATE employee SET user_id = ?, emp_gender = ?, emp_bd = ?,employee_name = ?,address = ?,contac = ? WHERE employeeid = ?",dto.getUId(),dto.getEmpGender(),dto.getEmpbd(),dto.getEmployeeName(),dto.getEmpAddress(),dto.getEmpContac(),dto.getEmployeeId());
+    public boolean update(Employee entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("UPDATE employee SET user_id = ?, emp_gender = ?, emp_bd = ?,employee_name = ?,address = ?,contac = ? WHERE employeeid = ?",entity.getUId(),entity.getEmpGender(),entity.getEmpbd(),entity.getEmployeeName(),entity.getEmpAddress(),entity.getEmpContac(),entity.getEmployeeId());
     }
 
     @Override
@@ -70,10 +71,10 @@ public class EmployeDAOImpl implements EmployeDAO {
     }
 
     @Override
-    public EmployeeDto search(String id) throws SQLException, ClassNotFoundException {
+    public Employee search(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM employee WHERE employeeid = ?",id);
 
-        EmployeeDto dto = null;
+        Employee entity = null;
 
         if(resultSet.next()) {
             String uId = resultSet.getString(1);
@@ -84,9 +85,9 @@ public class EmployeDAOImpl implements EmployeDAO {
             String empAddress = resultSet.getString(6);
             String empContac = resultSet.getString(7);
             //  String complete = resultSet.getString(8);
-            dto = new EmployeeDto(uId,employeeId,empGender,empbd,employeeName,empAddress,empContac);
+            entity = new Employee(uId,employeeId,empGender,empbd,employeeName,empAddress,empContac);
         }
-        return dto;
+        return entity;
     }
 
     public int empCount() throws SQLException {

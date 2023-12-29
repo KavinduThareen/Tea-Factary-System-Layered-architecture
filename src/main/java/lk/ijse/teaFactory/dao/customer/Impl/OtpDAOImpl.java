@@ -1,5 +1,6 @@
 package lk.ijse.teaFactory.dao.customer.Impl;
 
+import lk.ijse.teaFactory.Entity.Otp;
 import lk.ijse.teaFactory.dao.SQLUtil;
 import lk.ijse.teaFactory.dao.customer.OtpDAO;
 import lk.ijse.teaFactory.dto.OtpDto;
@@ -11,17 +12,17 @@ import java.util.ArrayList;
 
 public class OtpDAOImpl implements OtpDAO {
     @Override
-    public ArrayList<OtpDto> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Otp> getAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public boolean save(OtpDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("INSERT INTO Otp VALUES(?)",dto.getOtp());
+    public boolean save(Otp entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("INSERT INTO Otp VALUES(?)",entity.getOtp());
     }
 
     @Override
-    public boolean update(OtpDto dto) throws SQLException, ClassNotFoundException {
+    public boolean update(Otp entity) throws SQLException, ClassNotFoundException {
         return false;
     }
 
@@ -36,7 +37,7 @@ public class OtpDAOImpl implements OtpDAO {
     }
 
     @Override
-    public OtpDto search(String id) throws SQLException, ClassNotFoundException {
+    public Otp search(String id) throws SQLException, ClassNotFoundException {
         return null;
     }
 

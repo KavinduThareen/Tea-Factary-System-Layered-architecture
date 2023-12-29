@@ -1,5 +1,6 @@
 package lk.ijse.teaFactory.dao.customer.Impl;
 
+import lk.ijse.teaFactory.Entity.Salary;
 import lk.ijse.teaFactory.dao.SQLUtil;
 import lk.ijse.teaFactory.dao.customer.SalaryDAO;
 import lk.ijse.teaFactory.dto.SalaryDto;
@@ -12,10 +13,10 @@ import java.util.List;
 
 public class SalaryDAOImpl implements SalaryDAO {
     @Override
-    public ArrayList<SalaryDto> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Salary> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute( "SELECT * FROM salory");
 
-        ArrayList<SalaryDto> dtoList = new ArrayList<>();
+        ArrayList<Salary> dtoList = new ArrayList<>();
 
         while (resultSet.next()) {
             String id = resultSet.getString(1);
@@ -24,20 +25,20 @@ public class SalaryDAOImpl implements SalaryDAO {
             String count = resultSet.getString(4);
             //  String delete = resultSet.getString(5);
 
-            var dto = new SalaryDto(id,empId,date,count);
-            dtoList.add(dto);
+            var entity = new Salary(id,empId,date,count);
+            dtoList.add(entity);
         }
         return dtoList;
     }
 
     @Override
-    public boolean save(SalaryDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("INSERT INTO salory VALUES(?, ?, ?, ?)",dto.getId(),dto.getEmpId(),dto.getDate(),dto.getCount());
+    public boolean save(Salary entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("INSERT INTO salory VALUES(?, ?, ?, ?)",entity.getId(),entity.getEmpId(),entity.getDate(),entity.getCount());
     }
 
     @Override
-    public boolean update(SalaryDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("UPDATE salory SET e_id = ?, Date = ?, s_count = ?  WHERE salory_id = ?",dto.getEmpId(),dto.getDate(),dto.getCount(),dto.getId());
+    public boolean update(Salary entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("UPDATE salory SET e_id = ?, Date = ?, s_count = ?  WHERE salory_id = ?",entity.getEmpId(),entity.getDate(),entity.getCount(),entity.getId());
     }
 
     @Override
@@ -68,12 +69,11 @@ public class SalaryDAOImpl implements SalaryDAO {
         return "S001";
     }
 
-
     @Override
-    public SalaryDto search(String id) throws SQLException, ClassNotFoundException {
+    public Salary search(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute( "SELECT * FROM salory WHERE salory_id = ?");
 
-        SalaryDto dto = null;
+        Salary entity = null;
 
         if (resultSet.next()) {
             String resultId = resultSet.getString(1);  // Use a different variable name
@@ -82,8 +82,8 @@ public class SalaryDAOImpl implements SalaryDAO {
             String contac = resultSet.getString(4);
 
 
-            dto = new SalaryDto(resultId, empid, date, contac);
+            entity = new Salary(resultId, empid, date, contac);
         }
-        return dto;
+        return entity;
     }
 }

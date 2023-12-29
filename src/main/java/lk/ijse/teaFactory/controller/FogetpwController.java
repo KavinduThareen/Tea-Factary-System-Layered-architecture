@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.Otp;
 import lk.ijse.teaFactory.dao.customer.Impl.OtpDAOImpl;
 import lk.ijse.teaFactory.dao.customer.OtpDAO;
 import lk.ijse.teaFactory.dto.OtpDto;
@@ -69,8 +70,8 @@ public class FogetpwController {
             otp2 = random.nextInt(9999);
 
             if (otp2 > 1000){
-               var otpDto = new OtpDto(otp2);
-               boolean a =  otpDAO.save(otpDto);
+               var entity = new Otp(otp2);
+               boolean a =  otpDAO.save(entity);
               //  System.out.println(otp2);
                 return otp2;
             }

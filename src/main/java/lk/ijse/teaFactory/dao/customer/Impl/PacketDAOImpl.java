@@ -1,5 +1,6 @@
 package lk.ijse.teaFactory.dao.customer.Impl;
 
+import lk.ijse.teaFactory.Entity.PacketStoke;
 import lk.ijse.teaFactory.dao.SQLUtil;
 import lk.ijse.teaFactory.dao.customer.PacketDAO;
 import lk.ijse.teaFactory.db.DbConnection;
@@ -13,31 +14,31 @@ import java.util.List;
 
 public class PacketDAOImpl implements PacketDAO {
     @Override
-    public ArrayList<PacketStokeDto> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<PacketStoke> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM packet_stoke");
 
-        ArrayList<PacketStokeDto> dtoList = new ArrayList<>();
+        ArrayList<PacketStoke> dtoList = new ArrayList<>();
 
         while (resultSet.next()) {
-            var dto = new PacketStokeDto(
+            var entity = new PacketStoke(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getDate(4)
             );
-            dtoList.add(dto);
+            dtoList.add(entity);
         }
         return dtoList;
     }
 
     @Override
-    public boolean save(PacketStokeDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("INSERT INTO packet_stoke VALUES(?,?,?,?)",dto.getId(),dto.getCatagory(),dto.getWeigth(),dto.getDate());
+    public boolean save(PacketStoke entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("INSERT INTO packet_stoke VALUES(?,?,?,?)",entity.getId(),entity.getCatagory(),entity.getWeigth(),entity.getDate());
     }
 
     @Override
-    public boolean update(PacketStokeDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("UPDATE packet_stoke SET s_catogary = ?, s_weigth = ?, s_expiredate = ? WHERE packet_id = ?",dto.getCatagory(),dto.getWeigth(),dto.getDate(),dto.getId());
+    public boolean update(PacketStoke entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("UPDATE packet_stoke SET s_catogary = ?, s_weigth = ?, s_expiredate = ? WHERE packet_id = ?",entity.getCatagory(),entity.getWeigth(),entity.getDate(),entity.getId());
     }
 
     @Override
@@ -69,10 +70,10 @@ public class PacketDAOImpl implements PacketDAO {
     }
 
     @Override
-    public PacketStokeDto search(String id) throws SQLException, ClassNotFoundException {
+    public PacketStoke search(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM packet_stoke WHERE packet_id = ?",id);
 
-        PacketStokeDto dto = null;
+        PacketStoke entity = null;
 
         if(resultSet.next()) {
             String lid = resultSet.getString(1);
@@ -81,9 +82,9 @@ public class PacketDAOImpl implements PacketDAO {
             java.util.Date edate = resultSet.getDate(4);
 
 
-            dto = new PacketStokeDto(lid,catgary,weigth, (Date) edate);
+            entity = new PacketStoke(lid,catgary,weigth, (Date) edate);
         }
-        return dto;
+        return entity;
     }
 
     @Override

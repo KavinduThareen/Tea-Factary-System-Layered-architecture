@@ -1,5 +1,6 @@
 package lk.ijse.teaFactory.dao.customer.Impl;
 
+import lk.ijse.teaFactory.Entity.Suppling;
 import lk.ijse.teaFactory.dao.SQLUtil;
 import lk.ijse.teaFactory.dao.customer.SupOrdersDAO;
 import lk.ijse.teaFactory.db.DbConnection;
@@ -11,9 +12,9 @@ import java.util.List;
 
 public class SupOrderDAOImpl implements SupOrdersDAO {
     @Override
-    public ArrayList<SupOrderDto> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Suppling> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM supplier_orders");
-        ArrayList<SupOrderDto> dtoList = new ArrayList<>();
+        ArrayList<Suppling> dtoList = new ArrayList<>();
 
 
         while (resultSet.next()) {
@@ -23,20 +24,20 @@ public class SupOrderDAOImpl implements SupOrdersDAO {
             String weigth = resultSet.getString(4);
             double payment = resultSet.getDouble(5);
 
-            var dto = new SupOrderDto(id, sId, date, weigth,payment);
-            dtoList.add(dto);
+            var entity = new Suppling(id, sId, date, weigth,payment);
+            dtoList.add(entity);
         }
         return dtoList;
     }
 
     @Override
-    public boolean save(SupOrderDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("INSERT INTO supplier_orders VALUES(?, ?, ?, ?,?)",dto.getId(),dto.getSId(),dto.getDate(),dto.getWeigth(),dto.getPayment());
+    public boolean save(Suppling entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("INSERT INTO supplier_orders VALUES(?, ?, ?, ?,?)",entity.getId(),entity.getSId(),entity.getDate(),entity.getWeigth(),entity.getPayment());
     }
 
     @Override
-    public boolean update(SupOrderDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("UPDATE supplier_orders SET sup_id = ?, sup_date = ?, sup_stoke_weigth = ?,payment = ? WHERE s_orders_id = ?",dto.getSId(),dto.getDate(),dto.getWeigth(),dto.getPayment(),dto.getId());
+    public boolean update(Suppling entity) throws SQLException, ClassNotFoundException {
+        return SQLUtil.execute("UPDATE supplier_orders SET sup_id = ?, sup_date = ?, sup_stoke_weigth = ?,payment = ? WHERE s_orders_id = ?",entity.getSId(),entity.getDate(),entity.getWeigth(),entity.getPayment(),entity.getId());
     }
 
     @Override
@@ -68,10 +69,10 @@ public class SupOrderDAOImpl implements SupOrdersDAO {
     }
 
     @Override
-    public SupOrderDto search(String id) throws SQLException, ClassNotFoundException {
+    public Suppling search(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM supplier_orders WHERE s_orders_id = ?",id);
 
-        SupOrderDto dto = null;
+        Suppling entity = null;
 
         if(resultSet.next()) {
             String oid = resultSet.getString(1);
@@ -80,9 +81,9 @@ public class SupOrderDAOImpl implements SupOrdersDAO {
             String weight = resultSet.getString(4);
             double payment = resultSet.getDouble(5);
             //   String complete = resultSet.getString(6);
-            dto = new SupOrderDto(oid, sid, date , weight,payment);
+            entity = new Suppling(oid, sid, date , weight,payment);
         }
-        return dto;
+        return entity;
     }
 
     @Override
