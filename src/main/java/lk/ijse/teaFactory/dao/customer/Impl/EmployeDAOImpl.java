@@ -3,6 +3,7 @@ package lk.ijse.teaFactory.dao.customer.Impl;
 import lk.ijse.teaFactory.Entity.Employee;
 import lk.ijse.teaFactory.dao.CrudDAO;
 import lk.ijse.teaFactory.dao.SQLUtil;
+import lk.ijse.teaFactory.dao.SuperDAO;
 import lk.ijse.teaFactory.dao.customer.EmployeDAO;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.dto.EmployeeDto;

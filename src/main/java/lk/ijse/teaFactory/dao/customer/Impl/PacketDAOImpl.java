@@ -2,6 +2,7 @@ package lk.ijse.teaFactory.dao.customer.Impl;
 
 import lk.ijse.teaFactory.Entity.PacketStoke;
 import lk.ijse.teaFactory.dao.SQLUtil;
+import lk.ijse.teaFactory.dao.SuperDAO;
 import lk.ijse.teaFactory.dao.customer.PacketDAO;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.dto.EmployeeDto;
@@ -12,7 +13,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PacketDAOImpl implements PacketDAO {
+public class PacketDAOImpl implements PacketDAO
+{
     @Override
     public ArrayList<PacketStoke> getAll() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM packet_stoke");

@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.Supplier;
+import lk.ijse.teaFactory.Entity.Suppling;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.Impl.SupOrderDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.SupplierDAOImpl;
 import lk.ijse.teaFactory.dao.customer.SupOrdersDAO;
@@ -29,6 +32,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.SUPPLIER;
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.SUPPLING;
 
 public class SupplierOrdersController {
 
@@ -73,8 +79,8 @@ public class SupplierOrdersController {
 
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    SupplierDAO supplierDAO= new SupplierDAOImpl();
-    SupOrdersDAO supOrdersDAO = new SupOrderDAOImpl();
+    SupplierDAO supplierDAO= (SupplierDAO) DAOFactory.getDaoFactory().getDAO(SUPPLIER);
+    SupOrdersDAO supOrdersDAO = (SupOrdersDAO) DAOFactory.getDaoFactory().getDAO(SUPPLING);
 
     @FXML
     void addOnAction(ActionEvent event) {
@@ -89,7 +95,7 @@ public class SupplierOrdersController {
             Double paymentValue = Double.parseDouble(payment);
             double total = weigthValue * paymentValue;
 
-            var dto = new SupOrderDto(id, sId, date, weigth, total);
+            var dto = new Suppling(id, sId, date, weigth, total);
             boolean isValidated = validate();
 
             if (isValidated) {
@@ -143,9 +149,9 @@ public class SupplierOrdersController {
         ObservableList<SupOrderTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<SupOrderDto> dtoList = supOrdersDAO.getAll();
+            List<Suppling> dtoList = supOrdersDAO.getAll();
 
-            for(SupOrderDto dto : dtoList) {
+            for(Suppling dto : dtoList) {
 
                 JFXButton btnDelete = new JFXButton("Deleted");
                 btnDelete.setCursor(javafx.scene.Cursor.HAND);
@@ -234,7 +240,7 @@ public class SupplierOrdersController {
         String weigth = weigthTxt.getText();
         int payment = Integer.parseInt(paymentTxt.getText());
 
-        var dto = new SupOrderDto(id,sId,date,weigth,payment);
+        var dto = new Suppling(id,sId,date,weigth,payment);
         try {
             boolean isUpdated = supOrdersDAO.update(dto);
             System.out.println(isUpdated);
@@ -287,9 +293,9 @@ public class SupplierOrdersController {
     private void loadSupId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<SupplierDto> empList = supplierDAO.getAll();
+            List<Supplier> empList = supplierDAO.getAll();
 
-            for (SupplierDto empDto : empList) {
+            for (Supplier empDto : empList) {
                 obList.add(empDto.getId());
             }
 
@@ -306,7 +312,7 @@ public class SupplierOrdersController {
 
         String id = sOidTxt.getText();
         try {
-            SupOrderDto supOrderDto = supOrdersDAO.search(id);
+            Suppling supOrderDto = supOrdersDAO.search(id);
 
             if (supOrderDto != null) {
                 sOidTxt.setText(supOrderDto.getId());

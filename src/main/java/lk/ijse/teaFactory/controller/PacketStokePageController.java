@@ -12,6 +12,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.LeavesStoke;
+import lk.ijse.teaFactory.Entity.PacketStoke;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.Impl.LeavesStokeDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.StokeDetailDAOImpl;
 import lk.ijse.teaFactory.dao.customer.PacketDAO;
@@ -29,6 +32,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.PACKETSTOKE;
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.STOKEDETAIL;
 
 public class PacketStokePageController {
 
@@ -69,8 +75,8 @@ public class PacketStokePageController {
     private JFXComboBox<String > leavesId;
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    PacketDAO packetDAO = new PacketDAOImpl();
-    StokeDetailDAO stokeDetailDAO = new StokeDetailDAOImpl();
+    PacketDAO packetDAO = (PacketDAO) DAOFactory.getDaoFactory().getDAO(PACKETSTOKE);
+    StokeDetailDAO stokeDetailDAO = (StokeDetailDAO) DAOFactory.getDaoFactory().getDAO(STOKEDETAIL);
 
     @FXML
     void addOnAction(ActionEvent event) {
@@ -80,7 +86,7 @@ public class PacketStokePageController {
         Date date = Date.valueOf(expirTxt.getValue());
         String leavesStokeId = leavesId.getValue();
 
-        var dto = new PacketStokeDto(pid,catagory,weigth,date);
+        var dto = new PacketStoke(pid,catagory,weigth,date);
         boolean isValidated = validate();
         LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
 
@@ -136,9 +142,9 @@ public class PacketStokePageController {
         LeavesStokeDAOImpl leavesStokeDAO = new LeavesStokeDAOImpl();
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<LeavesStokeDto> empList = leavesStokeDAO.getAll();
+            List<LeavesStoke> empList = leavesStokeDAO.getAll();
 
-            for (LeavesStokeDto leavesDto : empList) {
+            for (LeavesStoke leavesDto : empList) {
                 obList.add(leavesDto.getId());
             }
 
@@ -158,7 +164,7 @@ public class PacketStokePageController {
         String   weigth = weigthTxt.getText();
         Date date = Date.valueOf(expirTxt.getValue());
 
-        var dto = new PacketStokeDto(id,catagory,weigth,date);
+        var dto = new PacketStoke(id,catagory,weigth,date);
         try {
             boolean isUpdated = packetDAO.update(dto);
             System.out.println(isUpdated);
@@ -178,8 +184,8 @@ public class PacketStokePageController {
         ObservableList<CompleteTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<PacketStokeDto> dtoList = packetDAO.getAll();
-            for (PacketStokeDto dto : dtoList){
+            List<PacketStoke> dtoList = packetDAO.getAll();
+            for (PacketStoke dto : dtoList){
 
                 JFXButton btnDelete = new JFXButton("Deleted");
                 btnDelete.setCursor(javafx.scene.Cursor.HAND);
@@ -274,7 +280,7 @@ public class PacketStokePageController {
             String id = idTxt.getText();
 
             try {
-                PacketStokeDto packetStokeDto = packetDAO.search(id);
+                PacketStoke packetStokeDto = packetDAO.search(id);
 
                 if (packetStokeDto != null) {
                     idTxt.setText(packetStokeDto.getId());

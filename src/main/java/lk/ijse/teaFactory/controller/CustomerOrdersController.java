@@ -10,6 +10,10 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.PacketStoke;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.customer.PlaseOrderBO;
+import lk.ijse.teaFactory.dao.SuperDAO;
 import lk.ijse.teaFactory.dao.customer.CusOrdersDAO;
 import lk.ijse.teaFactory.dao.customer.Impl.CusOrdersDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
@@ -32,6 +36,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Pattern;
+
+import static lk.ijse.teaFactory.bo.BOFactory.BOType.PLASEORDER;
+
 public class CustomerOrdersController {
     @FXML
     private TableColumn<?, ?> colCId;
@@ -99,6 +106,8 @@ public class CustomerOrdersController {
   //  private PacketStokeModel packetStokeModel = new PacketStokeModel();
    // private CusOrderModel cusOrderModel = new CusOrderModel();
     private PlaseOrderModel plaseOrderModel = new PlaseOrderModel();
+
+    PlaseOrderBO placeOrder = (PlaseOrderBO) BOFactory.getDaoFactory().getBO(PLASEORDER);
 
     private ObservableList<CartTm> obList2 = FXCollections.observableArrayList();
 
@@ -231,9 +240,9 @@ public class CustomerOrdersController {
     private void loadCatagary() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<PacketStokeDto> empList = packetDAO.getAll();
+            List<PacketStoke> empList = packetDAO.getAll();
 
-            for (PacketStokeDto cusODto : empList) {
+            for (PacketStoke cusODto : empList) {
                 obList.add(cusODto.getCatagory());
             }
             catagaryTxt.setItems(obList);
@@ -247,9 +256,9 @@ public class CustomerOrdersController {
     private void loadItemCodes() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<PacketStokeDto> itemDtos = packetDAO.getAll();
+            List<PacketStoke> itemDtos = packetDAO.getAll();
 
-            for (PacketStokeDto dto : itemDtos) {
+            for (PacketStoke dto : itemDtos) {
                 obList.add(dto.getId());
             }
             itemIdTxt.setItems(obList);
@@ -340,7 +349,7 @@ public class CustomerOrdersController {
             System.out.println("Place order form controller: " + cartTmList);
             var placeOrderDto = new PaseOrderDto(id, cId, catagary,weigth,date,descreption,payment,cartTmList);
             try {
-                boolean isSuccess = plaseOrderModel.placeOrder(placeOrderDto);
+                boolean isSuccess = placeOrder.placeOrder(placeOrderDto);
                 if (isSuccess) {
                     noti.showNotification("Order Success!");
                     count++;

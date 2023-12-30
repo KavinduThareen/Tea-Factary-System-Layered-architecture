@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import lk.ijse.teaFactory.Entity.Register;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.Impl.RegisterDAOImpl;
 import lk.ijse.teaFactory.dao.customer.RegisterDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
@@ -17,6 +19,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.regex.Pattern;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.REGISTER;
+
 public class RegisterPagecontroller {
 
     @FXML
@@ -45,7 +50,7 @@ public class RegisterPagecontroller {
 
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    RegisterDAO registerDAO = new RegisterDAOImpl();
+    RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
 
     @FXML
     void createAccountBtnOnAction(ActionEvent event) {
@@ -57,7 +62,7 @@ public class RegisterPagecontroller {
 
         String conPw = confirmPasswordTxt.getText();
 
-            var dto = new RegisterDto(userid, username, contac, password);
+            var dto = new Register(userid, username, contac, password);
 
         boolean isValidated = validate();
 

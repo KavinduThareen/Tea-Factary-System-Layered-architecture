@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.Employee;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.dto.EmployeeDto;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
@@ -19,6 +21,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.EMPLOYEE;
 
 public class ViewEmployeePageController {
 
@@ -49,9 +53,8 @@ public class ViewEmployeePageController {
     @FXML
     private TableView<EmployeeTm> tblEmployee;
 
-    EmployeDAOImpl employeDAO = new EmployeDAOImpl();
+    EmployeDAOImpl employeDAO = (EmployeDAOImpl) DAOFactory.getDaoFactory().getDAO(EMPLOYEE);
     NotificationAnimation notifi = new NotificationAnimation();
-
     @FXML
     private AnchorPane root;
 
@@ -65,8 +68,8 @@ public class ViewEmployeePageController {
         ObservableList<EmployeeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<EmployeeDto> dtoList =employeDAO.getAll();
-            for (EmployeeDto dto : dtoList){
+            List<Employee> dtoList =employeDAO.getAll();
+            for (Employee dto : dtoList){
 
 
                 JFXButton btnDelete = new JFXButton("Deleted");

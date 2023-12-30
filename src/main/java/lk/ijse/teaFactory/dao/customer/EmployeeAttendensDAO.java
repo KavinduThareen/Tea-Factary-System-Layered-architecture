@@ -1,5 +1,7 @@
 package lk.ijse.teaFactory.dao.customer;
 
+import lk.ijse.teaFactory.dao.SuperDAO;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;

@@ -2,6 +2,7 @@ package lk.ijse.teaFactory.dao.customer.Impl;
 
 import lk.ijse.teaFactory.Entity.Otp;
 import lk.ijse.teaFactory.dao.SQLUtil;
+import lk.ijse.teaFactory.dao.SuperDAO;
 import lk.ijse.teaFactory.dao.customer.OtpDAO;
 import lk.ijse.teaFactory.dto.OtpDto;
 
@@ -10,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class OtpDAOImpl implements OtpDAO {
+public class OtpDAOImpl implements OtpDAO, SuperDAO {
     @Override
     public ArrayList<Otp> getAll() throws SQLException, ClassNotFoundException {
         return null;

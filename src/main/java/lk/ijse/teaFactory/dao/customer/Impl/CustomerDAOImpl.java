@@ -2,6 +2,7 @@ package lk.ijse.teaFactory.dao.customer.Impl;
 
 import lk.ijse.teaFactory.Entity.Customer;
 import lk.ijse.teaFactory.dao.SQLUtil;
+import lk.ijse.teaFactory.dao.SuperDAO;
 import lk.ijse.teaFactory.dao.customer.CustomerDAO;
 import lk.ijse.teaFactory.dto.CustomerDto;
 

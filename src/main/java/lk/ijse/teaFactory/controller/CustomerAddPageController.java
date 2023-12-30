@@ -11,6 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.Customer;
+import lk.ijse.teaFactory.Entity.Employee;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.CustomerDAO;
 import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
@@ -24,6 +27,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.CUSTOMER;
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.EMPLOYEE;
+
 public class CustomerAddPageController {
 
     @FXML
@@ -44,8 +51,8 @@ public class CustomerAddPageController {
     @FXML
     private JFXComboBox<String> empidTxt;
 
-    CustomerDAO customerDAO = new CustomerDAOImpl();
-    EmployeDAOImpl employeDAO = new EmployeDAOImpl();
+    CustomerDAOImpl customerDAO = (CustomerDAOImpl) DAOFactory.getDaoFactory().getDAO(CUSTOMER);
+    EmployeDAOImpl employeDAO = (EmployeDAOImpl) DAOFactory.getDaoFactory().getDAO(EMPLOYEE);
 
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notification = new NotificationAnimation();
@@ -68,7 +75,7 @@ public class CustomerAddPageController {
         String cusAddress = cusAddressTxt.getText();
         String cusCantac = cuscontacTxt.getText();
 
-        var dto = new CustomerDto(cusid,empid,cusname,cusAddress,cusCantac);
+        var dto = new Customer(cusid,empid,cusname,cusAddress,cusCantac);
 
        boolean isValidated = validate();
 
@@ -136,9 +143,9 @@ public class CustomerAddPageController {
     private void loadEmpId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<EmployeeDto> empList = employeDAO.getAll();
+            List<Employee> empList = employeDAO.getAll();
 
-            for (EmployeeDto empDto : empList) {
+            for (Employee empDto : empList) {
                 obList.add(empDto.getEmployeeId());
             }
 
@@ -170,7 +177,7 @@ public class CustomerAddPageController {
         String cusAddress = cusAddressTxt.getText();
         String cusCantac = cuscontacTxt.getText();
 
-        var dto = new CustomerDto(cusid,empid,cusname,cusAddress,cusCantac);
+        var dto = new Customer(cusid,empid,cusname,cusAddress,cusCantac);
 
         try {
             boolean isUpdated = customerDAO.update(dto);
@@ -211,7 +218,7 @@ public class CustomerAddPageController {
         String id = cusidTxt.getText();
 
         try {
-            CustomerDto customerDto = customerDAO.search(id);
+            Customer customerDto = customerDAO.search(id);
 
             if (customerDto != null) {
                 cusidTxt.setText(customerDto.getCusid());

@@ -6,12 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.Impl.RegisterDAOImpl;
 import lk.ijse.teaFactory.dao.customer.RegisterDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.REGISTER;
 
 public class VerifiedPageController {
 
@@ -27,7 +30,7 @@ public class VerifiedPageController {
     @FXML
     private TextField uidTxt;
 
-    RegisterDAO registerDAO = new RegisterDAOImpl();
+    RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
 
     @FXML
     void pwSaveOnAction(ActionEvent event) {

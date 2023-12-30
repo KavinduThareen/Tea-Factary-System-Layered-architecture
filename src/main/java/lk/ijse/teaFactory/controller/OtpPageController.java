@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.Impl.OtpDAOImpl;
 import lk.ijse.teaFactory.dao.customer.OtpDAO;
 
@@ -18,6 +19,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.OTP;
 
 public class OtpPageController implements Initializable {
 
@@ -39,7 +42,7 @@ public class OtpPageController implements Initializable {
     @FXML
     private TextField otpField4Txt;
 
-    OtpDAO otpDAO = new OtpDAOImpl();
+    OtpDAO otpDAO = (OtpDAO) DAOFactory.getDaoFactory().getDAO(OTP);
 
     FogetpwController fogetpwController = new FogetpwController();
 

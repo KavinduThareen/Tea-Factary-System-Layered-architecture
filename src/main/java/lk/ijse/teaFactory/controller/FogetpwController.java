@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Otp;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.Impl.OtpDAOImpl;
 import lk.ijse.teaFactory.dao.customer.OtpDAO;
 import lk.ijse.teaFactory.dto.OtpDto;
@@ -15,6 +16,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Random;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.OTP;
 
 public class FogetpwController {
 
@@ -26,7 +29,7 @@ public class FogetpwController {
     private String email;
     public int otp;
 
-    OtpDAO otpDAO = new OtpDAOImpl();
+    OtpDAO otpDAO = (OtpDAO) DAOFactory.getDaoFactory().getDAO(OTP);
 
     private int otp2;
 

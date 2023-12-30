@@ -11,6 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.Employee;
+import lk.ijse.teaFactory.Entity.Register;
+import lk.ijse.teaFactory.dao.DAOFactory;
+import lk.ijse.teaFactory.dao.customer.EmployeDAO;
 import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.RegisterDAOImpl;
 import lk.ijse.teaFactory.dao.customer.RegisterDAO;
@@ -23,6 +27,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.EMPLOYEE;
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.REGISTER;
 
 public class EmployeePageController {
 
@@ -59,10 +66,10 @@ public class EmployeePageController {
     @FXML
     private TableView<EmployeeTm> tbl2;
 
-    EmployeDAOImpl employeDAO = new EmployeDAOImpl();
+    EmployeDAO employeDAO = (EmployeDAOImpl) DAOFactory.getDaoFactory().getDAO(EMPLOYEE);
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    RegisterDAO registerDAO = new RegisterDAOImpl();
+    RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
 
     @FXML
     void updateOnAction(ActionEvent event) {
@@ -74,10 +81,10 @@ public class EmployeePageController {
         String empAddress = empAddressTxt.getText();
         String empContac = empContacTxt.getText();
 
-        var dto = new EmployeeDto(uId,employeeId,empGender,empbd,employeeName,empAddress,empContac);
+        var entity = new Employee(uId,employeeId,empGender,empbd,employeeName,empAddress,empContac);
 
         try {
-            boolean isUpdated = employeDAO.update(dto);
+            boolean isUpdated = employeDAO.update(entity);
             System.out.println(isUpdated);
             if(isUpdated) {
               notifi.showNotification("update");
@@ -103,7 +110,7 @@ public class EmployeePageController {
         String empAddress = empAddressTxt.getText();
         String empContac = empContacTxt.getText();
 
-        var dto = new EmployeeDto(uId,employeeId,empGender,empbd,employeeName,empAddress,empContac);
+        var dto = new Employee(uId,employeeId,empGender,empbd,employeeName,empAddress,empContac);
         boolean isValidated = validate();
 
         if (isValidated) {
@@ -128,9 +135,9 @@ public class EmployeePageController {
     private void loadUserId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<RegisterDto> empList = registerDAO.getAll();
+            List<Register> empList = registerDAO.getAll();
 
-            for (RegisterDto regDto : empList) {
+            for (Register regDto : empList) {
                 obList.add(regDto.getUserid());
             }
 
@@ -212,8 +219,8 @@ public class EmployeePageController {
         ObservableList<EmployeeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<EmployeeDto> dtoList =employeDAO.getAll();
-            for (EmployeeDto dto : dtoList){
+            List<Employee> dtoList =employeDAO.getAll();
+            for (Employee dto : dtoList){
 
 
                 obList.add(
@@ -267,7 +274,7 @@ public class EmployeePageController {
             String id = employeeIdTxt.getText();
 
             try {
-                EmployeeDto employeeDto = employeDAO.search(id);
+                Employee employeeDto = employeDAO.search(id);
                 if (employeeDto != null) {
                     uidTxt.setValue(employeeDto.getUId());
                     employeeIdTxt.setText(employeeDto.getEmployeeId());
@@ -292,7 +299,7 @@ public class EmployeePageController {
 
         String id = employeeIdTxt.getText();
         try {
-            EmployeeDto employeeDto = employeDAO.search(id);
+            Employee employeeDto = employeDAO.search(id);
 
             if (employeeDto != null) {
                 uidTxt.setValue(employeeDto.getUId());

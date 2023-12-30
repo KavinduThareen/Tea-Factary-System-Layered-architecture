@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.Customer;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.CustomerDAO;
 import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
 import lk.ijse.teaFactory.dto.CustomerDto;
@@ -19,6 +21,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.CUSTOMER;
+
 public class CustomerPageController {
 
     @FXML
@@ -45,7 +50,7 @@ public class CustomerPageController {
     @FXML
     private TableView<CustomerTm> tabl;
 
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+    CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDaoFactory().getDAO(CUSTOMER);
 
     @FXML
     void addcusOnAction(ActionEvent event) throws IOException {
@@ -59,9 +64,9 @@ public class CustomerPageController {
         ObservableList<CustomerTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<CustomerDto> dtoList = customerDAO.getAll();
+            List<Customer> dtoList = customerDAO.getAll();
 
-            for(CustomerDto dto : dtoList) {
+            for(Customer dto : dtoList) {
 
                 JFXButton btnDelete = new JFXButton("Deleted");
                 btnDelete.setCursor(javafx.scene.Cursor.HAND);

@@ -11,6 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.Employee;
+import lk.ijse.teaFactory.Entity.Salary;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.SalaryDAOImpl;
 import lk.ijse.teaFactory.dao.customer.SalaryDAO;
@@ -28,6 +31,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.SALARY;
 
 public class PaymentController {
 
@@ -66,7 +71,7 @@ public class PaymentController {
 
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    SalaryDAO salaryDAO = new SalaryDAOImpl();
+    SalaryDAO salaryDAO = (SalaryDAO) DAOFactory.getDaoFactory().getDAO(SALARY);
 
     @FXML
     void addOnAction(ActionEvent event) {
@@ -76,7 +81,7 @@ public class PaymentController {
         int count = Integer.parseInt(countTxt.getText());
         String payment = String.valueOf(count * 30);
 
-        var dto = new SalaryDto(id,empId,date,payment);
+        var dto = new Salary(id,empId,date,payment);
         boolean isValidated = validate();
 
         if (isValidated) {
@@ -125,7 +130,7 @@ public class PaymentController {
         String count = countTxt.getText();
 
 
-        var dto = new SalaryDto(id,empId,date,count);
+        var dto = new Salary(id,empId,date,count);
         try {
             boolean isUpdated = salaryDAO.update(dto);
             System.out.println(isUpdated);
@@ -154,8 +159,8 @@ public class PaymentController {
         ObservableList<SalaryTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<SalaryDto> dtoList =salaryDAO.getAll();
-            for (SalaryDto dto : dtoList){
+            List<Salary> dtoList =salaryDAO.getAll();
+            for (Salary dto : dtoList){
 
 
                 JFXButton btnDelete = new JFXButton("Deleted");
@@ -228,9 +233,9 @@ public class PaymentController {
         EmployeDAOImpl employeDAO = new EmployeDAOImpl();
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<EmployeeDto> empList = employeDAO.getAll();
+            List<Employee> empList = employeDAO.getAll();
 
-            for (EmployeeDto empDto : empList) {
+            for (Employee empDto : empList) {
                 obList.add(empDto.getEmployeeId());
             }
 
@@ -266,7 +271,7 @@ public class PaymentController {
 
             String id = idTxt.getText();
             try {
-                SalaryDto salaryDto = salaryDAO.search(id);
+                Salary salaryDto = salaryDAO.search(id);
                 if (salaryDto != null) {
                     idTxt.setText(salaryDto.getId());
                     empIdTxt.setValue(salaryDto.getEmpId());

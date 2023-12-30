@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Supplier;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.Impl.SupplierDAOImpl;
 import lk.ijse.teaFactory.dao.customer.SupplierDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
@@ -25,6 +26,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.SUPPLIER;
 
 public class SupplierPageController {
 
@@ -64,7 +67,7 @@ public class SupplierPageController {
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
 
-    SupplierDAO supplierDAO = new SupplierDAOImpl();
+    SupplierDAO supplierDAO = (SupplierDAO) DAOFactory.getDaoFactory().getDAO(SUPPLIER);
 
     @FXML
     void addSDetailOnAction(ActionEvent event) throws IOException {

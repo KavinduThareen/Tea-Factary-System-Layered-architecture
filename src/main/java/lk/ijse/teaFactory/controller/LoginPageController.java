@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.Impl.LoginDetailDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.RegisterDAOImpl;
 import lk.ijse.teaFactory.dao.customer.LoginDetailsDAO;
@@ -26,6 +27,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.regex.Pattern;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.REGISTER;
 
 public class LoginPageController{
 
@@ -45,8 +48,8 @@ public class LoginPageController{
     private TextField usernameTxt;
      private ErrorAnimation errorAnimation = new ErrorAnimation();
 
-     private LoginDetailsDAO logdetail = new LoginDetailDAOImpl();
-     RegisterDAO registerDAO = new RegisterDAOImpl();
+     private LoginDetailsDAO logdetail = (LoginDetailsDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.LOGINDETAIL);
+     RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
 
     @FXML
     void keyOnAction(KeyEvent event) throws IOException {

@@ -11,6 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.LeavesStoke;
+import lk.ijse.teaFactory.Entity.Suppling;
+import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.customer.Impl.LeavesStokeDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.SupOrderDAOImpl;
 import lk.ijse.teaFactory.dao.customer.Impl.SupplingDetailDAOImpl;
@@ -28,6 +31,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
+
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.*;
 
 public class LevesStokePageController {
 
@@ -63,12 +68,12 @@ public class LevesStokePageController {
 
     @FXML
     private ComboBox<String > supplingidTxt;
-    LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
+    LeaveStokeDAO leaveStokeDAO = (LeaveStokeDAO) DAOFactory.getDaoFactory().getDAO(LEAVESTOKE);
 
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    SupOrdersDAO supOrdersDAO = new SupOrderDAOImpl();
-    SupplingDetailDAO supplingDetailDAO = new SupplingDetailDAOImpl();
+    SupOrdersDAO supOrdersDAO = (SupOrdersDAO) DAOFactory.getDaoFactory().getDAO(SUPPLING);
+    SupplingDetailDAO supplingDetailDAO = (SupplingDetailDAO) DAOFactory.getDaoFactory().getDAO(SUPPLINGDETAIL);
 
     @FXML
     private TableView<LeaveStokeTm> table;
@@ -82,7 +87,7 @@ public class LevesStokePageController {
         Date sDate = Date.valueOf(sDateTxt.getValue());
         Date eDate = Date.valueOf(eDateTxt.getValue());
 
-        var dto = new LeavesStokeDto(id,weigth,sDate,eDate);
+        var dto = new LeavesStoke(id,weigth,sDate,eDate);
         boolean isValidated = validate();
 
         if (isValidated) {
@@ -130,9 +135,9 @@ public class LevesStokePageController {
     private void loadSupplingId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<SupOrderDto> supList = supOrdersDAO.getAll();
+            List<Suppling> supList = supOrdersDAO.getAll();
 
-            for (SupOrderDto supDto : supList) {
+            for (Suppling supDto : supList) {
                 obList.add(supDto.getId());
             }
             supplingidTxt.setItems(obList);
@@ -147,8 +152,8 @@ public class LevesStokePageController {
         ObservableList<LeaveStokeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<LeavesStokeDto> dtoList = leaveStokeDAO.getAll();
-            for (LeavesStokeDto dto : dtoList){
+            List<LeavesStoke> dtoList = leaveStokeDAO.getAll();
+            for (LeavesStoke dto : dtoList){
 
                 JFXButton btnDelete = new JFXButton("Deleted");
                 btnDelete.setCursor(javafx.scene.Cursor.HAND);
@@ -245,7 +250,7 @@ public class LevesStokePageController {
         Date  sDate = Date.valueOf(sDateTxt.getValue());
         Date eDate = Date.valueOf(eDateTxt.getValue());
 
-        var dto = new LeavesStokeDto(id,weigth,sDate,eDate);
+        var dto = new LeavesStoke(id,weigth,sDate,eDate);
 
         try {
             boolean isUpdated = leaveStokeDAO.update(dto);
@@ -269,7 +274,7 @@ public class LevesStokePageController {
             String id = idTxt.getText();
 
             try {
-                LeavesStokeDto leavesStokeDto = leaveStokeDAO.search(id);
+                LeavesStoke leavesStokeDto = leaveStokeDAO.search(id);
 
                 if (leavesStokeDto != null) {
                     idTxt.setText(leavesStokeDto.getId());
