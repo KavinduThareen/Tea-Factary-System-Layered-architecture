@@ -11,8 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dao.DAOFactory;
-import lk.ijse.teaFactory.dao.customer.Impl.OtpDAOImpl;
-import lk.ijse.teaFactory.dao.customer.OtpDAO;
+import lk.ijse.teaFactory.dao.custome.OtpDAO;
 
 import java.io.IOException;
 import java.net.URL;

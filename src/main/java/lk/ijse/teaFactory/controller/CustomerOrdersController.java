@@ -10,19 +10,18 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.Customer;
 import lk.ijse.teaFactory.Entity.PacketStoke;
 import lk.ijse.teaFactory.bo.BOFactory;
-import lk.ijse.teaFactory.bo.customer.PlaseOrderBO;
-import lk.ijse.teaFactory.dao.SuperDAO;
-import lk.ijse.teaFactory.dao.customer.CusOrdersDAO;
-import lk.ijse.teaFactory.dao.customer.Impl.CusOrdersDAOImpl;
-import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
-import lk.ijse.teaFactory.dao.customer.PacketDAO;
-import lk.ijse.teaFactory.dao.customer.Impl.PacketDAOImpl;
+import lk.ijse.teaFactory.bo.custome.PlaseOrderBO;
+import lk.ijse.teaFactory.dao.custome.CusOrdersDAO;
+import lk.ijse.teaFactory.dao.custome.Impl.CusOrdersDAOImpl;
+import lk.ijse.teaFactory.dao.custome.Impl.CustomerDAOImpl;
+import lk.ijse.teaFactory.dao.custome.PacketDAO;
+import lk.ijse.teaFactory.dao.custome.Impl.PacketDAOImpl;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.CartTm;
-import lk.ijse.teaFactory.model.PlaseOrderModel;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
@@ -96,18 +95,12 @@ public class CustomerOrdersController {
 
     @FXML
     private  Label tolLbl;
-
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation noti = new NotificationAnimation();
     PacketDAO packetDAO = new PacketDAOImpl();
     CusOrdersDAO cusOrdersDAO = new CusOrdersDAOImpl();
 
-  //  private CustomerModel customerModel = new CustomerModel();
-  //  private PacketStokeModel packetStokeModel = new PacketStokeModel();
-   // private CusOrderModel cusOrderModel = new CusOrderModel();
-    private PlaseOrderModel plaseOrderModel = new PlaseOrderModel();
-
-    PlaseOrderBO placeOrder = (PlaseOrderBO) BOFactory.getDaoFactory().getBO(PLASEORDER);
+    PlaseOrderBO placeOrder = (PlaseOrderBO) BOFactory.getBoFactory().getBO(PLASEORDER);
 
     private ObservableList<CartTm> obList2 = FXCollections.observableArrayList();
 
@@ -202,9 +195,9 @@ public class CustomerOrdersController {
     private void loadCusOrdersId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<CustomerDto> cusList = CustomerDAOImpl.loadAllItems();
+            List<Customer> cusList = CustomerDAOImpl.loadAllItems();
 
-            for (CustomerDto cusODto : cusList) {
+            for (Customer cusODto : cusList) {
                 obList.add(cusODto.getCusid());
             }
 
@@ -234,7 +227,6 @@ public class CustomerOrdersController {
         setCellValueFactory();
         loadItemCodes();
         setDate();
-
     }
 
     private void loadCatagary() {
@@ -397,10 +389,7 @@ public class CustomerOrdersController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
          */
-
-
     }
 
     @FXML

@@ -13,12 +13,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Customer;
 import lk.ijse.teaFactory.Entity.Employee;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.CustomerBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
-import lk.ijse.teaFactory.dao.customer.CustomerDAO;
-import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
-import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
+import lk.ijse.teaFactory.dao.custome.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.dto.CustomerDto;
-import lk.ijse.teaFactory.dto.EmployeeDto;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
 
@@ -28,7 +27,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.CUSTOMER;
 import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.EMPLOYEE;
 
 public class CustomerAddPageController {
@@ -51,8 +49,9 @@ public class CustomerAddPageController {
     @FXML
     private JFXComboBox<String> empidTxt;
 
-    CustomerDAOImpl customerDAO = (CustomerDAOImpl) DAOFactory.getDaoFactory().getDAO(CUSTOMER);
+   // CustomerDAOImpl customerDAO = (CustomerDAOImpl) DAOFactory.getDaoFactory().getDAO(CUSTOMER);
     EmployeDAOImpl employeDAO = (EmployeDAOImpl) DAOFactory.getDaoFactory().getDAO(EMPLOYEE);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.CUSTOMER);
 
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notification = new NotificationAnimation();
@@ -75,13 +74,13 @@ public class CustomerAddPageController {
         String cusAddress = cusAddressTxt.getText();
         String cusCantac = cuscontacTxt.getText();
 
-        var dto = new Customer(cusid,empid,cusname,cusAddress,cusCantac);
+        var dto = new CustomerDto(cusid,empid,cusname,cusAddress,cusCantac);
 
        boolean isValidated = validate();
 
         if (isValidated) {
             try {
-                boolean isSaved = customerDAO.save(dto);
+                boolean isSaved = customerBO.save(dto);
                 if (isSaved) {
                     notification.showNotification("saved");
                     count++;
@@ -159,7 +158,7 @@ public class CustomerAddPageController {
 
     private void generateNextCusId() {
         try {
-            String cusId = customerDAO.generateID();
+            String cusId = customerBO.generateID();
             cusidTxt.setText(cusId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -177,10 +176,10 @@ public class CustomerAddPageController {
         String cusAddress = cusAddressTxt.getText();
         String cusCantac = cuscontacTxt.getText();
 
-        var dto = new Customer(cusid,empid,cusname,cusAddress,cusCantac);
+        var dto = new CustomerDto(cusid,empid,cusname,cusAddress,cusCantac);
 
         try {
-            boolean isUpdated = customerDAO.update(dto);
+            boolean isUpdated = customerBO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notification.showNotification("update");
@@ -218,7 +217,7 @@ public class CustomerAddPageController {
         String id = cusidTxt.getText();
 
         try {
-            Customer customerDto = customerDAO.search(id);
+            Customer customerDto = customerBO.search(id);
 
             if (customerDto != null) {
                 cusidTxt.setText(customerDto.getCusid());

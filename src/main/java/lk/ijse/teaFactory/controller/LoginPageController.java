@@ -11,10 +11,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dao.DAOFactory;
-import lk.ijse.teaFactory.dao.customer.Impl.LoginDetailDAOImpl;
-import lk.ijse.teaFactory.dao.customer.Impl.RegisterDAOImpl;
-import lk.ijse.teaFactory.dao.customer.LoginDetailsDAO;
-import lk.ijse.teaFactory.dao.customer.RegisterDAO;
+import lk.ijse.teaFactory.dao.custome.LoginDetailsDAO;
+import lk.ijse.teaFactory.dao.custome.RegisterDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.LoginDetailsDto;
 

@@ -9,9 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.teaFactory.Entity.Employee;
-import lk.ijse.teaFactory.dao.DAOFactory;
-import lk.ijse.teaFactory.dao.customer.Impl.EmployeDAOImpl;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.EmployeeBO;
 import lk.ijse.teaFactory.dto.EmployeeDto;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
 import lk.ijse.teaFactory.dto.tm.EmployeeTm;
@@ -22,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.EMPLOYEE;
+import static lk.ijse.teaFactory.bo.BOFactory.BOType.EMPLOYE;
 
 public class ViewEmployeePageController {
 
@@ -53,7 +52,8 @@ public class ViewEmployeePageController {
     @FXML
     private TableView<EmployeeTm> tblEmployee;
 
-    EmployeDAOImpl employeDAO = (EmployeDAOImpl) DAOFactory.getDaoFactory().getDAO(EMPLOYEE);
+  //  EmployeDAOImpl employeDAO = (EmployeDAOImpl) DAOFactory.getDaoFactory().getDAO(EMPLOYEE);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(EMPLOYE);
     NotificationAnimation notifi = new NotificationAnimation();
     @FXML
     private AnchorPane root;
@@ -68,8 +68,8 @@ public class ViewEmployeePageController {
         ObservableList<EmployeeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<Employee> dtoList =employeDAO.getAll();
-            for (Employee dto : dtoList){
+            List<EmployeeDto> dtoList =employeeBO.getAll();
+            for (EmployeeDto dto : dtoList){
 
 
                 JFXButton btnDelete = new JFXButton("Deleted");
@@ -120,7 +120,7 @@ public class ViewEmployeePageController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = employeDAO.delete(id);
+            boolean isDeleted = employeeBO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Delete");
         } catch (SQLException ex) {

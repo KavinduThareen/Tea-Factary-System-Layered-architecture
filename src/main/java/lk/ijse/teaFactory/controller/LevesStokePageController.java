@@ -13,16 +13,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.LeavesStoke;
 import lk.ijse.teaFactory.Entity.Suppling;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.LeaveStokeBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
-import lk.ijse.teaFactory.dao.customer.Impl.LeavesStokeDAOImpl;
-import lk.ijse.teaFactory.dao.customer.Impl.SupOrderDAOImpl;
-import lk.ijse.teaFactory.dao.customer.Impl.SupplingDetailDAOImpl;
-import lk.ijse.teaFactory.dao.customer.LeaveStokeDAO;
-import lk.ijse.teaFactory.dao.customer.SupOrdersDAO;
-import lk.ijse.teaFactory.dao.customer.SupplingDetailDAO;
+import lk.ijse.teaFactory.dao.custome.LeaveStokeDAO;
+import lk.ijse.teaFactory.dao.custome.SupOrdersDAO;
+import lk.ijse.teaFactory.dao.custome.SupplingDetailDAO;
 import lk.ijse.teaFactory.dto.*;
 import lk.ijse.teaFactory.dto.tm.LeaveStokeTm;
-import lk.ijse.teaFactory.model.*;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -68,7 +66,8 @@ public class LevesStokePageController {
 
     @FXML
     private ComboBox<String > supplingidTxt;
-    LeaveStokeDAO leaveStokeDAO = (LeaveStokeDAO) DAOFactory.getDaoFactory().getDAO(LEAVESTOKE);
+   // LeaveStokeDAO leaveStokeDAO = (LeaveStokeDAO) DAOFactory.getDaoFactory().getDAO(LEAVESTOKE);
+    LeaveStokeBO leaveStokeBO = (LeaveStokeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.LEAVESTOKE);
 
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
@@ -87,12 +86,12 @@ public class LevesStokePageController {
         Date sDate = Date.valueOf(sDateTxt.getValue());
         Date eDate = Date.valueOf(eDateTxt.getValue());
 
-        var dto = new LeavesStoke(id,weigth,sDate,eDate);
+        var dto = new LeavesStokeDto(id,weigth,sDate,eDate);
         boolean isValidated = validate();
 
         if (isValidated) {
             try {
-                boolean isSaved = leaveStokeDAO.save(dto);
+                boolean isSaved = leaveStokeBO.save(dto);
                 boolean isSaved2 =supOrdersDAO.dropid(sid,weigth);
 
                 boolean a = supplingDetailDAO.detail(sid,id,sDate);
@@ -152,8 +151,8 @@ public class LevesStokePageController {
         ObservableList<LeaveStokeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<LeavesStoke> dtoList = leaveStokeDAO.getAll();
-            for (LeavesStoke dto : dtoList){
+            List<LeavesStokeDto> dtoList = leaveStokeBO.getAll();
+            for (LeavesStokeDto dto : dtoList){
 
                 JFXButton btnDelete = new JFXButton("Deleted");
                 btnDelete.setCursor(javafx.scene.Cursor.HAND);
@@ -196,7 +195,7 @@ public class LevesStokePageController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = leaveStokeDAO.delete(id);
+            boolean isDeleted = leaveStokeBO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Deleted");
         } catch (SQLException ex) {
@@ -225,7 +224,7 @@ public class LevesStokePageController {
 
     private void generateNextId() {
         try {
-            String orderId = leaveStokeDAO.generateID();
+            String orderId = leaveStokeBO.generateID();
             idTxt.setText(orderId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -250,10 +249,10 @@ public class LevesStokePageController {
         Date  sDate = Date.valueOf(sDateTxt.getValue());
         Date eDate = Date.valueOf(eDateTxt.getValue());
 
-        var dto = new LeavesStoke(id,weigth,sDate,eDate);
+        var dto = new LeavesStokeDto(id,weigth,sDate,eDate);
 
         try {
-            boolean isUpdated = leaveStokeDAO.update(dto);
+            boolean isUpdated = leaveStokeBO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notifi.showNotification("update");
@@ -274,7 +273,7 @@ public class LevesStokePageController {
             String id = idTxt.getText();
 
             try {
-                LeavesStoke leavesStokeDto = leaveStokeDAO.search(id);
+                LeavesStoke leavesStokeDto = leaveStokeBO.search(id);
 
                 if (leavesStokeDto != null) {
                     idTxt.setText(leavesStokeDto.getId());

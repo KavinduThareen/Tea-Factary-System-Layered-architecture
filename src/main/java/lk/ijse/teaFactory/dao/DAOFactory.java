@@ -1,8 +1,6 @@
 package lk.ijse.teaFactory.dao;
 
-import lk.ijse.teaFactory.dao.customer.Impl.*;
-
-import javax.swing.plaf.PanelUI;
+import lk.ijse.teaFactory.dao.custome.Impl.*;
 
 public class DAOFactory {
 
@@ -16,7 +14,7 @@ public class DAOFactory {
     }
 
     public enum DAOType{
-        CUSORDERS,CUSTOMER,EMPLOYEE,LEAVESTOKE,LOGINDETAIL,ORDERDETAIL,OTP,PACKETSTOKE,REGISTER,SALARY,STOKEDETAIL,SUPPLING,SUPPLIER,SUPPLINGDETAIL
+        CUSORDERS,CUSTOMER,EMPLOYEE,LEAVESTOKE,LOGINDETAIL,ORDERDETAIL,OTP,PACKETSTOKE,REGISTER,SALARY,STOKEDETAIL,SUPPLING,SUPPLIER,SUPPLINGDETAIL,EMPLOYEEATTENDENTS
     }
 
     public SuperDAO getDAO(DAOType daoType){
@@ -62,6 +60,9 @@ public class DAOFactory {
 
             case SUPPLINGDETAIL:
                 return new SupplingDetailDAOImpl();
+
+            case EMPLOYEEATTENDENTS:
+                return new EmployeeAttendensDAOImpl();
 
             default:
                 return null;

@@ -9,8 +9,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import lk.ijse.teaFactory.QrcodeReader.QrCodeScanner;
-import lk.ijse.teaFactory.dao.customer.*;
-import lk.ijse.teaFactory.dao.customer.Impl.*;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.EmployeeBO;
+import lk.ijse.teaFactory.dao.DAOFactory;
+import lk.ijse.teaFactory.dao.custome.*;
+import lk.ijse.teaFactory.dao.custome.Impl.*;
 import lk.ijse.teaFactory.db.DbConnection;
 import lk.ijse.teaFactory.model.*;
 import net.sf.jasperreports.engine.*;
@@ -25,6 +28,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static lk.ijse.teaFactory.bo.BOFactory.BOType.EMPLOYE;
+import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.*;
 
 public class Dashboard1Controller {
 
@@ -57,11 +63,14 @@ public class Dashboard1Controller {
     private Label lblPacketSalles;
 
     private ExecutorService qrScannerExecutor;
-    EmployeDAOImpl employeDAO = new EmployeDAOImpl();
-    LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
-    PacketDAO packetDAO = new PacketDAOImpl();
-    OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
-    CusOrdersDAO cusOrdersDAO = new CusOrdersDAOImpl();
+  //  EmployeDAOImpl employeDAO = (EmployeDAOImpl) DAOFactory.getDaoFactory().getDAO(EMPLOYEE);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(EMPLOYE);
+    LeaveStokeDAO leaveStokeDAO = (LeaveStokeDAO) DAOFactory.getDaoFactory().getDAO(LEAVESTOKE);
+    PacketDAO packetDAO = (PacketDAO) DAOFactory.getDaoFactory().getDAO(PACKETSTOKE);
+    OrderDetailDAO orderDetailDAO = (OrderDetailDAO) DAOFactory.getDaoFactory().getDAO(ORDERDETAIL);
+    CusOrdersDAO cusOrdersDAO = (CusOrdersDAO) DAOFactory.getDaoFactory().getDAO(CUSORDERS);
+
+    EmployeeAttendensDAO employeeAttendensDAO = new EmployeeAttendensDAOImpl();
     @FXML
     public void initialize() throws SQLException, ClassNotFoundException {
         // Call the method to start updating the time
@@ -102,7 +111,7 @@ public class Dashboard1Controller {
 
     public void generatempCount() throws SQLException {
 
-        int a = employeDAO.empCount();
+        int a = employeeBO.empCount();
         lblemp.setText(String.valueOf(a));
     }
 
@@ -142,9 +151,9 @@ public class Dashboard1Controller {
 
     }
 
-    public void generateEmpAttendens() throws SQLException {
+    public void generateEmpAttendens() throws SQLException, ClassNotFoundException {
         EmpAttendensModel empAttendensModel = new EmpAttendensModel();
-        int a = empAttendensModel.empAttendes();
+        int a = employeeAttendensDAO.empAttendes();
 
         lblqrAttendent.setText(String.valueOf(a));
 

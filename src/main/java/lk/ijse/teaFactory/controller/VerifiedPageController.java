@@ -7,8 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.dao.DAOFactory;
-import lk.ijse.teaFactory.dao.customer.Impl.RegisterDAOImpl;
-import lk.ijse.teaFactory.dao.customer.RegisterDAO;
+import lk.ijse.teaFactory.dao.custome.RegisterDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;

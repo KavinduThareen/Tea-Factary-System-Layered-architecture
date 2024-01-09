@@ -7,9 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Otp;
 import lk.ijse.teaFactory.dao.DAOFactory;
-import lk.ijse.teaFactory.dao.customer.Impl.OtpDAOImpl;
-import lk.ijse.teaFactory.dao.customer.OtpDAO;
-import lk.ijse.teaFactory.dto.OtpDto;
+import lk.ijse.teaFactory.dao.custome.OtpDAO;
 import lk.ijse.teaFactory.gmail.Gmailer;
 
 import java.io.IOException;

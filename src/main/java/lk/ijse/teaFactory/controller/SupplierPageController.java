@@ -13,11 +13,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Supplier;
 import lk.ijse.teaFactory.dao.DAOFactory;
-import lk.ijse.teaFactory.dao.customer.Impl.SupplierDAOImpl;
-import lk.ijse.teaFactory.dao.customer.SupplierDAO;
+import lk.ijse.teaFactory.dao.custome.SupplierDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
-import lk.ijse.teaFactory.dto.SupplierDto;
 import lk.ijse.teaFactory.dto.tm.SupplierTm;
 
 import java.io.IOException;

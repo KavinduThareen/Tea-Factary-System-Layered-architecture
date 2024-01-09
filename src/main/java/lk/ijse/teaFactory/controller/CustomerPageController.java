@@ -9,10 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.teaFactory.Entity.Customer;
-import lk.ijse.teaFactory.dao.DAOFactory;
-import lk.ijse.teaFactory.dao.customer.CustomerDAO;
-import lk.ijse.teaFactory.dao.customer.Impl.CustomerDAOImpl;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.CustomerBO;
 import lk.ijse.teaFactory.dto.CustomerDto;
 import lk.ijse.teaFactory.dto.tm.CustomerTm;
 
@@ -21,8 +19,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
-import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.CUSTOMER;
 
 public class CustomerPageController {
 
@@ -50,7 +46,8 @@ public class CustomerPageController {
     @FXML
     private TableView<CustomerTm> tabl;
 
-    CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDaoFactory().getDAO(CUSTOMER);
+   // CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDaoFactory().getDAO(CUSTOMER);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.CUSTOMER);
 
     @FXML
     void addcusOnAction(ActionEvent event) throws IOException {
@@ -62,11 +59,10 @@ public class CustomerPageController {
     public void loadAll(){
 
         ObservableList<CustomerTm> obList = FXCollections.observableArrayList();
-
         try {
-            List<Customer> dtoList = customerDAO.getAll();
+            List<CustomerDto> dtoList = customerBO.getAll();
 
-            for(Customer dto : dtoList) {
+            for(CustomerDto dto : dtoList) {
 
                 JFXButton btnDelete = new JFXButton("Deleted");
                 btnDelete.setCursor(javafx.scene.Cursor.HAND);
@@ -84,9 +80,7 @@ public class CustomerPageController {
                     if(type.orElse(no) == yes) {
                         int selectedIndex = tabl.getSelectionModel().getSelectedIndex();
                         String id = (String) colid.getCellData(selectedIndex);
-
                         deleteItem(id);   //delete item from the database
-
                         obList.remove(selectedIndex);   //delete item from the JFX-Table
                         tabl.refresh();
                     }
@@ -128,7 +122,7 @@ public class CustomerPageController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = customerDAO.delete(id);
+            boolean isDeleted = customerBO.delete(id);
             if(isDeleted)
                 new Alert(Alert.AlertType.CONFIRMATION, "item deleted!").show();
         } catch (SQLException ex) {
