@@ -14,6 +14,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.LeavesStoke;
 import lk.ijse.teaFactory.Entity.PacketStoke;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.PacketStokeBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.Impl.LeavesStokeDAOImpl;
 import lk.ijse.teaFactory.dao.custome.PacketDAO;
@@ -30,7 +32,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.PACKETSTOKE;
+import static lk.ijse.teaFactory.bo.BOFactory.BOType.PACKETSTOKE;
 import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.STOKEDETAIL;
 
 public class PacketStokePageController {
@@ -72,7 +74,8 @@ public class PacketStokePageController {
     private JFXComboBox<String > leavesId;
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    PacketDAO packetDAO = (PacketDAO) DAOFactory.getDaoFactory().getDAO(PACKETSTOKE);
+   // PacketDAO packetDAO = (PacketDAO) DAOFactory.getDaoFactory().getDAO(PACKETSTOKE);
+    PacketStokeBO packetStokeBO = (PacketStokeBO) BOFactory.getBoFactory().getBO(PACKETSTOKE);
     StokeDetailDAO stokeDetailDAO = (StokeDetailDAO) DAOFactory.getDaoFactory().getDAO(STOKEDETAIL);
 
     @FXML
@@ -83,13 +86,13 @@ public class PacketStokePageController {
         Date date = Date.valueOf(expirTxt.getValue());
         String leavesStokeId = leavesId.getValue();
 
-        var dto = new PacketStoke(pid,catagory,weigth,date);
+        var dto = new PacketStokeDto(pid,catagory,weigth,date);
         boolean isValidated = validate();
         LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
 
         if (isValidated) {
             try {
-                boolean isSaved = packetDAO.save(dto);
+                boolean isSaved = packetStokeBO.save(dto);
                 boolean drop = ((LeavesStokeDAOImpl) leaveStokeDAO).drop(leavesStokeId,weigth);
                 boolean saved1 = stokeDetailDAO.detail(pid,leavesStokeId,date);
 
@@ -161,9 +164,9 @@ public class PacketStokePageController {
         String   weigth = weigthTxt.getText();
         Date date = Date.valueOf(expirTxt.getValue());
 
-        var dto = new PacketStoke(id,catagory,weigth,date);
+        var dto = new PacketStokeDto(id,catagory,weigth,date);
         try {
-            boolean isUpdated = packetDAO.update(dto);
+            boolean isUpdated = packetStokeBO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notifi.showNotification("Update");
@@ -181,8 +184,8 @@ public class PacketStokePageController {
         ObservableList<CompleteTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<PacketStoke> dtoList = packetDAO.getAll();
-            for (PacketStoke dto : dtoList){
+            List<PacketStokeDto> dtoList = packetStokeBO.getAll();
+            for (PacketStokeDto dto : dtoList){
 
                 JFXButton btnDelete = new JFXButton("Deleted");
                 btnDelete.setCursor(javafx.scene.Cursor.HAND);
@@ -243,7 +246,7 @@ public class PacketStokePageController {
 
     private void generateNextId() {
         try {
-            String orderId = packetDAO.generateID();
+            String orderId = packetStokeBO.generateID();
             idTxt.setText(orderId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -254,7 +257,7 @@ public class PacketStokePageController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = packetDAO.delete(id);
+            boolean isDeleted = packetStokeBO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Delete");
         } catch (SQLException ex) {
@@ -277,7 +280,7 @@ public class PacketStokePageController {
             String id = idTxt.getText();
 
             try {
-                PacketStoke packetStokeDto = packetDAO.search(id);
+                PacketStoke packetStokeDto = packetStokeBO.search(id);
 
                 if (packetStokeDto != null) {
                     idTxt.setText(packetStokeDto.getId());

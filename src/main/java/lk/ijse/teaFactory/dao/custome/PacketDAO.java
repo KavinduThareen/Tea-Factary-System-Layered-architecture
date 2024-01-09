@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface PacketDAO extends CrudDAO<PacketStoke> {
     boolean updateItem(List<CartTm> cartTmList) throws SQLException, ClassNotFoundException;
+    public int stokeCount() throws SQLException, ClassNotFoundException;
 }
