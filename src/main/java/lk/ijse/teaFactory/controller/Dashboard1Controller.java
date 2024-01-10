@@ -16,7 +16,6 @@ import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.*;
 import lk.ijse.teaFactory.dao.custome.Impl.*;
 import lk.ijse.teaFactory.db.DbConnection;
-import lk.ijse.teaFactory.model.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -153,7 +152,6 @@ public class Dashboard1Controller {
     }
 
     public void generateEmpAttendens() throws SQLException, ClassNotFoundException {
-        EmpAttendensModel empAttendensModel = new EmpAttendensModel();
         int a = employeeAttendensDAO.empAttendes();
 
         lblqrAttendent.setText(String.valueOf(a));

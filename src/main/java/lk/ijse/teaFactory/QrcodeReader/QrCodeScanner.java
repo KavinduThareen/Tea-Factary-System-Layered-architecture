@@ -7,7 +7,6 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.EmployeeAttendensDAO;
-import lk.ijse.teaFactory.model.EmpAttendensModel;
 
 
 import javax.swing.*;
@@ -29,7 +28,6 @@ public class QrCodeScanner {
 
 
     public static void qrCodeScan() {
-        EmpAttendensModel empAttendensModel = new EmpAttendensModel();
         String[] stringArray = new String[5];
 
         Webcam webcam = Webcam.getDefault();   //Generate Webcam Object
