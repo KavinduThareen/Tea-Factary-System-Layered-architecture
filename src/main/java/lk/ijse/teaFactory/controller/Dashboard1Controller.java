@@ -11,6 +11,7 @@ import javafx.util.Duration;
 import lk.ijse.teaFactory.QrcodeReader.QrCodeScanner;
 import lk.ijse.teaFactory.bo.BOFactory;
 import lk.ijse.teaFactory.bo.custome.EmployeeBO;
+import lk.ijse.teaFactory.bo.custome.LeaveStokeBO;
 import lk.ijse.teaFactory.bo.custome.PacketStokeBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.*;
@@ -65,7 +66,8 @@ public class Dashboard1Controller {
     private ExecutorService qrScannerExecutor;
   //  EmployeDAOImpl employeDAO = (EmployeDAOImpl) DAOFactory.getDaoFactory().getDAO(EMPLOYEE);
     EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(EMPLOYE);
-    LeaveStokeDAO leaveStokeDAO = (LeaveStokeDAO) DAOFactory.getDaoFactory().getDAO(LEAVESTOKE);
+  //  LeaveStokeDAO leaveStokeDAO = (LeaveStokeDAO) DAOFactory.getDaoFactory().getDAO(LEAVESTOKE);
+    LeaveStokeBO leaveStokeBO = (LeaveStokeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.LEAVESTOKE);
    PacketStokeBO packetStokeBO = (PacketStokeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.PACKETSTOKE);
     OrderDetailDAO orderDetailDAO = (OrderDetailDAO) DAOFactory.getDaoFactory().getDAO(ORDERDETAIL);
     CusOrdersDAO cusOrdersDAO = (CusOrdersDAO) DAOFactory.getDaoFactory().getDAO(CUSORDERS);
@@ -130,7 +132,7 @@ public class Dashboard1Controller {
     }
 
     public void generatestokeCount() throws SQLException, ClassNotFoundException {
-        int a = ((LeavesStokeDAOImpl) leaveStokeDAO).stokeCount();
+        int a = ((LeavesStokeDAOImpl) leaveStokeBO).stokeCount();
 
 
         lblstokeCount.setText(String.valueOf(a));

@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Customer;
 import lk.ijse.teaFactory.Entity.PacketStoke;
 import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.PacketStokeBO;
 import lk.ijse.teaFactory.bo.custome.PlaseOrderBO;
 import lk.ijse.teaFactory.dao.custome.CusOrdersDAO;
 import lk.ijse.teaFactory.dao.custome.Impl.CusOrdersDAOImpl;
@@ -36,6 +37,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import static lk.ijse.teaFactory.bo.BOFactory.BOType.PACKETSTOKE;
 import static lk.ijse.teaFactory.bo.BOFactory.BOType.PLASEORDER;
 
 public class CustomerOrdersController {
@@ -97,7 +99,8 @@ public class CustomerOrdersController {
     private  Label tolLbl;
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation noti = new NotificationAnimation();
-    PacketDAO packetDAO = new PacketDAOImpl();
+  //  PacketDAO packetDAO = new PacketDAOImpl();
+    PacketStokeBO packetStokeBO = (PacketStokeBO) BOFactory.getBoFactory().getBO(PACKETSTOKE);
     CusOrdersDAO cusOrdersDAO = new CusOrdersDAOImpl();
 
     PlaseOrderBO placeOrder = (PlaseOrderBO) BOFactory.getBoFactory().getBO(PLASEORDER);
@@ -232,9 +235,9 @@ public class CustomerOrdersController {
     private void loadCatagary() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<PacketStoke> empList = packetDAO.getAll();
+            List<PacketStokeDto> empList = packetStokeBO.getAll();
 
-            for (PacketStoke cusODto : empList) {
+            for (PacketStokeDto cusODto : empList) {
                 obList.add(cusODto.getCatagory());
             }
             catagaryTxt.setItems(obList);
@@ -248,9 +251,9 @@ public class CustomerOrdersController {
     private void loadItemCodes() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<PacketStoke> itemDtos = packetDAO.getAll();
+            List<PacketStokeDto> itemDtos = packetStokeBO.getAll();
 
-            for (PacketStoke dto : itemDtos) {
+            for (PacketStokeDto dto : itemDtos) {
                 obList.add(dto.getId());
             }
             itemIdTxt.setItems(obList);

@@ -15,9 +15,11 @@ import lk.ijse.teaFactory.Entity.Customer;
 import lk.ijse.teaFactory.Entity.Employee;
 import lk.ijse.teaFactory.bo.BOFactory;
 import lk.ijse.teaFactory.bo.custome.CustomerBO;
+import lk.ijse.teaFactory.bo.custome.EmployeeBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.dto.CustomerDto;
+import lk.ijse.teaFactory.dto.EmployeeDto;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
 
@@ -50,8 +52,9 @@ public class CustomerAddPageController {
     private JFXComboBox<String> empidTxt;
 
    // CustomerDAOImpl customerDAO = (CustomerDAOImpl) DAOFactory.getDaoFactory().getDAO(CUSTOMER);
-    EmployeDAOImpl employeDAO = (EmployeDAOImpl) DAOFactory.getDaoFactory().getDAO(EMPLOYEE);
+  //  EmployeDAOImpl employeDAO = (EmployeDAOImpl) DAOFactory.getDaoFactory().getDAO(EMPLOYEE);
     CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.CUSTOMER);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.EMPLOYE);
 
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notification = new NotificationAnimation();
@@ -142,9 +145,9 @@ public class CustomerAddPageController {
     private void loadEmpId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<Employee> empList = employeDAO.getAll();
+            List<EmployeeDto> empList = employeeBO.getAll();
 
-            for (Employee empDto : empList) {
+            for (EmployeeDto empDto : empList) {
                 obList.add(empDto.getEmployeeId());
             }
 
