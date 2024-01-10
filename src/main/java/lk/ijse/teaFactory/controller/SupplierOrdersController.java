@@ -11,6 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Supplier;
 import lk.ijse.teaFactory.Entity.Suppling;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.SupOrderBO;
+import lk.ijse.teaFactory.bo.custome.SupplierBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.SupOrdersDAO;
 import lk.ijse.teaFactory.dao.custome.SupplierDAO;
@@ -76,8 +79,11 @@ public class SupplierOrdersController {
 
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    SupplierDAO supplierDAO= (SupplierDAO) DAOFactory.getDaoFactory().getDAO(SUPPLIER);
-    SupOrdersDAO supOrdersDAO = (SupOrdersDAO) DAOFactory.getDaoFactory().getDAO(SUPPLING);
+  // SupplierDAO supplierDAO= (SupplierDAO) DAOFactory.getDaoFactory().getDAO(SUPPLIER);
+   // SupOrdersDAO supOrdersDAO = (SupOrdersDAO) DAOFactory.getDaoFactory().getDAO(SUPPLING);
+
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.SUPPLIER);
+    SupOrderBO supOrderBO = (SupOrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.SUPPLING);
 
     @FXML
     void addOnAction(ActionEvent event) {
@@ -92,12 +98,12 @@ public class SupplierOrdersController {
             Double paymentValue = Double.parseDouble(payment);
             double total = weigthValue * paymentValue;
 
-            var dto = new Suppling(id, sId, date, weigth, total);
+            var dto = new SupOrderDto(id, sId, date, weigth, total);
             boolean isValidated = validate();
 
             if (isValidated) {
                 try {
-                    boolean isSaved = supOrdersDAO.save(dto);
+                    boolean isSaved = supOrderBO.save(dto);
                     if (isSaved) {
                         printCustomer();
                          notifi.showNotification("Saved");
@@ -146,9 +152,9 @@ public class SupplierOrdersController {
         ObservableList<SupOrderTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<Suppling> dtoList = supOrdersDAO.getAll();
+            List<SupOrderDto> dtoList = supOrderBO.getAll();
 
-            for(Suppling dto : dtoList) {
+            for(SupOrderDto dto : dtoList) {
 
                 JFXButton btnDelete = new JFXButton("Deleted");
                 btnDelete.setCursor(javafx.scene.Cursor.HAND);
@@ -193,7 +199,7 @@ public class SupplierOrdersController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = supOrdersDAO.delete(id);
+            boolean isDeleted = supOrderBO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Delete");
         } catch (SQLException ex) {
@@ -237,9 +243,9 @@ public class SupplierOrdersController {
         String weigth = weigthTxt.getText();
         int payment = Integer.parseInt(paymentTxt.getText());
 
-        var dto = new Suppling(id,sId,date,weigth,payment);
+        var dto = new SupOrderDto(id,sId,date,weigth,payment);
         try {
-            boolean isUpdated = supOrdersDAO.update(dto);
+            boolean isUpdated = supOrderBO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notifi.showNotification("Update");
@@ -278,7 +284,7 @@ public class SupplierOrdersController {
 
     private void generateNextId() {
         try {
-            String orderId = supOrdersDAO.generateID();
+            String orderId = supOrderBO.generateID();
             sOidTxt.setText(orderId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -290,9 +296,9 @@ public class SupplierOrdersController {
     private void loadSupId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<Supplier> empList = supplierDAO.getAll();
+            List<SupplierDto> empList = supplierBO.getAll();
 
-            for (Supplier empDto : empList) {
+            for (SupplierDto empDto : empList) {
                 obList.add(empDto.getId());
             }
 
@@ -309,7 +315,7 @@ public class SupplierOrdersController {
 
         String id = sOidTxt.getText();
         try {
-            Suppling supOrderDto = supOrdersDAO.search(id);
+            Suppling supOrderDto = supOrderBO.search(id);
 
             if (supOrderDto != null) {
                 sOidTxt.setText(supOrderDto.getId());

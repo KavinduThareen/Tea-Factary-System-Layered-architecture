@@ -12,10 +12,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Supplier;
-import lk.ijse.teaFactory.dao.DAOFactory;
-import lk.ijse.teaFactory.dao.custome.SupplierDAO;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.SupplierBO;
+
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
+import lk.ijse.teaFactory.dto.SupplierDto;
 import lk.ijse.teaFactory.dto.tm.SupplierTm;
 
 import java.io.IOException;
@@ -65,7 +67,8 @@ public class SupplierPageController {
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
 
-    SupplierDAO supplierDAO = (SupplierDAO) DAOFactory.getDaoFactory().getDAO(SUPPLIER);
+ //   SupplierDAO supplierDAO = (SupplierDAO) DAOFactory.getDaoFactory().getDAO(SUPPLIER);
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.SUPPLIER);
 
     @FXML
     void addSDetailOnAction(ActionEvent event) throws IOException {
@@ -81,12 +84,12 @@ public class SupplierPageController {
         String address = Address.getText();
         String contac= Contac.getText();
 
-        var entity = new Supplier(id,name,address,contac);
+        var entity = new SupplierDto(id,name,address,contac);
         boolean isValidated = validate();
 
         if (isValidated) {
             try {
-                boolean isSaved = supplierDAO.save(entity);
+                boolean isSaved = supplierBO.save(entity);
                 if (isSaved) {
                      notifi.showNotification("Saved");
                     loadAll();
@@ -141,7 +144,7 @@ public class SupplierPageController {
 
     private void generateNextSupId() {
         try {
-            String orderId = supplierDAO.generateID();
+            String orderId = supplierBO.generateID();
             idTxt.setText(orderId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -154,8 +157,8 @@ public class SupplierPageController {
 
         ObservableList<SupplierTm> obList = FXCollections.observableArrayList();
     try {
-        List<Supplier> dtoList = supplierDAO.getAll();
-        for (Supplier dto : dtoList){
+        List<SupplierDto> dtoList = supplierBO.getAll();
+        for (SupplierDto dto : dtoList){
 
 
             JFXButton btnDelete = new JFXButton("Deleted");
@@ -201,7 +204,7 @@ public class SupplierPageController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = supplierDAO.delete(id);
+            boolean isDeleted = supplierBO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Delete");
         } catch (SQLException ex) {
@@ -234,10 +237,10 @@ public class SupplierPageController {
         String address = Address.getText();
         String contac= Contac.getText();
 
-        var dto = new Supplier(id,name,address,contac);
+        var dto = new SupplierDto(id,name,address,contac);
 
         try {
-            boolean isUpdated = supplierDAO.update(dto);
+            boolean isUpdated = supplierBO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notifi.showNotification("Update");
@@ -265,7 +268,7 @@ public class SupplierPageController {
             String id = idTxt.getText();
 
             try {
-                Supplier supplier = supplierDAO.search(id);
+                Supplier supplier = supplierBO.search(id);
                 if (supplier != null) {
                     idTxt.setText(supplier.getId());
                     nameTxt.setText(supplier.getName());

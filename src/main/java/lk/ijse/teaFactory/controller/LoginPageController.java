@@ -10,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.RegisterBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.LoginDetailsDAO;
 import lk.ijse.teaFactory.dao.custome.RegisterDAO;
@@ -47,7 +49,8 @@ public class LoginPageController{
      private ErrorAnimation errorAnimation = new ErrorAnimation();
 
      private LoginDetailsDAO logdetail = (LoginDetailsDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.LOGINDETAIL);
-     RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
+   //  RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
+    RegisterBO registerBO = (RegisterBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.REGISTER);
 
     @FXML
     void keyOnAction(KeyEvent event) throws IOException {
@@ -69,7 +72,7 @@ public class LoginPageController{
 
         if (isValidated) {
             try {
-                boolean isLogin = registerDAO.searchUser(username, password);
+                boolean isLogin = registerBO.searchUser(username, password);
                 if (isLogin) {
                     loginroot.getChildren().clear();
                     loginroot.getChildren().add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/dashboard.fxml"))));
@@ -77,7 +80,7 @@ public class LoginPageController{
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
                     String inTime = ((LocalDateTime.now().format(formatter)));
                     Date date = Date.valueOf((LocalDate.now().toString()));
-                    String uid = registerDAO.findUserIdByUsername(username);
+                    String uid = registerBO.findUserIdByUsername(username);
 
                     loginDetail(inTime, date, uid);
 

@@ -8,10 +8,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Register;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.RegisterBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.RegisterDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
+import lk.ijse.teaFactory.dto.RegisterDto;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -44,7 +47,8 @@ public class UserProfileController{
 
     private ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
+   // RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
+    RegisterBO registerBO = (RegisterBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.REGISTER);
 
     @FXML
     void addnewaccOnAction(ActionEvent event) throws IOException, SQLException {
@@ -67,7 +71,7 @@ public class UserProfileController{
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = registerDAO.delete(id);
+            boolean isDeleted = registerBO.delete(id);
             if(isDeleted)
               notifi.showNotification("Delete");
         } catch (SQLException ex) {
@@ -86,13 +90,13 @@ public class UserProfileController{
         String password = pwTxt.getText();
         String comfimepw = cpwTxt.getText();
 
-        var dto = new Register(id, name, contac, password);
+        var dto = new RegisterDto(id, name, contac, password);
         boolean isValidated = validate();
 
         if (isValidated) {
             if (password.equals(comfimepw)) {
                 try {
-                    boolean isUpdated = registerDAO.update(dto);
+                    boolean isUpdated = registerBO.update(dto);
                     System.out.println(isUpdated);
                     if (isUpdated) {
                         notifi.showNotification("Update");

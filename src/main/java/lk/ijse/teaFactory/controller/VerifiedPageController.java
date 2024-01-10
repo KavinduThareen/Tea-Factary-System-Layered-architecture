@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.RegisterBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.RegisterDAO;
 
@@ -29,7 +31,7 @@ public class VerifiedPageController {
     @FXML
     private TextField uidTxt;
 
-    RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
+    RegisterBO registerBO = (RegisterBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.REGISTER);
 
     @FXML
     void pwSaveOnAction(ActionEvent event) {
@@ -39,7 +41,7 @@ public class VerifiedPageController {
 
         try {
             if (pw.equals(cfpw)) {
-                boolean isLogin = registerDAO.updatepw(id, pw);
+                boolean isLogin = registerBO.updatepw(id, pw);
                 if (isLogin) {
                     root.getChildren().clear();
                     root.getChildren().add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/login_page.fxml"))));

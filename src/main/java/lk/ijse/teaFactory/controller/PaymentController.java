@@ -13,6 +13,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Employee;
 import lk.ijse.teaFactory.Entity.Salary;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.PaymentBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.Impl.EmployeDAOImpl;
 import lk.ijse.teaFactory.dao.custome.SalaryDAO;
@@ -31,6 +33,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static lk.ijse.teaFactory.bo.BOFactory.BOType.PAYMENT;
 import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.SALARY;
 
 public class PaymentController {
@@ -70,7 +73,8 @@ public class PaymentController {
 
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    SalaryDAO salaryDAO = (SalaryDAO) DAOFactory.getDaoFactory().getDAO(SALARY);
+   // SalaryDAO salaryDAO = (SalaryDAO) DAOFactory.getDaoFactory().getDAO(SALARY);
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getBoFactory().getBO(PAYMENT);
 
     @FXML
     void addOnAction(ActionEvent event) {
@@ -80,12 +84,12 @@ public class PaymentController {
         int count = Integer.parseInt(countTxt.getText());
         String payment = String.valueOf(count * 30);
 
-        var dto = new Salary(id,empId,date,payment);
+        var dto = new SalaryDto(id,empId,date,payment);
         boolean isValidated = validate();
 
         if (isValidated) {
             try {
-                boolean isSaved = salaryDAO.save(dto);
+                boolean isSaved = paymentBO.save(dto);
                 if (isSaved) {
                    notifi.showNotification("Saved");
                     loadAllEmployees();
@@ -129,9 +133,9 @@ public class PaymentController {
         String count = countTxt.getText();
 
 
-        var dto = new Salary(id,empId,date,count);
+        var dto = new SalaryDto(id,empId,date,count);
         try {
-            boolean isUpdated = salaryDAO.update(dto);
+            boolean isUpdated = paymentBO.update(dto);
             System.out.println(isUpdated);
             if(isUpdated) {
                 notifi.showNotification("Update");
@@ -158,8 +162,8 @@ public class PaymentController {
         ObservableList<SalaryTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<Salary> dtoList =salaryDAO.getAll();
-            for (Salary dto : dtoList){
+            List<SalaryDto> dtoList =paymentBO.getAll();
+            for (SalaryDto dto : dtoList){
 
 
                 JFXButton btnDelete = new JFXButton("Deleted");
@@ -218,7 +222,7 @@ public class PaymentController {
 
     private void deleteItem(String id) {
         try {
-            boolean isDeleted = salaryDAO.delete(id);
+            boolean isDeleted = paymentBO.delete(id);
             if(isDeleted)
                 notifi.showNotification("Delete");
         } catch (SQLException ex) {
@@ -248,7 +252,7 @@ public class PaymentController {
 
     private void generateNextPaymentId() {
         try {
-            String orderId = salaryDAO.generateID();
+            String orderId = paymentBO.generateID();
             idTxt.setText(orderId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -270,7 +274,7 @@ public class PaymentController {
 
             String id = idTxt.getText();
             try {
-                Salary salaryDto = salaryDAO.search(id);
+                Salary salaryDto = paymentBO.search(id);
                 if (salaryDto != null) {
                     idTxt.setText(salaryDto.getId());
                     empIdTxt.setValue(salaryDto.getEmpId());

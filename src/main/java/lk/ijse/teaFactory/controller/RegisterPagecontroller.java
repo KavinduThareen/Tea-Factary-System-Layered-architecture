@@ -8,10 +8,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import lk.ijse.teaFactory.Entity.Register;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.RegisterBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.RegisterDAO;
 import lk.ijse.teaFactory.dto.ErrorAnimation;
 import lk.ijse.teaFactory.dto.NotificationAnimation;
+import lk.ijse.teaFactory.dto.RegisterDto;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -48,7 +51,8 @@ public class RegisterPagecontroller {
 
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
+  //  RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
+    RegisterBO registerBO = (RegisterBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.REGISTER);
 
     @FXML
     void createAccountBtnOnAction(ActionEvent event) {
@@ -60,14 +64,14 @@ public class RegisterPagecontroller {
 
         String conPw = confirmPasswordTxt.getText();
 
-            var dto = new Register(userid, username, contac, password);
+            var dto = new RegisterDto(userid, username, contac, password);
 
         boolean isValidated = validate();
 
         if (isValidated) {
             if (password.equals(conPw)) {
                 try {
-                    boolean isSaved = registerDAO.save(dto);
+                    boolean isSaved = registerBO.save(dto);
                     if (isSaved) {
                         notifi.showNotification("You are registerd!");
 
@@ -143,7 +147,7 @@ public class RegisterPagecontroller {
 
     private void generateNextCusOrderId() {
         try {
-            String orderId = registerDAO.generateID();
+            String orderId = registerBO.generateID();
             useridTxt.setText(orderId);
         } catch (SQLException e) {
             throw new RuntimeException(e);

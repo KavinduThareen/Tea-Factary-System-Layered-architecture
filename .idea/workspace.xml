@@ -5,15 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9d40562-1598-46ef-b631-583a8e64a67b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/PacketStokeBOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/PacketStokeBO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/PaymentBOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/RegisterBOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/SupOrderBOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/SupplierBOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/PaymentBO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/RegisterBO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/SupOrderBO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/SupplierBO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/BOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/BOFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/PlaseOrderBOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/PlaseOrderBOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/Dashboard1Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/Dashboard1Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/PacketStokePageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/PacketStokePageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/Impl/PacketDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/Impl/PacketDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/PacketDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/PacketDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/LoginPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/LoginPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/RegisterPagecontroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/RegisterPagecontroller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/SupplierOrdersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/SupplierOrdersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/SupplierPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/SupplierPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/UserProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/UserProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/VerifiedPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/VerifiedPageController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +135,8 @@
       <workItem from="1703994630451" duration="3856000" />
       <workItem from="1704768802187" duration="3122000" />
       <workItem from="1704771968468" duration="4229000" />
-      <workItem from="1704786594275" duration="2455000" />
+      <workItem from="1704786594275" duration="3030000" />
+      <workItem from="1704878717681" duration="4285000" />
     </task>
     <task id="LOCAL-00001" summary="new commit">
       <option name="closed" value="true" />
@@ -217,7 +226,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704775504916</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="new commit">
+      <option name="closed" value="true" />
+      <created>1704789258490</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1704789258490</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
