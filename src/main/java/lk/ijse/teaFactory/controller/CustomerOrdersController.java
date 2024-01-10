@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Customer;
 import lk.ijse.teaFactory.Entity.PacketStoke;
 import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.OrdersOB;
 import lk.ijse.teaFactory.bo.custome.PacketStokeBO;
 import lk.ijse.teaFactory.bo.custome.PlaseOrderBO;
 import lk.ijse.teaFactory.dao.custome.CusOrdersDAO;
@@ -37,8 +38,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import static lk.ijse.teaFactory.bo.BOFactory.BOType.PACKETSTOKE;
-import static lk.ijse.teaFactory.bo.BOFactory.BOType.PLASEORDER;
+import static lk.ijse.teaFactory.bo.BOFactory.BOType.*;
 
 public class CustomerOrdersController {
     @FXML
@@ -101,10 +101,9 @@ public class CustomerOrdersController {
     NotificationAnimation noti = new NotificationAnimation();
   //  PacketDAO packetDAO = new PacketDAOImpl();
     PacketStokeBO packetStokeBO = (PacketStokeBO) BOFactory.getBoFactory().getBO(PACKETSTOKE);
-    CusOrdersDAO cusOrdersDAO = new CusOrdersDAOImpl();
-
+   // CusOrdersDAO cusOrdersDAO = new CusOrdersDAOImpl();
+    OrdersOB ordersOB = (OrdersOB) BOFactory.getBoFactory().getBO(ORDERS);
     PlaseOrderBO placeOrder = (PlaseOrderBO) BOFactory.getBoFactory().getBO(PLASEORDER);
-
     private ObservableList<CartTm> obList2 = FXCollections.observableArrayList();
 
     @FXML
@@ -214,7 +213,7 @@ public class CustomerOrdersController {
 
     private void generateNextCusOrderId() {
         try {
-            String orderId = cusOrdersDAO.generateID();
+            String orderId = ordersOB.generateID();
             idTxt.setText(orderId);
         } catch (SQLException e) {
             throw new RuntimeException(e);

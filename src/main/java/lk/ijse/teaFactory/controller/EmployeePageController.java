@@ -15,6 +15,7 @@ import lk.ijse.teaFactory.Entity.Employee;
 import lk.ijse.teaFactory.Entity.Register;
 import lk.ijse.teaFactory.bo.BOFactory;
 import lk.ijse.teaFactory.bo.custome.EmployeeBO;
+import lk.ijse.teaFactory.bo.custome.RegisterBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.RegisterDAO;
 import lk.ijse.teaFactory.dto.*;
@@ -69,7 +70,7 @@ public class EmployeePageController {
     EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(EMPLOYE);
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
+    RegisterBO registerBO = (RegisterBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.REGISTER);
 
     @FXML
     void updateOnAction(ActionEvent event) {
@@ -135,9 +136,9 @@ public class EmployeePageController {
     private void loadUserId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<Register> empList = registerDAO.getAll();
+            List<RegisterDto> empList = registerBO.getAll();
 
-            for (Register regDto : empList) {
+            for (RegisterDto regDto : empList) {
                 obList.add(regDto.getUserid());
             }
 

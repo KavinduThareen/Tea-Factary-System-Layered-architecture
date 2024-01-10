@@ -18,8 +18,6 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
         }
         return true;
     }
-
-    @Override
     public boolean saveOrderDetails(String orderId, CartTm tm) throws SQLException, ClassNotFoundException {
         return SQLUtil.execute("INSERT INTO order_detailse VALUES(?, ?, ?, ?)",orderId,tm.getItemId(),tm.getWeigth(),tm.getPayment());
     }

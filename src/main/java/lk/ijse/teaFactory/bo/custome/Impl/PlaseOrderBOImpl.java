@@ -1,6 +1,8 @@
 package lk.ijse.teaFactory.bo.custome.Impl;
 
 import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.OrderDetailBO;
+import lk.ijse.teaFactory.bo.custome.OrdersOB;
 import lk.ijse.teaFactory.bo.custome.PacketStokeBO;
 import lk.ijse.teaFactory.bo.custome.PlaseOrderBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
@@ -19,8 +21,9 @@ public class PlaseOrderBOImpl implements PlaseOrderBO {
 
     //private static PacketDAO packetDAO = (PacketDAO) DAOFactory.getDaoFactory().getDAO(PACKETSTOKE);
     private static PacketStokeBO packetStokeBO = (PacketStokeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.PACKETSTOKE);
-    private static OrderDetailDAO orderDetailDAO = (OrderDetailDAO) DAOFactory.getDaoFactory().getDAO(ORDERDETAIL);
-    private static CusOrdersDAO cusOrdersDAO = (CusOrdersDAO) DAOFactory.getDaoFactory().getDAO(CUSORDERS);
+    private static OrderDetailBO orderDetailBO = (OrderDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.ORDERDETAIL);
+  //  private static CusOrdersDAO cusOrdersDAO = (CusOrdersDAO) DAOFactory.getDaoFactory().getDAO(CUSORDERS);
+    private static OrdersOB ordersOB = (OrdersOB) BOFactory.getBoFactory().getBO(BOFactory.BOType.ORDERS);
     @Override
     public boolean placeOrder(PaseOrderDto placeOrderDto) throws SQLException {
 
@@ -38,14 +41,14 @@ public class PlaseOrderBOImpl implements PlaseOrderBO {
             connection.setAutoCommit(false);
 
             //  var dto1 = new CusOrderDto(orderId,customerId,category,weight,date,description, String.valueOf(payment));
-            boolean isOrderSaved = cusOrdersDAO.saveOrder(orderId,customerId,category,weight,date,description, String.valueOf(payment));
+            boolean isOrderSaved = ordersOB.saveOrder(orderId,customerId,category,weight,date,description, String.valueOf(payment));
             //  boolean isOrderSaved = cusOrdersDAO.save(dto1);
             if (isOrderSaved) {
                 //   boolean isUpdated = packetStokeModel.updateItem(placeOrderDto.getCartTmList());
                 boolean isUpdated = packetStokeBO.updateItem(placeOrderDto.getCartTmList());
 
                 if (isUpdated  ) {
-                    boolean isOrderDetailSaved = orderDetailDAO.saveOrderDetails(placeOrderDto.getid(), placeOrderDto.getCartTmList());
+                    boolean isOrderDetailSaved = orderDetailBO.saveOrderDetails(placeOrderDto.getid(), placeOrderDto.getCartTmList());
 
 
                     if (isOrderDetailSaved) {

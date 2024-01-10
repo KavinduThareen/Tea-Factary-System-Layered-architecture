@@ -10,9 +10,7 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 import lk.ijse.teaFactory.QrcodeReader.QrCodeScanner;
 import lk.ijse.teaFactory.bo.BOFactory;
-import lk.ijse.teaFactory.bo.custome.EmployeeBO;
-import lk.ijse.teaFactory.bo.custome.LeaveStokeBO;
-import lk.ijse.teaFactory.bo.custome.PacketStokeBO;
+import lk.ijse.teaFactory.bo.custome.*;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.*;
 import lk.ijse.teaFactory.dao.custome.Impl.*;
@@ -31,6 +29,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static lk.ijse.teaFactory.bo.BOFactory.BOType.EMPLOYE;
+import static lk.ijse.teaFactory.bo.BOFactory.BOType.ORDERS;
 import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.*;
 
 public class Dashboard1Controller {
@@ -69,8 +68,9 @@ public class Dashboard1Controller {
   //  LeaveStokeDAO leaveStokeDAO = (LeaveStokeDAO) DAOFactory.getDaoFactory().getDAO(LEAVESTOKE);
     LeaveStokeBO leaveStokeBO = (LeaveStokeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.LEAVESTOKE);
    PacketStokeBO packetStokeBO = (PacketStokeBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.PACKETSTOKE);
-    OrderDetailDAO orderDetailDAO = (OrderDetailDAO) DAOFactory.getDaoFactory().getDAO(ORDERDETAIL);
-    CusOrdersDAO cusOrdersDAO = (CusOrdersDAO) DAOFactory.getDaoFactory().getDAO(CUSORDERS);
+   OrderDetailBO orderDetailBO = (OrderDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.ORDERDETAIL);
+   // CusOrdersDAO cusOrdersDAO = (CusOrdersDAO) DAOFactory.getDaoFactory().getDAO(CUSORDERS);
+    OrdersOB ordersOB = (OrdersOB) BOFactory.getBoFactory().getBO(ORDERS);
 
     EmployeeAttendensDAO employeeAttendensDAO = new EmployeeAttendensDAOImpl();
     @FXML
@@ -119,7 +119,7 @@ public class Dashboard1Controller {
 
 
    public void generateOrderCount() throws SQLException {
-       int a = cusOrdersDAO.cusCount();
+       int a = ordersOB.cusCount();
         lblordersTxt.setText(String.valueOf(a));
    }
 
@@ -140,7 +140,7 @@ public class Dashboard1Controller {
     }
 
     public void generateordersCount() throws SQLException, ClassNotFoundException {
-        int a = orderDetailDAO.ordersCount();
+        int a = orderDetailBO.ordersCount();
 
         lblPacketSalles.setText(String.valueOf(a));
 
