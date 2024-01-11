@@ -130,7 +130,7 @@ public class Dashboard1Controller {
     }
 
     public void generatestokeCount() throws SQLException, ClassNotFoundException {
-        int a = ((LeavesStokeDAOImpl) leaveStokeBO).stokeCount();
+        int a = leaveStokeBO.stokeCount();
 
 
         lblstokeCount.setText(String.valueOf(a));

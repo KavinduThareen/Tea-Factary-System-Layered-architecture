@@ -80,6 +80,7 @@ public class PacketStokePageController {
    // PacketDAO packetDAO = (PacketDAO) DAOFactory.getDaoFactory().getDAO(PACKETSTOKE);
     PacketStokeBO packetStokeBO = (PacketStokeBO) BOFactory.getBoFactory().getBO(PACKETSTOKE);
     StokeDetailBO stokeDetailBO = (StokeDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.STOKEDETAIL);
+   // StokeDetailDAO stokeDetailDAO = (StokeDetailDAO) DAOFactory.getDaoFactory().getDAO(STOKEDETAIL);
     LeaveStokeBO leaveStokeBO = (LeaveStokeBO) BOFactory.getBoFactory().getBO(LEAVESTOKE);
 
     @FXML

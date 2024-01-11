@@ -51,7 +51,7 @@ public class BOFactory {
             case LOGIN:
                 return new LoginBOImpl();
             case STOKEDETAIL:
-                return new SupplingDetailBOImpl();
+                return new StokeDetailBOImpl();
             default:
                 return null;
         }

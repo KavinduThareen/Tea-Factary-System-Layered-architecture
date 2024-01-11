@@ -4,32 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a9d40562-1598-46ef-b631-583a8e64a67b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/EmployeAttendentBO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/EmployeAttendentBOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/LoginBOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/OtpBOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/StokeDetailBOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/SupplingDetailBOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/LoginBO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/OtpBO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/StokeDetailBO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/SupplingDetailBO.java" afterDir="false" />
+    <list default="true" id="a9d40562-1598-46ef-b631-583a8e64a67b" name="Changes" comment="new commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/QrcodeReader/QrCodeScanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/QrcodeReader/QrCodeScanner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/BOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/BOFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/StokeDetailBOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/bo/custome/Impl/StokeDetailBOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/Dashboard1Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/Dashboard1Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/FogetpwController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/FogetpwController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/LevesStokePageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/LevesStokePageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/LoginPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/LoginPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/OtpPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/OtpPageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/PacketStokePageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/PacketStokePageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/SupplierPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/controller/SupplierPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/EmployeeAttendensDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/EmployeeAttendensDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/Impl/EmployeeAttendensDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/Impl/EmployeeAttendensDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/Impl/LoginDetailDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/Impl/LoginDetailDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/LoginDetailsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/teaFactory/dao/custome/LoginDetailsDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +126,7 @@
       <workItem from="1704786594275" duration="3030000" />
       <workItem from="1704878717681" duration="5861000" />
       <workItem from="1704899196022" duration="3237000" />
-      <workItem from="1704940098533" duration="3790000" />
+      <workItem from="1704940098533" duration="5417000" />
     </task>
     <task id="LOCAL-00001" summary="new commit">
       <option name="closed" value="true" />
@@ -276,7 +256,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704903872873</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="new commit">
+      <option name="closed" value="true" />
+      <created>1704943906231</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1704943906231</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
