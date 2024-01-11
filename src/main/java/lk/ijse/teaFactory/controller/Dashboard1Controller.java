@@ -28,8 +28,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static lk.ijse.teaFactory.bo.BOFactory.BOType.EMPLOYE;
-import static lk.ijse.teaFactory.bo.BOFactory.BOType.ORDERS;
+import static lk.ijse.teaFactory.bo.BOFactory.BOType.*;
 import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.*;
 
 public class Dashboard1Controller {
@@ -71,8 +70,7 @@ public class Dashboard1Controller {
    OrderDetailBO orderDetailBO = (OrderDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.ORDERDETAIL);
    // CusOrdersDAO cusOrdersDAO = (CusOrdersDAO) DAOFactory.getDaoFactory().getDAO(CUSORDERS);
     OrdersOB ordersOB = (OrdersOB) BOFactory.getBoFactory().getBO(ORDERS);
-
-    EmployeeAttendensDAO employeeAttendensDAO = new EmployeeAttendensDAOImpl();
+    EmployeAttendentBO employeAttendentBO = (EmployeAttendentBO) BOFactory.getBoFactory().getBO(EMPLOYEEATTENEDENT);
     @FXML
     public void initialize() throws SQLException, ClassNotFoundException {
         // Call the method to start updating the time
@@ -154,7 +152,7 @@ public class Dashboard1Controller {
     }
 
     public void generateEmpAttendens() throws SQLException, ClassNotFoundException {
-        int a = employeeAttendensDAO.empAttendes();
+        int a = employeAttendentBO.empAttendes();
 
         lblqrAttendent.setText(String.valueOf(a));
 

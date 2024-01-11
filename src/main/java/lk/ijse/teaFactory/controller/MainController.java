@@ -6,12 +6,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.EmployeAttendentBO;
 import lk.ijse.teaFactory.dao.custome.EmployeeAttendensDAO;
 import lk.ijse.teaFactory.dao.custome.Impl.EmployeeAttendensDAOImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
+
+import static lk.ijse.teaFactory.bo.BOFactory.BOType.EMPLOYEEATTENEDENT;
 
 public class MainController {
 
@@ -24,7 +28,7 @@ public class MainController {
     @FXML
     private AnchorPane root;
 
-    EmployeeAttendensDAO employeeAttendensDAO = new EmployeeAttendensDAOImpl();
+    EmployeAttendentBO employeAttendentBO = (EmployeAttendentBO) BOFactory.getBoFactory().getBO(EMPLOYEEATTENEDENT);
 
 
     /*
@@ -96,7 +100,7 @@ public class MainController {
     @FXML
     void singoutbtnOnAction(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
        // EmpAttendensModel empAttendensModel = new EmpAttendensModel();
-        boolean a = employeeAttendensDAO.delete();
+        boolean a = employeAttendentBO.delete();
 
         root.getChildren().clear();
         root.getChildren().add(FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/view/login_page.fxml"))));

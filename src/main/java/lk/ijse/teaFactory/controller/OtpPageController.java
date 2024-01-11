@@ -10,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.OtpBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.OtpDAO;
 
@@ -41,7 +43,7 @@ public class OtpPageController implements Initializable {
     @FXML
     private TextField otpField4Txt;
 
-    OtpDAO otpDAO = (OtpDAO) DAOFactory.getDaoFactory().getDAO(OTP);
+    OtpBO otpBO = (OtpBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.OTP);
 
     FogetpwController fogetpwController = new FogetpwController();
 
@@ -57,7 +59,7 @@ public class OtpPageController implements Initializable {
     @FXML
     void textOnAction(ActionEvent event) throws SQLException, IOException, ClassNotFoundException {
 
-        otp = otpDAO.load();
+        otp = otpBO.load();
 
         boolean a = verifyOto(otp);
         if (a){
@@ -73,7 +75,7 @@ public class OtpPageController implements Initializable {
 
     private void delete(int otp) {
         try {
-            boolean isDeleted = otpDAO.delete(otp);
+            boolean isDeleted = otpBO.delete(otp);
 
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();

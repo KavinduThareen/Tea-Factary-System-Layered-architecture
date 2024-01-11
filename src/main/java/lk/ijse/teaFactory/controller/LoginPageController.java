@@ -10,7 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.teaFactory.Entity.LoginDetails;
 import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.LoginBO;
 import lk.ijse.teaFactory.bo.custome.RegisterBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.LoginDetailsDAO;
@@ -48,9 +50,9 @@ public class LoginPageController{
     private TextField usernameTxt;
      private ErrorAnimation errorAnimation = new ErrorAnimation();
 
-     private LoginDetailsDAO logdetail = (LoginDetailsDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOType.LOGINDETAIL);
+     private LoginBO loginBO = (LoginBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.LOGIN);
    //  RegisterDAO registerDAO = (RegisterDAO) DAOFactory.getDaoFactory().getDAO(REGISTER);
-    RegisterBO registerBO = (RegisterBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.REGISTER);
+     RegisterBO registerBO = (RegisterBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.REGISTER);
 
     @FXML
     void keyOnAction(KeyEvent event) throws IOException {
@@ -102,7 +104,7 @@ public class LoginPageController{
         Date loginDate = date;
 
         var dto = new LoginDetailsDto(userid,intime,loginDate);
-        boolean isSaved = logdetail.logdetail(dto);
+        boolean isSaved = loginBO.logdetail(dto);
 
         if (isSaved){
             System.out.println("saved");

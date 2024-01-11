@@ -66,8 +66,6 @@ public class SupplierPageController {
 
     ErrorAnimation errora = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-
- //   SupplierDAO supplierDAO = (SupplierDAO) DAOFactory.getDaoFactory().getDAO(SUPPLIER);
     SupplierBO supplierBO = (SupplierBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.SUPPLIER);
 
     @FXML

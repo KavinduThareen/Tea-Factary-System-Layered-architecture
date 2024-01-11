@@ -15,7 +15,9 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.LeavesStoke;
 import lk.ijse.teaFactory.Entity.PacketStoke;
 import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.LeaveStokeBO;
 import lk.ijse.teaFactory.bo.custome.PacketStokeBO;
+import lk.ijse.teaFactory.bo.custome.StokeDetailBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.Impl.LeavesStokeDAOImpl;
 import lk.ijse.teaFactory.dao.custome.PacketDAO;
@@ -32,6 +34,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static lk.ijse.teaFactory.bo.BOFactory.BOType.LEAVESTOKE;
 import static lk.ijse.teaFactory.bo.BOFactory.BOType.PACKETSTOKE;
 import static lk.ijse.teaFactory.dao.DAOFactory.DAOType.STOKEDETAIL;
 
@@ -76,7 +79,8 @@ public class PacketStokePageController {
     NotificationAnimation notifi = new NotificationAnimation();
    // PacketDAO packetDAO = (PacketDAO) DAOFactory.getDaoFactory().getDAO(PACKETSTOKE);
     PacketStokeBO packetStokeBO = (PacketStokeBO) BOFactory.getBoFactory().getBO(PACKETSTOKE);
-    StokeDetailDAO stokeDetailDAO = (StokeDetailDAO) DAOFactory.getDaoFactory().getDAO(STOKEDETAIL);
+    StokeDetailBO stokeDetailBO = (StokeDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.STOKEDETAIL);
+    LeaveStokeBO leaveStokeBO = (LeaveStokeBO) BOFactory.getBoFactory().getBO(LEAVESTOKE);
 
     @FXML
     void addOnAction(ActionEvent event) {
@@ -88,13 +92,13 @@ public class PacketStokePageController {
 
         var dto = new PacketStokeDto(pid,catagory,weigth,date);
         boolean isValidated = validate();
-        LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
+       // LeaveStokeDAO leaveStokeDAO = new LeavesStokeDAOImpl();
 
         if (isValidated) {
             try {
                 boolean isSaved = packetStokeBO.save(dto);
-                boolean drop = ((LeavesStokeDAOImpl) leaveStokeDAO).drop(leavesStokeId,weigth);
-                boolean saved1 = stokeDetailDAO.detail(pid,leavesStokeId,date);
+                boolean drop =  leaveStokeBO.drop(leavesStokeId,weigth);
+                boolean saved1 = stokeDetailBO.detail(pid,leavesStokeId,date);
 
                 if (isSaved) {
                     notifi.showNotification("Saved");

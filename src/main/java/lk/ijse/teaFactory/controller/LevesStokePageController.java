@@ -15,6 +15,8 @@ import lk.ijse.teaFactory.Entity.LeavesStoke;
 import lk.ijse.teaFactory.Entity.Suppling;
 import lk.ijse.teaFactory.bo.BOFactory;
 import lk.ijse.teaFactory.bo.custome.LeaveStokeBO;
+import lk.ijse.teaFactory.bo.custome.SupOrderBO;
+import lk.ijse.teaFactory.bo.custome.SupplingDetailBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.LeaveStokeDAO;
 import lk.ijse.teaFactory.dao.custome.SupOrdersDAO;
@@ -71,8 +73,8 @@ public class LevesStokePageController {
 
     ErrorAnimation errorAnimation = new ErrorAnimation();
     NotificationAnimation notifi = new NotificationAnimation();
-    SupOrdersDAO supOrdersDAO = (SupOrdersDAO) DAOFactory.getDaoFactory().getDAO(SUPPLING);
-    SupplingDetailDAO supplingDetailDAO = (SupplingDetailDAO) DAOFactory.getDaoFactory().getDAO(SUPPLINGDETAIL);
+    SupOrderBO supOrderBO = (SupOrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.SUPPLING);
+    SupplingDetailBO supplingDetailBO = (SupplingDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.SUPPLINGDETAIL);
 
     @FXML
     private TableView<LeaveStokeTm> table;
@@ -92,9 +94,9 @@ public class LevesStokePageController {
         if (isValidated) {
             try {
                 boolean isSaved = leaveStokeBO.save(dto);
-                boolean isSaved2 =supOrdersDAO.dropid(sid,weigth);
+                boolean isSaved2 =supOrderBO.dropid(sid,weigth);
 
-                boolean a = supplingDetailDAO.detail(sid,id,sDate);
+                boolean a = supplingDetailBO.detail(sid,id,sDate);
 
                 if (isSaved && isSaved2) {
                         notifi.showNotification("saved");
@@ -134,9 +136,9 @@ public class LevesStokePageController {
     private void loadSupplingId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<Suppling> supList = supOrdersDAO.getAll();
+            List<SupOrderDto> supList = supOrderBO.getAll();
 
-            for (Suppling supDto : supList) {
+            for (SupOrderDto supDto : supList) {
                 obList.add(supDto.getId());
             }
             supplingidTxt.setItems(obList);

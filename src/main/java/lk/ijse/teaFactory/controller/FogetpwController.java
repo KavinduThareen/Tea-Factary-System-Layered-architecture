@@ -6,8 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.teaFactory.Entity.Otp;
+import lk.ijse.teaFactory.bo.BOFactory;
+import lk.ijse.teaFactory.bo.custome.OtpBO;
 import lk.ijse.teaFactory.dao.DAOFactory;
 import lk.ijse.teaFactory.dao.custome.OtpDAO;
+import lk.ijse.teaFactory.dto.OtpDto;
 import lk.ijse.teaFactory.gmail.Gmailer;
 
 import java.io.IOException;
@@ -27,7 +30,7 @@ public class FogetpwController {
     private String email;
     public int otp;
 
-    OtpDAO otpDAO = (OtpDAO) DAOFactory.getDaoFactory().getDAO(OTP);
+    OtpBO otpBO = (OtpBO) BOFactory.getBoFactory().getBO(BOFactory.BOType.OTP);
 
     private int otp2;
 
@@ -71,8 +74,8 @@ public class FogetpwController {
             otp2 = random.nextInt(9999);
 
             if (otp2 > 1000){
-               var entity = new Otp(otp2);
-               boolean a =  otpDAO.save(entity);
+               var entity = new OtpDto(otp2);
+               boolean a =  otpBO.save(entity);
               //  System.out.println(otp2);
                 return otp2;
             }

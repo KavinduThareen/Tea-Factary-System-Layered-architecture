@@ -29,7 +29,6 @@ public class EmployeeAttendensDAOImpl implements EmployeeAttendensDAO {
         return SQLUtil.execute("INSERT INTO emp_attendens VALUES (?, ?, ?)", value, date, time);
     }
 
-    @Override
     public boolean isValueExists( String value) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = SQLUtil.execute("SELECT COUNT(*) FROM emp_attendens WHERE attendent = ?",value);
         if (resultSet.next()) {
@@ -39,7 +38,6 @@ public class EmployeeAttendensDAOImpl implements EmployeeAttendensDAO {
         return false;
     }
 
-    @Override
     public boolean deleteDuplicateValue( String value) throws SQLException, ClassNotFoundException {
         return SQLUtil.execute( "DELETE FROM emp_attendens WHERE attendent = ?",value);
     }
