@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -32,6 +33,7 @@ public class Luncher extends Application {
 
         //set title and get center on screen stage
         stage.setTitle("GreenLeaf Software");
+        stage.getIcons().add(new Image("/img/icons8-tea-cup-100.png"));
         stage.centerOnScreen();
         stage.isFullScreen();
 
